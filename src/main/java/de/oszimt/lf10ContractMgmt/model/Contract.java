@@ -1,4 +1,4 @@
-package de.oszimt.lf10aContractMgmt.model;
+package de.oszimt.lf10ContractMgmt.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ public class Contract {
 	private Address ProjectLocations;
 	private Customer customer;
 	private Employee projectOwner;
-	private String contractType;   
-	private String state;          
+	private String contractType;
+	private String state;
 	private String description;
 	private ArrayList<ActivityRecord> activityRecordList;
-	
+
 	public Contract(int contractID, LocalDate creationDate, Address projectLocations, Customer customer,
 			Employee projectOwner, String contractType, String state, String description,
 			ArrayList<ActivityRecord> activityRecordList) {
@@ -100,5 +100,5 @@ public class Contract {
 	public void setActivityRecordList(ArrayList<ActivityRecord> activityRecordList) {
 		this.activityRecordList = activityRecordList;
 	}
-	
+
 }

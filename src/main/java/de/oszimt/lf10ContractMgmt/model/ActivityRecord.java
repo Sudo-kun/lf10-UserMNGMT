@@ -1,4 +1,4 @@
-package de.oszimt.lf10aContractMgmt.model;
+package de.oszimt.lf10ContractMgmt.model;
 
 import java.time.LocalDateTime;
 
@@ -7,7 +7,7 @@ public class ActivityRecord {
 	private LocalDateTime  endTime;
 	private int numberOfEmployees;
 	private String description;
-	
+
 	public ActivityRecord(LocalDateTime startTime, LocalDateTime endTime, int numberOfEmployees, String description) {
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -46,5 +46,5 @@ public class ActivityRecord {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-		
+
 }

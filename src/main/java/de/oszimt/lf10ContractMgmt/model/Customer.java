@@ -1,4 +1,4 @@
-package de.oszimt.lf10aContractMgmt.model;
+package de.oszimt.lf10ContractMgmt.model;
 
 import java.time.LocalDate;
 
@@ -9,7 +9,7 @@ public class Customer {
 	private LocalDate birthday;
 	private String email;
 	private Address address;
-	
+
 	public Customer(int customerID, String firstname, String lastname, LocalDate birthday, String email,
 			Address address) {
 		super();
@@ -69,8 +69,8 @@ public class Customer {
 		this.address = address;
 	}
 
-	
-	
-	
+
+
+
 
 }

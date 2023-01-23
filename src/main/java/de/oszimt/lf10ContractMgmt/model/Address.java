@@ -1,4 +1,4 @@
-package de.oszimt.lf10aContractMgmt.model;
+package de.oszimt.lf10ContractMgmt.model;
 
 public class Address {
 	private String street;
@@ -6,8 +6,8 @@ public class Address {
 	private String postalCode;
 	private String city;
 	private String country;
-	
-	public Address(String street, String house, 
+
+	public Address(String street, String house,
 			       String postalCode, String city, String country) {
 		super();
 		this.street = street;
@@ -56,9 +56,9 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
-	
-	
-	
+
+
+
+
 
 }

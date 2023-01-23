@@ -1,4 +1,4 @@
-package de.oszimt.lf10aContractMgmt.model;
+package de.oszimt.lf10ContractMgmt.model;
 
 public class Employee {
 	private int employeeID;
@@ -7,8 +7,8 @@ public class Employee {
 	private Address address;
 	private String email;
 	private String telephone;
-	
-	public Employee(int employeeID, String firstname, String lastname, 
+
+	public Employee(int employeeID, String firstname, String lastname,
 			Address address, String email, String telephone) {
 		super();
 		this.employeeID = employeeID;
