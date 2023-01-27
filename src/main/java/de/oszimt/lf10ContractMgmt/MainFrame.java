@@ -40,7 +40,10 @@ public class MainFrame extends JFrame {
 
             loginPanel.setError(!validData);
 
-            if (validData) loginPanel.setVisible(false);
+            if (validData) {
+                loginPanel.setVisible(false);
+                // go to next view
+            }
         });
 
     }
