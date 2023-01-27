@@ -1,5 +1,6 @@
 package de.oszimt.lf10ContractMgmt;
 
+import de.oszimt.lf10ContractMgmt.view.CustomerPanel;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class MainFrame extends JFrame {
     public static final String LOGIN_PASSWORD = "password";
 
     LoginPanel loginPanel = new LoginPanel();
+    CustomerPanel customerPanel = new CustomerPanel();
 
     public MainFrame() {
         setVisible(true);
@@ -24,11 +26,13 @@ public class MainFrame extends JFrame {
         setAlwaysOnTop(true);
         setLocationRelativeTo(null); // Zentriert das Fenster auf dem Bildschirm
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(300, 300);
+        //setSize(300, 300);
+        setSize(960, 540);
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
         add(loginPanel);
+        add(customerPanel);
 
         loginPanel.setLoginActionListener(e -> {
             // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
@@ -43,9 +47,9 @@ public class MainFrame extends JFrame {
             if (validData) {
                 loginPanel.setVisible(false);
                 // go to next view
+                customerPanel.setVisible(true);
             }
         });
-
     }
 }
 
