@@ -1,7 +1,9 @@
 package de.oszimt.lf10ContractMgmt;
 
+import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        ActivityDetailsView activityDetailsView = new ActivityDetailsView();
     }
 }
