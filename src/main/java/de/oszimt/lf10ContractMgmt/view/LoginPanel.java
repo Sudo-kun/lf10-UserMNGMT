@@ -2,16 +2,12 @@ package de.oszimt.lf10ContractMgmt.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
  * created by Brisko Bernburg
  */
-public class Login extends JFrame {
-
-    public static final String LOGIN_USERNAME = "admin";
-    public static final String LOGIN_PASSWORD = "password";
+public class LoginPanel extends JPanel {
 
     public static final String VIEW_TITLE = "Login";
 
@@ -21,19 +17,9 @@ public class Login extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    public static void main(String[] args) {
-        var frame = new Login();
-        frame.setVisible(true);
-    }
-
-    public Login() {
-        super(VIEW_TITLE);
-
-        setResizable(false);
-        setAlwaysOnTop(true);
-        setSize(300, 300);
+    public LoginPanel() {
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
 
         var panel = new JPanel();
         panel.setLayout(new GridLayout(4, 1));
@@ -86,7 +72,6 @@ public class Login extends JFrame {
     private JButton setupLoginButton() {
         loginBtn = new JButton("Login");
         loginBtn.setBorder(BorderFactory.createEmptyBorder(10, 32, 10, 32));
-        loginBtn.addActionListener(new LoginListener());
         return loginBtn;
     }
 
@@ -111,20 +96,20 @@ public class Login extends JFrame {
         return panel;
     }
 
-    private class LoginListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
-            // z.B. Verbindung zur Datenbank, um die Anmeldedaten zu überprüfen
-            char[] password = passwordField.getPassword();
-            String username = usernameField.getText();
-            if(username.equals(LOGIN_USERNAME) && new String(password).equals(LOGIN_PASSWORD)){
-                //JOptionPane.showMessageDialog(null, "Erfolgreich angemeldet");
-                errorLabel.setVisible(false);
-            }else{
-                //JOptionPane.showMessageDialog(null, "Falsche Anmeldedaten");
-                errorLabel.setVisible(true);
-            }
-        }
+    public void setLoginActionListener(ActionListener actionListener) {
+        loginBtn.addActionListener(actionListener);
+    }
+
+    public char[] getPasswordValue() {
+        return passwordField.getPassword();
+    }
+
+    public String getUsernameValue() {
+        return usernameField.getText();
+    }
+
+    public void setError(boolean error) {
+        errorLabel.setVisible(error);
     }
 
 }
