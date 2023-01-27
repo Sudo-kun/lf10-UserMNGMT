@@ -6,6 +6,13 @@ import javax.swing.*;
 
 public class MainFrame extends JFrame {
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            MainFrame frame = new MainFrame();
+            frame.setVisible(true);
+        });
+    }
+
     public static final String LOGIN_USERNAME = "admin";
     public static final String LOGIN_PASSWORD = "password";
 
@@ -36,13 +43,6 @@ public class MainFrame extends JFrame {
             if (validData) loginPanel.setVisible(false);
         });
 
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            MainFrame frame = new MainFrame();
-            frame.setVisible(true);
-        });
     }
 }
 
