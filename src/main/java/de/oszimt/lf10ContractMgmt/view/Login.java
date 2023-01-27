@@ -2,18 +2,24 @@ package de.oszimt.lf10ContractMgmt.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * created by Brisko Bernburg
  */
 public class Login extends JFrame {
 
+    public static final String LOGIN_USERNAME = "admin";
+    public static final String LOGIN_PASSWORD = "password";
+
     public static final String VIEW_TITLE = "Login";
 
     private JButton loginBtn;
+    private JLabel errorLabel;
 
     private JTextField usernameField;
-    private JTextField passwordField;
+    private JPasswordField passwordField;
 
     public static void main(String[] args) {
         var frame = new Login();
@@ -23,26 +29,38 @@ public class Login extends JFrame {
     public Login() {
         super(VIEW_TITLE);
 
+        setResizable(false);
         setAlwaysOnTop(true);
-        setSize(300, 275);
-        setLayout(new BorderLayout(10, 10));
+        setSize(300, 300);
+        setLayout(new BorderLayout());
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         var panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1));
+        panel.setLayout(new GridLayout(4, 1));
 
-        var titlePanel = new JPanel();
-        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-        titlePanel.add(Box.createHorizontalGlue());
-        titlePanel.add(getTitleLabel(VIEW_TITLE));
-        titlePanel.add(Box.createHorizontalGlue());
+        var titlePanel = new JPanel(new BorderLayout());
+        JLabel titleLabel = new JLabel("<html><h1 style='margin: 0;'>" + VIEW_TITLE + "</h1></html>");
+
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 20));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titlePanel.add(titleLabel);
+
         panel.add(titlePanel);
 
-        var btnPanel = new JPanel();
-        btnPanel.setLayout(new BorderLayout());
+        var errorPanel = new JPanel(new BorderLayout());
+
+        errorLabel = new JLabel("<html><p style='color: red; margin: 0;'>Anmeldedaten sind falsch</p></html>");
+
+        errorLabel.setFont(new Font("Serif", Font.PLAIN, 14));
+        errorLabel.setVisible(false);
+        errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        errorPanel.add(errorLabel);
+
+        panel.add(errorPanel);
 
         loginBtn = setupLoginButton();
         usernameField = new JTextField(10);
-        passwordField = new JTextField(10);
+        passwordField = new JPasswordField(10);
 
         var usernamePanel = getTextField("Benutzername:", usernameField);
         var passwordPanel = getTextField("Passwort:", passwordField);
@@ -50,35 +68,26 @@ public class Login extends JFrame {
         panel.add(usernamePanel);
         panel.add(passwordPanel);
 
+        var btnPanel = new JPanel();
+        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.Y_AXIS));
+
         var buttonRow = new JPanel();
         buttonRow.setLayout(new BoxLayout(buttonRow, BoxLayout.X_AXIS));
         buttonRow.add(Box.createHorizontalGlue());
         buttonRow.add(loginBtn);
         buttonRow.add(Box.createHorizontalGlue());
 
-        //loginBtn.addActionListener(e -> clickLogin(usernameField.getText(), passwordField.getText()));
-
         btnPanel.add(buttonRow, BorderLayout.CENTER);
 
         add(panel, BorderLayout.CENTER);
-        add(btnPanel, BorderLayout.SOUTH);
-    }
-
-    private void clickLogin(String username, String password) {
-        System.out.println("Benutzername: " + username);
-        System.out.println("Passwort: " + password);
+        add(btnPanel, BorderLayout.PAGE_END);
     }
 
     private JButton setupLoginButton() {
         loginBtn = new JButton("Login");
         loginBtn.setBorder(BorderFactory.createEmptyBorder(10, 32, 10, 32));
+        loginBtn.addActionListener(new LoginListener());
         return loginBtn;
-    }
-
-    private JLabel getTitleLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(new Font("Serif", Font.BOLD, 20));
-        return label;
     }
 
     private JPanel getTextField(String title, JTextField field) {
@@ -89,7 +98,7 @@ public class Login extends JFrame {
 
         field.setMargin(new Insets(0, 8, 0, 8));
 
-        var size = new Dimension(200, 20);
+        var size = new Dimension(200, 30);
         field.setMaximumSize(size);
         field.setMinimumSize(size);
         field.setSize(size);
@@ -100,6 +109,22 @@ public class Login extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 16, 10, 16));
 
         return panel;
+    }
+
+    private class LoginListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
+            // z.B. Verbindung zur Datenbank, um die Anmeldedaten zu überprüfen
+            char[] password = passwordField.getPassword();
+            String username = usernameField.getText();
+            if(username.equals(LOGIN_USERNAME) && new String(password).equals(LOGIN_PASSWORD)){
+                //JOptionPane.showMessageDialog(null, "Erfolgreich angemeldet");
+                errorLabel.setVisible(false);
+            }else{
+                //JOptionPane.showMessageDialog(null, "Falsche Anmeldedaten");
+                errorLabel.setVisible(true);
+            }
+        }
     }
 
 }
