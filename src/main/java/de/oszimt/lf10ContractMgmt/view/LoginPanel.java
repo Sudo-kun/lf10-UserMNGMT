@@ -1,5 +1,7 @@
 package de.oszimt.lf10ContractMgmt.view;
 
+import de.oszimt.lf10ContractMgmt.util.FontUtil;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -27,7 +29,7 @@ public class LoginPanel extends JPanel {
         var titlePanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel("<html><h1 style='margin: 0;'>" + VIEW_TITLE + "</h1></html>");
 
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 20));
+        titleLabel.setFont(FontUtil.getBoldFont(20));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titlePanel.add(titleLabel);
 
@@ -37,7 +39,7 @@ public class LoginPanel extends JPanel {
 
         errorLabel = new JLabel("<html><p style='color: red; margin: 0;'>Anmeldedaten sind falsch</p></html>");
 
-        errorLabel.setFont(new Font("Serif", Font.PLAIN, 14));
+        errorLabel.setFont(FontUtil.getDefaultFont());
         errorLabel.setVisible(false);
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         errorPanel.add(errorLabel);
