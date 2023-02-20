@@ -21,6 +21,9 @@ public class CustomerPanel extends JPanel {
 
         add(titlePanel);
 
+        var parentContainer = new JPanel();
+        parentContainer.setLayout(new BoxLayout(parentContainer, BoxLayout.Y_AXIS));
+
         var formContainer = new JPanel();
         formContainer.setLayout(new BoxLayout(formContainer, BoxLayout.X_AXIS));
 
@@ -66,10 +69,26 @@ public class CustomerPanel extends JPanel {
         //formPanel.add(addressCityField);
         //formPanel.add(addressCountryField);
 
+        var selectBtn = new Button("Select");
+        var saveBtn = new Button("Save");
+
+        var buttonContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        var buttonContainerGrid = new JPanel(new GridLayout(1, 3, 25, 25));
+        buttonContainerGrid.add(selectBtn);
+        buttonContainerGrid.add(Box.createVerticalGlue());
+        buttonContainerGrid.add(saveBtn);
+        buttonContainer.add(buttonContainerGrid);
+
         formContainer.add(Box.createHorizontalGlue());
         formContainer.add(formPanel);
         formContainer.add(Box.createHorizontalGlue());
-        add(formContainer);
+
+        parentContainer.add(Box.createHorizontalGlue());
+        parentContainer.add(formContainer);
+        parentContainer.add(buttonContainer);
+        parentContainer.add(Box.createHorizontalGlue());
+        add(parentContainer);
     }
 
 }
