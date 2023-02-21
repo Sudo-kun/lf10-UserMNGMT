@@ -1,5 +1,7 @@
 package de.oszimt.lf10ContractMgmt;
 
+import de.oszimt.lf10ContractMgmt.mock_data.MockDataCreator;
+import de.oszimt.lf10ContractMgmt.view.ActivityOverview;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 
 import javax.swing.*;
@@ -42,9 +44,23 @@ public class MainFrame extends JFrame {
 
             if (validData) {
                 loginPanel.setVisible(false);
-                // go to next view
+
+                showActivityOverview();
             }
         });
+
+    }
+
+    public void showActivityOverview() {
+        // go to next view
+        setSize(1920, 1080);
+        setVisible(true);
+
+        MockDataCreator mockDataCreator = new MockDataCreator();
+
+        ActivityOverview activityOverview = new ActivityOverview(this);
+
+        activityOverview.drawActivityOverview(mockDataCreator.createContractMockData((int) (Math.random() * 20) + 1));
 
     }
 }
