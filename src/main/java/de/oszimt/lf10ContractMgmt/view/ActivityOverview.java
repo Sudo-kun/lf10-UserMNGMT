@@ -5,6 +5,8 @@ import de.oszimt.lf10ContractMgmt.model.Contract;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class ActivityOverview {
     JFrame window;
@@ -19,6 +21,7 @@ public class ActivityOverview {
         activityOverviewPanel.setLayout(new BoxLayout(activityOverviewPanel, BoxLayout.Y_AXIS));
 
         JPanel headlinePanel = createHeadline();
+        activityOverviewPanel.add(Box.createVerticalGlue());
         activityOverviewPanel.add(headlinePanel);
         activityOverviewPanel.add(Box.createVerticalGlue());
 
@@ -28,9 +31,21 @@ public class ActivityOverview {
         window.add(activityOverviewPanel);
         window.revalidate();
         window.repaint();
+
+        window.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                activityOverviewPanel.setSize(window.getSize());
+                window.revalidate();
+                window.repaint();
+            }
+        });
     }
 
     private static JPanel createTable(Contract[] contracts) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Id");
         model.addColumn("Customer");
@@ -71,8 +86,8 @@ public class ActivityOverview {
 
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
-        searchPanel.setSize(1800, 40);
-        searchPanel.setPreferredSize(new Dimension(1800, 40));
+        searchPanel.setSize((int) (screenSize.getWidth() * 0.95), 40);
+        searchPanel.setPreferredSize(new Dimension((int) (screenSize.getWidth() * 0.95), 40));
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
         searchPanel.add(Box.createHorizontalGlue());
@@ -103,19 +118,39 @@ public class ActivityOverview {
         //create and show table
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
-        scrollPane.setSize(1800, 500);
-        scrollPane.setPreferredSize(new Dimension(1800, 500));
+        Dimension scrollPaneSize = new Dimension((int) (screenSize.getWidth() * 0.95), (int) (screenSize.getHeight() * 0.90));
+        scrollPane.setSize(scrollPaneSize);
+        scrollPane.setPreferredSize(scrollPaneSize);
 
         // table should be inside a new panel with a FlowLayout
         JPanel tablePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         tablePanel.add(searchPanel);
         tablePanel.add(scrollPane);
 
+        // handle window resize and resize the table accordingly while keeping the space around the table constant
+        tablePanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                Dimension windowSize = tablePanel.getSize();
+                Dimension newScrollPaneSize = new Dimension((int) (windowSize.getWidth() * 0.95), (int) (windowSize.getHeight() * 0.90));
+                scrollPane.setSize(newScrollPaneSize);
+                scrollPane.setPreferredSize(newScrollPaneSize);
+                searchPanel.setSize((int) newScrollPaneSize.getWidth(), 40);
+                searchPanel.setPreferredSize(new Dimension((int) (windowSize.getWidth() * 0.95), 40));
+
+                tablePanel.revalidate();
+                tablePanel.repaint();
+            }
+        });
+
+
         return tablePanel;
     }
-    
 
     private static JPanel createHeadline() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
         JPanel headlinePanel = new JPanel();
         headlinePanel.setLayout(new BoxLayout(headlinePanel, BoxLayout.X_AXIS));
 
@@ -125,7 +160,6 @@ public class ActivityOverview {
 
         headlinePanel.add(Box.createHorizontalGlue());
         headlinePanel.add(headLine);
-        headlinePanel.add(Box.createRigidArea(new Dimension(0,20)));
         headlinePanel.add(Box.createHorizontalGlue());
 
         return headlinePanel;

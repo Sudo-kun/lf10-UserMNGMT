@@ -29,7 +29,7 @@ public class MockDataCreator {
                     "" + (int) (Math.random() * 100000000));
         }
 
-        ActivityRecord[][] activityRecords = new ActivityRecord[wantedLength][10];
+        ActivityRecord[][] activityRecords = new ActivityRecord[wantedLength][wantedLength];
         for (int i = 0; i < activityRecords.length; i++) {
             for (int j = 0; j < activityRecords[i].length; j++) {
                 activityRecords[i][j] = new ActivityRecord(
@@ -42,7 +42,7 @@ public class MockDataCreator {
                         LocalTime.now()
                                 .withHour((int) (Math.random() * 24))
                                 .withMinute((int) (Math.random() * 12)),
-                        employees[(int) (Math.random() * wantedLength) + 1],
+                        employees[(int) (Math.random() * wantedLength)],
                         "description" + i + j);
             }
         }
@@ -52,7 +52,7 @@ public class MockDataCreator {
                     LocalDate.now()
                             .minusYears(1)
                             .plusDays((int) (Math.random() * 365)),
-                    new Address("street" + i, "" + (int) (Math.random() * 100), "" + (int) (Math.random() * 100000), "city" + i, "Germany"), customers[(int) (Math.random() * wantedLength)], employees[(int) (Math.random() * 10)], "Service", "In Progress", "description" + i, new ArrayList<>(List.of(activityRecords[i])));
+                    new Address("street" + i, "" + (int) (Math.random() * 100), "" + (int) (Math.random() * 100000), "city" + i, "Germany"), customers[(int) (Math.random() * wantedLength)], employees[(int) (Math.random() * wantedLength)], "Service", "In Progress", "description" + i, new ArrayList<>(List.of(activityRecords[i])));
         }
 
         return contracts;
