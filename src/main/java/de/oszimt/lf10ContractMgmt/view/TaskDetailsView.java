@@ -23,7 +23,8 @@ public class TaskDetailsView extends JPanel {
     private JSpinner startTimeInput;
     private JSpinner endTimeInput;
     private JComboBox<Employee> employeeSelect;
-    private  JTextField descriptionInput;
+    private JTextField descriptionInput;
+
     public TaskDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, Contract contract) {
         setupWindow();
         setupActivityDetailsView(activityRecord, haseGmbHManagement);
