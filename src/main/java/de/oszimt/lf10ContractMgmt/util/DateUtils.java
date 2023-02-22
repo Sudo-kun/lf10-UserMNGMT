@@ -24,4 +24,8 @@ public class DateUtils {
     public static LocalTime asLocalTime(Date date) {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
     }
+
+    public static Date asDateTimeIgnoringDate(LocalTime localTime) {
+        return Date.from(LocalDate.now().atTime(localTime).atZone(ZoneId.systemDefault()).toInstant());
+    }
 }

@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -27,11 +28,11 @@ public class TaskDetailsView extends JPanel {
 
     public TaskDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, Contract contract) {
         setupWindow();
-        setupActivityDetailsView(activityRecord, haseGmbHManagement);
+        setupActivityDetailsView(activityRecord, haseGmbHManagement, contract);
         setVisible(true);
     }
 
-    private void setupActivityDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement) {
+    private void setupActivityDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, Contract contract) {
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Task Details");
@@ -43,7 +44,7 @@ public class TaskDetailsView extends JPanel {
         JPanel inputsPanel = createInputsPanel(activityRecord, haseGmbHManagement);
         add(inputsPanel);
 
-        JPanel buttonsPanel = createButtonsPanel();
+        JPanel buttonsPanel = createButtonsPanel(haseGmbHManagement, activityRecord, contract);
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 
@@ -54,6 +55,12 @@ public class TaskDetailsView extends JPanel {
     }
 
     private JPanel createInputsPanel(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement) {
+        Date date = activityRecord == null ? DateUtils.asDate(LocalDate.now()) : DateUtils.asDate(activityRecord.getDate());
+        Date startTime = activityRecord == null ? DateUtils.asDate(LocalDateTime.now()) : DateUtils.asDateTimeIgnoringDate(activityRecord.getStartTime());
+        Date endTime = activityRecord == null ? DateUtils.asDate(LocalDateTime.now()) : DateUtils.asDateTimeIgnoringDate(activityRecord.getEndTime());
+        String description = activityRecord == null ? "" : activityRecord.getDescription();
+        Employee selectedEmployee = activityRecord == null ? null : activityRecord.getEmployee();
+
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(8, 2));
         inputPanel.setPreferredSize(new Dimension(700, 330));
@@ -62,17 +69,19 @@ public class TaskDetailsView extends JPanel {
 
         JLabel dateLabel = new JLabel("Date");
         datePicker = new JXDatePicker();
-        datePicker.setDate(DateUtils.asDate(activityRecord.getDate()));
+        datePicker.setDate(date);
 
         JLabel startTimeLabel = new JLabel("Start time");
         startTimeInput = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor startTimeEditor = new JSpinner.DateEditor(startTimeInput, "HH:mm");
         startTimeInput.setEditor(startTimeEditor);
+        startTimeInput.setValue(startTime);
 
         JLabel endTimeLabel = new JLabel("End time");
         endTimeInput = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor endTimeEditor = new JSpinner.DateEditor(endTimeInput, "HH:mm");
         endTimeInput.setEditor(endTimeEditor);
+        startTimeInput.setValue(endTime);
 
         JLabel employeeSelectLabel = new JLabel("Employee");
         employeeSelect = new JComboBox<>(haseGmbHManagement.getAllEmployees().toArray(new Employee[0]));
@@ -86,9 +95,12 @@ public class TaskDetailsView extends JPanel {
             }
         });
 
+        if (selectedEmployee != null) employeeSelect.setSelectedItem(selectedEmployee);
+
 
         JLabel descriptionLabel = new JLabel("Description");
-        descriptionInput = new JTextField(activityRecord.getDescription());
+        descriptionInput = new JTextField();
+        descriptionInput.setText(description);
 
         inputPanel.add(dateLabel);
         inputPanel.add(datePicker);
@@ -104,7 +116,7 @@ public class TaskDetailsView extends JPanel {
         return inputPanel;
     }
 
-    private JPanel createButtonsPanel() {
+    private JPanel createButtonsPanel(HaseGmbHManagement haseGmbHManagement, ActivityRecord activityRecord, Contract contract) {
         JPanel buttonsPanel = new JPanel();
 
         JButton saveButton = new JButton("Save");
@@ -112,7 +124,7 @@ public class TaskDetailsView extends JPanel {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ActivityRecord activityRecord = createActivityRecordFromFormData();
+                createOrUpdateActivityRecordFromFormData(activityRecord, haseGmbHManagement, contract);
             }
         });
 
@@ -127,17 +139,25 @@ public class TaskDetailsView extends JPanel {
         setBorder(padding);
     }
 
-    private ActivityRecord createActivityRecordFromFormData() {
+    private void createOrUpdateActivityRecordFromFormData(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, Contract contract) {
         LocalDate date = DateUtils.asLocalDate(datePicker.getDate());
         LocalTime startTime = DateUtils.asLocalTime((Date) endTimeInput.getValue());
         LocalTime endTime = DateUtils.asLocalTime((Date) startTimeInput.getValue());
         Employee selectedEmployee = (Employee) employeeSelect.getSelectedItem();
         String description = descriptionInput.getText();
 
-        ActivityRecord activityRecord = new ActivityRecord(
-                date, startTime, endTime, selectedEmployee, description
-        );
+        if (activityRecord == null) {
+            activityRecord = new ActivityRecord(
+                    date, startTime, endTime, selectedEmployee, description
+            );
 
-        return activityRecord;
+            haseGmbHManagement.addNewWorkingRecord(contract.getContractID(), activityRecord);
+        } else {
+            activityRecord.setDate(date);
+            activityRecord.setStartTime(startTime);
+            activityRecord.setEndTime(endTime);
+            activityRecord.setDescription(description);
+            activityRecord.setEmployee(selectedEmployee);
+        }
     }
 }
