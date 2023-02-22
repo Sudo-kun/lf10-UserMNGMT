@@ -1,92 +1,93 @@
 package de.oszimt.lf10ContractMgmt.model;
 
 public class Employee {
-    private int employeeID;
-    private String firstname;
-    private String lastname;
-    private Address address;
-    private String email;
-    private String telephone;
-    private static int nextID = 10000;   // this is only for internal usage.
+	private int employeeID;
+	private String firstname;
+	private String lastname;
+	private Address address;
+	private String email;
+	private String telephone;
+	private static int nextID= 10000;   // this is only for internal usage.
+	
+	public Employee(String firstname, String lastname, 
+			Address address, String email, String telephone) {
+		this.employeeID = generateNewID();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.address = address;
+		this.email = email;
+		this.telephone = telephone;
+	}
+	
+	private int generateNewID() {
+		return ++nextID;
+	}
+	
 
-    public Employee(String firstname, String lastname,
-                    Address address, String email, String telephone) {
-        this.employeeID = generateNewID();
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.address = address;
-        this.email = email;
-        this.telephone = telephone;
-    }
+	public int getEmployeeID() {
+		return employeeID;
+	}
 
-    private int generateNewID() {
-        return ++nextID;
-    }
+	public void setEmployeeID(int employeeID) {
+		this.employeeID = employeeID;
+	}
 
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public int getEmployeeID() {
-        return employeeID;
-    }
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
-    }
+	public String getLastname() {
+		return lastname;
+	}
 
-    public String getFirstname() {
-        return firstname;
-    }
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public Address getAddress() {
+		return address;
+	}
 
-    public String getLastname() {
-        return lastname;
-    }
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Address getAddress() {
-        return address;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+	public String getTelephone() {
+		return telephone;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee [employeeID=" + employeeID + ", firstname=" + firstname + ", lastname=" + lastname
-                + ", address=" + address + ", email=" + email + ", telephone=" + telephone + "]";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Employee) {
-            Employee tempEmployee = (Employee) o;
-            if (this.employeeID == tempEmployee.getEmployeeID())
-                return true;
-        }
-        return false;
-    }
-
+	@Override
+	public String toString() {
+		return "Employee [employeeID=" + employeeID + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", address=" + address + ", email=" + email + ", telephone=" + telephone + "]";
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if ( o instanceof Employee) {
+			Employee tempEmployee = (Employee) o;
+			if (this.employeeID == tempEmployee.getEmployeeID())
+				return true;
+		}
+		return false;
+	}
+	
+	
 
 }

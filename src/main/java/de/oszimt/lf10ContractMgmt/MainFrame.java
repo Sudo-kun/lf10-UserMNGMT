@@ -1,8 +1,11 @@
 package de.oszimt.lf10ContractMgmt;
 
+import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
+import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
 import de.oszimt.lf10ContractMgmt.mock_data.MockDataCreator;
 import de.oszimt.lf10ContractMgmt.view.ActivityOverview;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
+import de.oszimt.lf10ContractMgmt.view.TaskDetailsView;
 
 import javax.swing.*;
 
@@ -19,10 +22,18 @@ public class MainFrame extends JFrame {
     public static final String LOGIN_PASSWORD = "password";
 
     LoginPanel loginPanel = new LoginPanel();
+    ActivityDetailsView activityDetailsView;
+
+    TaskDetailsView taskDetailsView;
+
+    HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
 
     public MainFrame() {
+        setupDetailsView();
+        setupTestTaskView();
+
         setVisible(true);
-        setResizable(false);
+        // setResizable(false);
         setAlwaysOnTop(true);
         setLocationRelativeTo(null); // Zentriert das Fenster auf dem Bildschirm
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -30,7 +41,9 @@ public class MainFrame extends JFrame {
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
-        add(loginPanel);
+        //add(loginPanel);
+        //add(taskDetailsView);
+        //add(activityDetailsView);
 
         loginPanel.setLoginActionListener(e -> {
             // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
@@ -63,5 +76,14 @@ public class MainFrame extends JFrame {
         activityOverview.drawActivityOverview(mockDataCreator.createContractMockData((int) (Math.random() * 20) + 1));
 
     }
+
+    private void setupDetailsView() {
+        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(21001101));
+    }
+
+    private void setupTestTaskView() {
+        taskDetailsView = new TaskDetailsView(haseGmbHManagement.getContract(21001101).getActivityRecordList().get(0),haseGmbHManagement, null);
+    }
 }
+
 
