@@ -1,10 +1,10 @@
 package de.oszimt.lf10ContractMgmt.impl;
 
+import de.oszimt.lf10ContractMgmt.model.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
-import de.oszimt.lf10ContractMgmt.model.*;
 
 public class HaseGmbHManagement implements IntContractMgmt, IntCustomerMgmt, IntEmployeeMgmt {
 

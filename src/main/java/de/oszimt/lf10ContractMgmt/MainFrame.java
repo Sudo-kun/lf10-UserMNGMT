@@ -82,7 +82,7 @@ public class MainFrame extends JFrame {
     }
 
     private void setupTestTaskView() {
-        taskDetailsView = new TaskDetailsView(haseGmbHManagement.getContract(21001101).getActivityRecordList().get(0),haseGmbHManagement, null);
+        taskDetailsView = new TaskDetailsView(haseGmbHManagement.getContract(21001101).getActivityRecordList().get(0), haseGmbHManagement, null);
     }
 }
 

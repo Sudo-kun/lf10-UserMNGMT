@@ -3,91 +3,91 @@ package de.oszimt.lf10ContractMgmt.model;
 import java.time.LocalDate;
 
 public class Customer {
-	private int customerID;
-	private String firstname;
-	private String lastname;
-	private LocalDate birthday;
-	private String email;
-	private Address address;
-	private static int nextID = 1009900;  // this is only for internal usage. 
-	
-	public Customer(String firstname, String lastname, LocalDate birthday, String email,
-			Address address) {
-		super();
-		this.customerID = generateNewID();
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.birthday = birthday;
-		this.email = email;
-		this.address = address;
-	}
-	
-	private int generateNewID() {
-		return ++nextID;
-	}
+    private int customerID;
+    private String firstname;
+    private String lastname;
+    private LocalDate birthday;
+    private String email;
+    private Address address;
+    private static int nextID = 1009900;  // this is only for internal usage.
 
-	public int getCustomerID() {
-		return customerID;
-	}
+    public Customer(String firstname, String lastname, LocalDate birthday, String email,
+                    Address address) {
+        super();
+        this.customerID = generateNewID();
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthday = birthday;
+        this.email = email;
+        this.address = address;
+    }
 
-	public void setCustomerID(int customerID) {
-		this.customerID = customerID;
-	}
+    private int generateNewID() {
+        return ++nextID;
+    }
 
-	public String getFirstname() {
-		return firstname;
-	}
+    public int getCustomerID() {
+        return customerID;
+    }
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
 
-	public String getLastname() {
-		return lastname;
-	}
+    public String getFirstname() {
+        return firstname;
+    }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-	public LocalDate getBirthday() {
-		return birthday;
-	}
+    public String getLastname() {
+        return lastname;
+    }
 
-	public void setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
-	}
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public LocalDate getBirthday() {
+        return birthday;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
 
-	public Address getAddress() {
-		return address;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	@Override
-	public String toString() {
-		return "Customer [customerID=" + customerID + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", birthday=" + birthday + ", email=" + email + ", address=" + address + "]";
-	}
+    public Address getAddress() {
+        return address;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if ( o instanceof Customer) {
-			Customer tempCustomer = (Customer) o;
-			if (this.customerID == tempCustomer.getCustomerID())
-				return true;
-		}
-		return false;
-	}
-	
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer [customerID=" + customerID + ", firstname=" + firstname + ", lastname=" + lastname
+                + ", birthday=" + birthday + ", email=" + email + ", address=" + address + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Customer) {
+            Customer tempCustomer = (Customer) o;
+            if (this.customerID == tempCustomer.getCustomerID())
+                return true;
+        }
+        return false;
+    }
+
 }
