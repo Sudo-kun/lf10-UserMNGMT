@@ -1,6 +1,9 @@
 .idea/
 .settings/
 bin/
+.gradle/
+.build/
+
 
 # Compiled class file
 *.class
