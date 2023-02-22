@@ -3,91 +3,91 @@ package de.oszimt.lf10ContractMgmt.model;
 import java.time.LocalDate;
 
 public class Customer {
-    private int customerID;
-    private String firstname;
-    private String lastname;
-    private LocalDate birthday;
-    private String email;
-    private Address address;
-    private static int nextID = 1009900;  // this is only for internal usage.
+	private int customerID;
+	private String firstname;
+	private String lastname;
+	private LocalDate birthday;
+	private String email;
+	private Address address;
+	private static int nextID = 1009900;  // this is only for internal usage. 
+	
+	public Customer(String firstname, String lastname, LocalDate birthday, String email,
+			Address address) {
+		super();
+		this.customerID = generateNewID();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.birthday = birthday;
+		this.email = email;
+		this.address = address;
+	}
+	
+	private int generateNewID() {
+		return ++nextID;
+	}
 
-    public Customer(String firstname, String lastname, LocalDate birthday, String email,
-                    Address address) {
-        super();
-        this.customerID = generateNewID();
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.birthday = birthday;
-        this.email = email;
-        this.address = address;
-    }
+	public int getCustomerID() {
+		return customerID;
+	}
 
-    private int generateNewID() {
-        return ++nextID;
-    }
+	public void setCustomerID(int customerID) {
+		this.customerID = customerID;
+	}
 
-    public int getCustomerID() {
-        return customerID;
-    }
+	public String getFirstname() {
+		return firstname;
+	}
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-    public String getFirstname() {
-        return firstname;
-    }
+	public String getLastname() {
+		return lastname;
+	}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 
-    public String getLastname() {
-        return lastname;
-    }
+	public LocalDate getBirthday() {
+		return birthday;
+	}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
 
-    public LocalDate getBirthday() {
-        return birthday;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public Address getAddress() {
+		return address;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
-    public Address getAddress() {
-        return address;
-    }
+	@Override
+	public String toString() {
+		return "Customer [customerID=" + customerID + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", birthday=" + birthday + ", email=" + email + ", address=" + address + "]";
+	}
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer [customerID=" + customerID + ", firstname=" + firstname + ", lastname=" + lastname
-                + ", birthday=" + birthday + ", email=" + email + ", address=" + address + "]";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Customer) {
-            Customer tempCustomer = (Customer) o;
-            if (this.customerID == tempCustomer.getCustomerID())
-                return true;
-        }
-        return false;
-    }
-
+	@Override
+	public boolean equals(Object o) {
+		if ( o instanceof Customer) {
+			Customer tempCustomer = (Customer) o;
+			if (this.customerID == tempCustomer.getCustomerID())
+				return true;
+		}
+		return false;
+	}
+	
 }

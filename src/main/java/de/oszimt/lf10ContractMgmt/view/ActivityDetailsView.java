@@ -1,80 +1,83 @@
 package de.oszimt.lf10ContractMgmt.view;
 
 import de.oszimt.lf10ContractMgmt.model.ActivityRecord;
+import de.oszimt.lf10ContractMgmt.model.Contract;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ActivityDetailsView extends JFrame {
-    public ActivityDetailsView() {
-        super("Activity Details");
-
+public class ActivityDetailsView extends JPanel {
+    public ActivityDetailsView(Contract contract) {
         setupWindow();
-        setupActivityDetailsView();
-
-        pack();
-        setLocationRelativeTo(null);
+        setupActivityDetailsView(contract);
         setVisible(true);
     }
 
-    private void setupActivityDetailsView() {
-        getContentPane().setLayout(new BorderLayout());
+    private void setupActivityDetailsView(Contract contract) {
+        setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Activity Details");
-        getContentPane().add(title, BorderLayout.NORTH);
+
+        title.setFont(new Font("Serif", Font.BOLD, 20));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        add(title, BorderLayout.NORTH);
 
         JPanel mainCenterPanel = new JPanel();
         mainCenterPanel.setLayout(new BoxLayout(mainCenterPanel, BoxLayout.Y_AXIS));
 
-        JPanel inputsPanel = createInputsPanel();
+        JPanel inputsPanel = createInputsPanel(contract);
         mainCenterPanel.add(inputsPanel);
 
-        JLabel titleForTaskList = new JLabel("Activity Details");
+        JLabel titleForTaskList = new JLabel("Tasks");
+
+        titleForTaskList.setFont(new Font("Serif", Font.BOLD, 20));
+        titleForTaskList.setHorizontalAlignment(SwingConstants.LEADING);
         mainCenterPanel.add(titleForTaskList);
 
-        JPanel taskListPanel = createTaskListPanel(createMockTaskList());
+        JPanel taskListPanel = createTaskListPanel(contract.getActivityRecordList());
         mainCenterPanel.add(taskListPanel);
 
-        getContentPane().add(mainCenterPanel, BorderLayout.CENTER);
+        JButton addNewTaskButton = new JButton("Add new task");
+        mainCenterPanel.add(addNewTaskButton);
+
+        add(mainCenterPanel, BorderLayout.CENTER);
 
         JPanel buttonsPanel = createButtonsPanel();
-        getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+        add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     private void setupWindow() {
         addPaddingToMainWindow();
 
         setSize(500, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private JPanel createInputsPanel() {
+    private JPanel createInputsPanel(Contract contract) {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(8, 2));
-        inputPanel.setPreferredSize(new Dimension(500, 330));
-        inputPanel.setMaximumSize(new Dimension(500, 330));
-        inputPanel.setMinimumSize(new Dimension(500, 330));
+        inputPanel.setPreferredSize(new Dimension(700, 330));
+        inputPanel.setMaximumSize(new Dimension(700, 330));
+        inputPanel.setMinimumSize(new Dimension(700, 330));
 
         JLabel addressLabel = new JLabel("Project location");
-        JTextField streetInput = new JTextField();
-        JTextField streetNumberInput = new JTextField();
+        JTextField streetInput = new JTextField(contract.getProjectLocations().getStreet());
+        JTextField streetNumberInput = new JTextField(contract.getProjectLocations().getHouse());
         JPanel addressPanel1 = new JPanel();
 
-        streetInput.setPreferredSize(new Dimension(100, 25));
+        streetInput.setPreferredSize(new Dimension(200, 25));
         streetNumberInput.setPreferredSize(new Dimension(100, 25));
         addressPanel1.setLayout(new FlowLayout());
 
         addressPanel1.add(streetInput);
         addressPanel1.add(streetNumberInput);
 
-        JTextField postalCodeInput = new JTextField();
-        JTextField cityInput = new JTextField();
+        JTextField postalCodeInput = new JTextField(contract.getProjectLocations().getPostalCode());
+        JTextField cityInput = new JTextField(contract.getProjectLocations().getCity());
         JPanel addressPanel2 = new JPanel();
 
-        cityInput.setPreferredSize(new Dimension(100, 25));
+        cityInput.setPreferredSize(new Dimension(200, 25));
         postalCodeInput.setPreferredSize(new Dimension(100, 25));
 
         addressPanel2.setLayout(new FlowLayout());
@@ -82,33 +85,33 @@ public class ActivityDetailsView extends JFrame {
         addressPanel2.add(cityInput);
 
         JPanel addressPanel3 = new JPanel();
-        JTextField countryInput = new JTextField();
-        countryInput.setPreferredSize(new Dimension(205, 25));
+        JTextField countryInput = new JTextField(contract.getProjectLocations().getCountry());
+        countryInput.setPreferredSize(new Dimension(305, 25));
         addressPanel3.add(countryInput);
 
-        JComboBox<String> customerSelect = new JComboBox<String>();
-        customerSelect.setPreferredSize(new Dimension(205, 25));
+        JComboBox<String> customerSelect = new JComboBox<>();
+        customerSelect.setPreferredSize(new Dimension(305, 25));
         JPanel customerSelectWrapper = new JPanel();
         customerSelectWrapper.add(customerSelect);
 
-        JComboBox<String> employeeSelect = new JComboBox<String>();
-        employeeSelect.setPreferredSize(new Dimension(205, 25));
+        JComboBox<String> employeeSelect = new JComboBox<>();
+        employeeSelect.setPreferredSize(new Dimension(305, 25));
         JPanel employeeSelectWrapper = new JPanel();
         employeeSelectWrapper.add(employeeSelect);
 
-        JComboBox<String> typeSelect = new JComboBox<String>();
-        typeSelect.setPreferredSize(new Dimension(205, 25));
+        JComboBox<String> typeSelect = new JComboBox<>();
+        typeSelect.setPreferredSize(new Dimension(305, 25));
         JPanel typeSelectWrapper = new JPanel();
         typeSelectWrapper.add(typeSelect);
 
-        JComboBox<String> stateSelect = new JComboBox<String>();
-        stateSelect.setPreferredSize(new Dimension(205, 25));
+        JComboBox<String> stateSelect = new JComboBox<>();
+        stateSelect.setPreferredSize(new Dimension(305, 25));
         JPanel stateSelectWrapper = new JPanel();
         stateSelectWrapper.add(stateSelect);
 
 
-        JTextField descriptionInput = new JTextField();
-        descriptionInput.setPreferredSize(new Dimension(205, 25));
+        JTextField descriptionInput = new JTextField(contract.getDescription());
+        descriptionInput.setPreferredSize(new Dimension(305, 25));
         JPanel descriptionInputWrapper = new JPanel();
         descriptionInputWrapper.add(descriptionInput);
 
@@ -135,30 +138,38 @@ public class ActivityDetailsView extends JFrame {
 
     private JPanel createTaskListPanel(ArrayList<ActivityRecord> activityRecords) {
         JPanel taskListPanel = new JPanel();
-        taskListPanel.setPreferredSize(new Dimension(500, 40 + 40 * activityRecords.size()));
-        taskListPanel.setMaximumSize(new Dimension(500, 40 + 40 * activityRecords.size()));
-        taskListPanel.setMinimumSize(new Dimension(500, 40 + 40 * activityRecords.size()));
+        taskListPanel.setPreferredSize(new Dimension(700, 40 + 40 * activityRecords.size()));
+        taskListPanel.setMaximumSize(new Dimension(700, 40 + 40 * activityRecords.size()));
+        taskListPanel.setMinimumSize(new Dimension(700, 40 + 40 * activityRecords.size()));
         taskListPanel.setLayout(new GridLayout(1 + activityRecords.size(), 4));
         taskListPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
-        JLabel timeLabel = new JLabel("Start - & Endtime");
+        JLabel timeLabel = new JLabel("Start - & Endtime", SwingConstants.CENTER);
         timeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        timeLabel.setBackground(Color.LIGHT_GRAY);
+        timeLabel.setOpaque(true);
         timeLabel.setPreferredSize(new Dimension(100, 25));
 
-        JLabel employeeCountLabel = new JLabel("Employee");
-        employeeCountLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        employeeCountLabel.setPreferredSize(new Dimension(100, 25));
+        JLabel employeeLabel = new JLabel("Employee", SwingConstants.CENTER);
+        employeeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        employeeLabel.setBackground(Color.LIGHT_GRAY);
+        employeeLabel.setOpaque(true);
+        employeeLabel.setPreferredSize(new Dimension(100, 25));
 
-        JLabel descriptionLabel = new JLabel("Description");
+        JLabel descriptionLabel = new JLabel("Description", SwingConstants.CENTER);
         descriptionLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        descriptionLabel.setBackground(Color.LIGHT_GRAY);
+        descriptionLabel.setOpaque(true);
         descriptionLabel.setPreferredSize(new Dimension(100, 25));
 
-        JLabel actionsLabel = new JLabel("Actions");
+        JLabel actionsLabel = new JLabel("Actions", SwingConstants.CENTER);
         actionsLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        actionsLabel.setBackground(Color.LIGHT_GRAY);
+        actionsLabel.setOpaque(true);
         actionsLabel.setPreferredSize(new Dimension(100, 25));
 
         taskListPanel.add(timeLabel);
-        taskListPanel.add(employeeCountLabel);
+        taskListPanel.add(employeeLabel);
         taskListPanel.add(descriptionLabel);
         taskListPanel.add(actionsLabel);
 
@@ -169,30 +180,32 @@ public class ActivityDetailsView extends JFrame {
 
     private void addTasksToTaskList(JPanel taskListPanel, ArrayList<ActivityRecord> activityRecords) {
         for (ActivityRecord activityRecord : activityRecords) {
-            JLabel timeText = new JLabel(activityRecord.getStartTime() + "-" + activityRecord.getEndTime());
+            JLabel timeText = new JLabel(activityRecord.getDate() + " " + activityRecord.getStartTime() + "-" + activityRecord.getEndTime(), SwingConstants.CENTER);
             timeText.setBackground(Color.lightGray);
             timeText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             timeText.setPreferredSize(new Dimension(100, 25));
 
-            JLabel employeeCountText = new JLabel("Employee");
-            employeeCountText.setBackground(Color.lightGray);
-            employeeCountText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            employeeCountText.setPreferredSize(new Dimension(100, 25));
+            JLabel employeeNameText = new JLabel(activityRecord.getEmployee().getFirstname() + " " + activityRecord.getEmployee().getLastname(), SwingConstants.CENTER);
+            employeeNameText.setBackground(Color.lightGray);
+            employeeNameText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            employeeNameText.setPreferredSize(new Dimension(100, 25));
 
-            JLabel descriptionText = new JLabel("Description");
+            JLabel descriptionText = new JLabel(activityRecord.getDescription(), SwingConstants.CENTER);
             descriptionText.setBackground(Color.lightGray);
             descriptionText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             descriptionText.setPreferredSize(new Dimension(100, 25));
 
-            JLabel actionsText = new JLabel("Actions");
-            actionsText.setBackground(Color.lightGray);
-            actionsText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            actionsText.setPreferredSize(new Dimension(100, 25));
+
+            JPanel taskActionsButtonPanel = new JPanel();
+            taskActionsButtonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            taskActionsButtonPanel.setLayout(new FlowLayout());
+            taskActionsButtonPanel.add(new JButton("Edit"));
+            taskActionsButtonPanel.add(new JButton("Delete"));
 
             taskListPanel.add(timeText);
-            taskListPanel.add(employeeCountText);
+            taskListPanel.add(employeeNameText);
             taskListPanel.add(descriptionText);
-            taskListPanel.add(actionsText);
+            taskListPanel.add(taskActionsButtonPanel);
         }
     }
 
@@ -207,25 +220,9 @@ public class ActivityDetailsView extends JFrame {
         return buttonsPanel;
     }
 
-    
     private void addPaddingToMainWindow() {
-        JPanel contentPanel = new JPanel();
-
         Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
 
-        contentPanel.setBorder(padding);
-
-        this.setContentPane(contentPanel);
-    }
-
-    // TODO remove after adding backend
-    private ArrayList<ActivityRecord> createMockTaskList() {
-        ArrayList<ActivityRecord> activityRecords = new ArrayList<>();
-
-        activityRecords.add(new ActivityRecord(LocalDateTime.now(), LocalDateTime.now(), 4, "text"));
-        activityRecords.add(new ActivityRecord(LocalDateTime.now(), LocalDateTime.now(), 6, "text123"));
-        activityRecords.add(new ActivityRecord(LocalDateTime.now(), LocalDateTime.now(), 5, "321text"));
-
-        return activityRecords;
+        setBorder(padding);
     }
 }
