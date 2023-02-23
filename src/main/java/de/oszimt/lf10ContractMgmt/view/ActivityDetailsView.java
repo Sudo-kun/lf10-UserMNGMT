@@ -79,7 +79,8 @@ public class ActivityDetailsView extends JPanel {
     }
 
     private void setupWindow() {
-        addPaddingToMainWindow();
+        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        this.setBorder(padding);
 
         setSize(500, 500);
     }
@@ -284,13 +285,6 @@ public class ActivityDetailsView extends JPanel {
 
         return buttonsPanel;
     }
-
-    private void addPaddingToMainWindow() {
-        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-
-        setBorder(padding);
-    }
-
     private void createOrUpdateContract(HaseGmbHManagement haseGmbHManagement, Contract contract) {
         String street = streetInput.getText();
         String house = streetNumberInput.getText();

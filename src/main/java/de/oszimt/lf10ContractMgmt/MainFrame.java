@@ -6,6 +6,7 @@ import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 import de.oszimt.lf10ContractMgmt.view.TaskDetailsView;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainFrame extends JFrame {
 
@@ -36,8 +37,8 @@ public class MainFrame extends JFrame {
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
-        add(loginPanel);
-        add(activityDetailsView);
+        //add(loginPanel);
+        //add(new JScrollPane(activityDetailsView));
 
         loginPanel.setLoginActionListener(e -> {
             // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
