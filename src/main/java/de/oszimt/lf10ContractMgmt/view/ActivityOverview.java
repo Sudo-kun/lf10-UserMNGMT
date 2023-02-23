@@ -134,13 +134,7 @@ public class ActivityOverview extends AbstractOverview {
     table = new JTable(model);
     table.setDefaultEditor(Object.class, null);
     table.setAutoCreateRowSorter(true);
-
-    // create a search field for customer and employee
-    JTextField searchField = new JTextField();
-    searchField.setPreferredSize(new Dimension(200, 30));
-    searchField.setMaximumSize(new Dimension(200, 30));
-    searchField.setAlignmentX(Component.LEFT_ALIGNMENT);
-    searchField.setAlignmentY(Component.TOP_ALIGNMENT);
+    table.setRowHeight(35);
 
     // create a search button
     innerSearchButton.setPreferredSize(new Dimension(100, 30));
@@ -157,7 +151,6 @@ public class ActivityOverview extends AbstractOverview {
     searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
     searchPanel.setSize((int) (screenSize.getWidth() * 0.95), 40);
     searchPanel.setPreferredSize(new Dimension((int) (screenSize.getWidth() * 0.95), 40));
-    searchPanel.add(searchField);
     searchPanel.add(innerSearchButton);
     searchPanel.add(Box.createHorizontalGlue());
     searchPanel.add(addButton);
@@ -329,7 +322,6 @@ public class ActivityOverview extends AbstractOverview {
       }
     });
 
-
     searchPanel.add(customerLabel);
     searchPanel.add(customerField);
     searchPanel.add(projectOwnerLabel);
@@ -342,7 +334,6 @@ public class ActivityOverview extends AbstractOverview {
     searchPanel.add(startDateField);
     searchPanel.add(endDateLabel);
     searchPanel.add(endDateField);
-
 
     // add a new panel that combines the search fields and the search button
     // the search button should be aligned to the right with a margin of 10px

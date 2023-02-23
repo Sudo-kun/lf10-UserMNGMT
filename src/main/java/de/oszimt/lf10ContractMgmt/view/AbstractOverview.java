@@ -1,6 +1,7 @@
 package de.oszimt.lf10ContractMgmt.view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -13,7 +14,6 @@ public abstract class AbstractOverview extends JPanel {
         JPanel headlinePanel = createHeadline(title);
         add(Box.createVerticalGlue());
         add(headlinePanel);
-        add(Box.createVerticalGlue());
 
         JPanel tablePanel = createTable();
         add(tablePanel);
@@ -32,6 +32,7 @@ public abstract class AbstractOverview extends JPanel {
     protected static JPanel createHeadline(String headline) {
         JPanel headlinePanel = new JPanel();
         JLabel headlineLabel = new JLabel(headline);
+        headlineLabel.setFont(new Font("Serif", Font.BOLD, 20));
         headlinePanel.add(headlineLabel);
 
         return headlinePanel;
