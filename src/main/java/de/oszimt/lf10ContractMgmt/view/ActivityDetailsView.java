@@ -74,7 +74,7 @@ public class ActivityDetailsView extends JPanel {
 
         add(mainCenterPanel, BorderLayout.CENTER);
 
-        JPanel buttonsPanel = createButtonsPanel();
+        JPanel buttonsPanel = createButtonsPanel(haseGmbHManagement, contract);
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 
@@ -86,6 +86,18 @@ public class ActivityDetailsView extends JPanel {
     }
 
     private JPanel createInputsPanel(Contract contract, HaseGmbHManagement haseGmbHManagement) {
+        // get values / default values if contract is null
+        String street = contract == null ? "" : streetInput.getText();
+        String house = contract == null ? "" : streetNumberInput.getText();
+        String postalCode = contract == null ? "" : postalCodeInput.getText();
+        String city = contract == null ? "" : cityInput.getText();
+        String country = contract == null ? "" :  countryInput.getText();
+        Customer customer = contract == null ? null :  (Customer) customerSelect.getSelectedItem();
+        Employee projectOwner = contract == null ? null :  (Employee) employeeSelect.getSelectedItem();
+        String type = contract == null ? "" : typeInput.getText();
+        String state = contract == null ? "" : stateInput.getText();
+        String description = contract == null ? "" :  descriptionInput.getText();
+
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(8, 2));
         inputPanel.setPreferredSize(new Dimension(700, 330));
@@ -93,8 +105,8 @@ public class ActivityDetailsView extends JPanel {
         inputPanel.setMinimumSize(new Dimension(700, 330));
 
         JLabel addressLabel = new JLabel("Project location");
-        streetInput = new JTextField(contract.getProjectLocations().getStreet());
-        streetNumberInput = new JTextField(contract.getProjectLocations().getHouse());
+        streetInput = new JTextField(street);
+        streetNumberInput = new JTextField(house);
         JPanel addressPanel1 = new JPanel();
 
         streetInput.setPreferredSize(new Dimension(200, 25));
@@ -104,8 +116,8 @@ public class ActivityDetailsView extends JPanel {
         addressPanel1.add(streetInput);
         addressPanel1.add(streetNumberInput);
 
-        postalCodeInput = new JTextField(contract.getProjectLocations().getPostalCode());
-        cityInput = new JTextField(contract.getProjectLocations().getCity());
+        postalCodeInput = new JTextField(postalCode);
+        cityInput = new JTextField(city);
         JPanel addressPanel2 = new JPanel();
 
         cityInput.setPreferredSize(new Dimension(200, 25));
@@ -116,7 +128,7 @@ public class ActivityDetailsView extends JPanel {
         addressPanel2.add(cityInput);
 
         JPanel addressPanel3 = new JPanel();
-        countryInput = new JTextField(contract.getProjectLocations().getCountry());
+        countryInput = new JTextField(country);
         countryInput.setPreferredSize(new Dimension(305, 25));
         addressPanel3.add(countryInput);
 
@@ -131,7 +143,7 @@ public class ActivityDetailsView extends JPanel {
             }
         });
         customerSelect.setPreferredSize(new Dimension(305, 25));
-
+        if (customer != null) customerSelect.setSelectedItem(customer);
 
         JPanel customerSelectWrapper = new JPanel();
         customerSelectWrapper.add(customerSelect);
@@ -147,22 +159,23 @@ public class ActivityDetailsView extends JPanel {
             }
         });
         employeeSelect.setPreferredSize(new Dimension(305, 25));
+        if (projectOwner != null) employeeSelect.setSelectedItem(projectOwner);
 
         JPanel employeeSelectWrapper = new JPanel();
         employeeSelectWrapper.add(employeeSelect);
 
-        JTextField typeInput = new JTextField();
+        typeInput = new JTextField(type);
         typeInput.setPreferredSize(new Dimension(305, 25));
         JPanel typeSelectWrapper = new JPanel();
         typeSelectWrapper.add(typeInput);
 
-        JTextField stateInput = new JTextField();
+        stateInput = new JTextField(state);
         stateInput.setPreferredSize(new Dimension(305, 25));
         JPanel stateSelectWrapper = new JPanel();
         stateSelectWrapper.add(stateInput);
 
 
-        descriptionInput = new JTextField(contract.getDescription());
+        descriptionInput = new JTextField(description);
         descriptionInput.setPreferredSize(new Dimension(305, 25));
         JPanel descriptionInputWrapper = new JPanel();
         descriptionInputWrapper.add(descriptionInput);
@@ -275,11 +288,15 @@ public class ActivityDetailsView extends JPanel {
         }
     }
 
-    private JPanel createButtonsPanel() {
+    private JPanel createButtonsPanel(HaseGmbHManagement haseGmbHManagement, Contract contract) {
         JPanel buttonsPanel = new JPanel();
 
         JButton saveButton = new JButton("Save");
         saveButton.setPreferredSize(new Dimension(200, 30));
+
+        saveButton.addActionListener(e -> {
+            createOrUpdateContract(haseGmbHManagement, contract);
+        });
 
         buttonsPanel.add(saveButton);
 
