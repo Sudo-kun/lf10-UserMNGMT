@@ -1,10 +1,7 @@
 package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
-import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
-import de.oszimt.lf10ContractMgmt.view.ActivityOverview;
-import de.oszimt.lf10ContractMgmt.view.LoginPanel;
-import de.oszimt.lf10ContractMgmt.view.TaskDetailsView;
+import de.oszimt.lf10ContractMgmt.view.*;
 
 import javax.swing.*;
 
@@ -27,9 +24,9 @@ public class MainFrame extends JFrame {
 
     HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
 
-    public MainFrame() {
-        //setupTestTaskView();
+    MainLayout mainLayout;
 
+    public MainFrame() {
         setVisible(true);
         // setResizable(false);
         setAlwaysOnTop(true);
@@ -56,14 +53,27 @@ public class MainFrame extends JFrame {
                 setResizable(true);
                 setAlwaysOnTop(false);
 
+
+                showMainLayout();
+                setSize(1920, 1080);
                 showActivityOverview();
             }
         });
 
     }
 
+    public void showMainLayout () {
+        setSize(1920, 1080);
+        mainLayout = new MainLayout();
+        mainLayout.setHeadline("Test");
+        add(mainLayout);
+
+        mainLayout.setContractOverviewAction(e -> showActivityOverview());
+    }
+
+
     public void showActivityOverview() {
-       ActivityOverview activityOverview = new ActivityOverview(
+        ActivityOverview activityOverview = new ActivityOverview(
                 haseGmbHManagement.getAllContracts());
 
         activityOverview.setEditActionListener(e -> {
@@ -75,7 +85,8 @@ public class MainFrame extends JFrame {
 
             System.out.println("ContractID: " + activityOverview.getIdByRow(row));
 
-            add(activityDetailsView);
+            mainLayout.setHeadline("Aktivitätsdetails");
+            mainLayout.setBody(activityDetailsView);
             activityDetailsView.setVisible(true);
         });
 
@@ -87,7 +98,8 @@ public class MainFrame extends JFrame {
             activityOverview.removeRow(row);
         });
 
-        add(activityOverview);
+        mainLayout.setHeadline("Aktivitätenübersicht");
+        mainLayout.setBody(activityOverview);
     }
 
     private void setupDetailsView(int ContractID) {

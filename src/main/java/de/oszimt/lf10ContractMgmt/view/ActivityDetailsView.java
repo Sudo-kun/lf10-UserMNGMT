@@ -18,12 +18,6 @@ public class ActivityDetailsView extends JPanel {
     private void setupActivityDetailsView(Contract contract) {
         setLayout(new BorderLayout());
 
-        JLabel title = new JLabel("Activity Details");
-
-        title.setFont(new Font("Serif", Font.BOLD, 20));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        add(title, BorderLayout.NORTH);
-
         JPanel mainCenterPanel = new JPanel();
         mainCenterPanel.setLayout(new BoxLayout(mainCenterPanel, BoxLayout.Y_AXIS));
 
@@ -51,7 +45,7 @@ public class ActivityDetailsView extends JPanel {
     private void setupWindow() {
         addPaddingToMainWindow();
 
-        setSize(500, 500);
+        setSize(1920, 1080);
     }
 
     private JPanel createInputsPanel(Contract contract) {

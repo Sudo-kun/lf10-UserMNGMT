@@ -31,22 +31,19 @@ public class ActivityOverview extends AbstractOverview {
   private final JButton addButton = new JButton("Add");
 
   static JButton outerSearchButton = new JButton("Search");
+
   static JButton innerSearchButton = new JButton("Search");
 
 
   public ActivityOverview(ArrayList<Contract> contracts) {
-    windowInit();
+    setupWindow();
     setContracts(contracts);
     drawOverview("Activity Overview");
     setVisible(true);
   }
 
-  private void windowInit() {
-    Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-
-    setBorder(padding);
+  private void setupWindow() {
     setSize(1920, 1080);
-    setPreferredSize(new Dimension(1920, 1080));
   }
 
   private void setContracts(ArrayList<Contract> contracts) {
@@ -183,9 +180,16 @@ public class ActivityOverview extends AbstractOverview {
     tablePanel.add(scrollPane);
 
     // handle window resize and resize the table accordingly while keeping the space around the table constant
+    setResizeListener(tablePanel, scrollPane, searchPanel);
+
+    return tablePanel;
+  }
+
+  private void setResizeListener(JPanel tablePanel, JScrollPane scrollPane, JPanel searchPanel) {
     tablePanel.addComponentListener(new ComponentAdapter() {
       @Override
       public void componentResized(ComponentEvent e) {
+        System.out.println("Table resized");
         super.componentResized(e);
         Dimension windowSize = tablePanel.getSize();
         Dimension newScrollPaneSize = new Dimension((int) (windowSize.getWidth() * 0.95), (int) (windowSize.getHeight() * 0.90));
@@ -198,8 +202,6 @@ public class ActivityOverview extends AbstractOverview {
         tablePanel.repaint();
       }
     });
-
-    return tablePanel;
   }
 
   protected static JPanel createHeadline(String headlineText) {
