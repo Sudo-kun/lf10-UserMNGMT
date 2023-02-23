@@ -3,22 +3,19 @@ package de.oszimt.lf10ContractMgmt.view;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.model.ActivityRecord;
-import de.oszimt.lf10ContractMgmt.model.Contract;
 import de.oszimt.lf10ContractMgmt.model.Employee;
 import de.oszimt.lf10ContractMgmt.util.DateUtils;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class TaskDetailsView extends JPanel {
+public class TaskDetailsView extends JFrame {
 
     private JXDatePicker datePicker;
     private JSpinner startTimeInput;
@@ -26,13 +23,16 @@ public class TaskDetailsView extends JPanel {
     private JComboBox<Employee> employeeSelect;
     private JTextField descriptionInput;
 
-    public TaskDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, Contract contract) {
+    private ActivityDetailsView parentView;
+
+    public TaskDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, ArrayList<ActivityRecord> activityRecordBufferList, ActivityDetailsView parent) {
+        parentView = parent;
         setupWindow();
-        setupActivityDetailsView(activityRecord, haseGmbHManagement, contract);
+        setupActivityDetailsView(activityRecord, haseGmbHManagement, activityRecordBufferList);
         setVisible(true);
     }
 
-    private void setupActivityDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, Contract contract) {
+    private void setupActivityDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, ArrayList<ActivityRecord> activityRecordBufferList) {
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Task Details");
@@ -44,13 +44,12 @@ public class TaskDetailsView extends JPanel {
         JPanel inputsPanel = createInputsPanel(activityRecord, haseGmbHManagement);
         add(inputsPanel);
 
-        JPanel buttonsPanel = createButtonsPanel(haseGmbHManagement, activityRecord, contract);
+        JPanel buttonsPanel = createButtonsPanel(activityRecord, activityRecordBufferList, haseGmbHManagement);
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     private void setupWindow() {
-        addPaddingToMainWindow();
-
+        //addPaddingToMainWindow();
         setSize(500, 500);
     }
 
@@ -81,7 +80,7 @@ public class TaskDetailsView extends JPanel {
         endTimeInput = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor endTimeEditor = new JSpinner.DateEditor(endTimeInput, "HH:mm");
         endTimeInput.setEditor(endTimeEditor);
-        startTimeInput.setValue(endTime);
+        endTimeInput.setValue(endTime);
 
         JLabel employeeSelectLabel = new JLabel("Employee");
         employeeSelect = new JComboBox<>(haseGmbHManagement.getAllEmployees().toArray(new Employee[0]));
@@ -116,33 +115,29 @@ public class TaskDetailsView extends JPanel {
         return inputPanel;
     }
 
-    private JPanel createButtonsPanel(HaseGmbHManagement haseGmbHManagement, ActivityRecord activityRecord, Contract contract) {
+    private JPanel createButtonsPanel(ActivityRecord activityRecord, ArrayList<ActivityRecord> activityRecordBufferList, HaseGmbHManagement haseGmbHManagement) {
         JPanel buttonsPanel = new JPanel();
 
         JButton saveButton = new JButton("Save");
         saveButton.setPreferredSize(new Dimension(200, 30));
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createOrUpdateActivityRecordFromFormData(activityRecord, haseGmbHManagement, contract);
-            }
-        });
+        saveButton.addActionListener(e -> createOrUpdateActivityRecordFromFormData(activityRecord, activityRecordBufferList, haseGmbHManagement));
 
         buttonsPanel.add(saveButton);
 
         return buttonsPanel;
     }
 
-    private void addPaddingToMainWindow() {
-        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+    /*
+        private void addPaddingToMainWindow() {
+            Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
 
-        setBorder(padding);
-    }
-
-    private void createOrUpdateActivityRecordFromFormData(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, Contract contract) {
+            setBorder(padding);
+        }
+    */
+    private void createOrUpdateActivityRecordFromFormData(ActivityRecord activityRecord, ArrayList<ActivityRecord> activityRecordBufferList, HaseGmbHManagement haseGmbHManagement) {
         LocalDate date = DateUtils.asLocalDate(datePicker.getDate());
-        LocalTime startTime = DateUtils.asLocalTime((Date) endTimeInput.getValue());
-        LocalTime endTime = DateUtils.asLocalTime((Date) startTimeInput.getValue());
+        LocalTime startTime = DateUtils.asLocalTime((Date) startTimeInput.getValue());
+        LocalTime endTime = DateUtils.asLocalTime((Date) endTimeInput.getValue());
         Employee selectedEmployee = (Employee) employeeSelect.getSelectedItem();
         String description = descriptionInput.getText();
 
@@ -151,7 +146,7 @@ public class TaskDetailsView extends JPanel {
                     date, startTime, endTime, selectedEmployee, description
             );
 
-            haseGmbHManagement.addNewWorkingRecord(contract.getContractID(), activityRecord);
+            activityRecordBufferList.add(activityRecord);
         } else {
             activityRecord.setDate(date);
             activityRecord.setStartTime(startTime);
@@ -159,5 +154,8 @@ public class TaskDetailsView extends JPanel {
             activityRecord.setDescription(description);
             activityRecord.setEmployee(selectedEmployee);
         }
+
+        parentView.reloadTaskList(haseGmbHManagement);
+        this.dispose();
     }
 }

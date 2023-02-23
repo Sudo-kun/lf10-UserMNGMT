@@ -22,10 +22,10 @@ public class DateUtils {
     }
 
     public static LocalTime asLocalTime(Date date) {
-        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
+        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalTime().withSecond(0).withNano(0);
     }
 
     public static Date asDateTimeIgnoringDate(LocalTime localTime) {
-        return Date.from(LocalDate.now().atTime(localTime).atZone(ZoneId.systemDefault()).toInstant());
+        return Date.from(LocalDate.now().atTime(localTime).withSecond(0).withNano(0).atZone(ZoneId.systemDefault()).toInstant());
     }
 }

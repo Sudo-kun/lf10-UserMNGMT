@@ -22,26 +22,22 @@ public class MainFrame extends JFrame {
     LoginPanel loginPanel = new LoginPanel();
     ActivityDetailsView activityDetailsView;
 
-    TaskDetailsView taskDetailsView;
-
     HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
 
     public MainFrame() {
         setupDetailsView();
-        setupTestTaskView();
 
         setVisible(true);
         // setResizable(false);
-        setAlwaysOnTop(true);
+        setAlwaysOnTop(false);
         setLocationRelativeTo(null); // Zentriert das Fenster auf dem Bildschirm
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(300, 300);
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
-        //add(loginPanel);
-        //add(taskDetailsView);
-        //add(activityDetailsView);
+        add(loginPanel);
+        add(activityDetailsView);
 
         loginPanel.setLoginActionListener(e -> {
             // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
@@ -62,11 +58,7 @@ public class MainFrame extends JFrame {
     }
 
     private void setupDetailsView() {
-        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(21001101));
-    }
-
-    private void setupTestTaskView() {
-        taskDetailsView = new TaskDetailsView(haseGmbHManagement.getContract(21001101).getActivityRecordList().get(0), haseGmbHManagement, haseGmbHManagement.getContract(21001101));
+        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(21001101), haseGmbHManagement);
     }
 }
 
