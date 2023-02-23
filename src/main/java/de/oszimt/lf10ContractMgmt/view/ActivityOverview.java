@@ -70,7 +70,6 @@ public class ActivityOverview extends AbstractOverview {
     searchWindow.setLocationRelativeTo(null);
     searchWindow.setVisible(true);
 
-
     JPanel searchPanel = new JPanel(new GridLayout(6, 2, 10, 10));
 
     JLabel customerLabel = new JLabel("Customer");
@@ -292,7 +291,3 @@ public class ActivityOverview extends AbstractOverview {
     updateTable();
   }
 }
-
-
-
-

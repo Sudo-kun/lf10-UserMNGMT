@@ -64,6 +64,10 @@ public abstract class AbstractOverview extends JPanel {
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(rowSorter);
 
+        if (innerSearchButton.getActionListeners().length > 0) {
+            innerSearchButton.removeActionListener(innerSearchButton.getActionListeners()[0]);
+        }
+
         innerSearchButton.addActionListener(e -> {
             innerSearchButton.setEnabled(false);
 
