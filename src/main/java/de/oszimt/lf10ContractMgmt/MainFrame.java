@@ -2,6 +2,7 @@ package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
+import de.oszimt.lf10ContractMgmt.view.ActivityOverview;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 import de.oszimt.lf10ContractMgmt.view.TaskDetailsView;
 
@@ -27,8 +28,7 @@ public class MainFrame extends JFrame {
     HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
 
     public MainFrame() {
-        setupDetailsView();
-        setupTestTaskView();
+        //setupTestTaskView();
 
         setVisible(true);
         // setResizable(false);
@@ -39,9 +39,7 @@ public class MainFrame extends JFrame {
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
-        //add(loginPanel);
-        //add(taskDetailsView);
-        //add(activityDetailsView);
+        add(loginPanel);
 
         loginPanel.setLoginActionListener(e -> {
             // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
@@ -55,14 +53,45 @@ public class MainFrame extends JFrame {
 
             if (validData) {
                 loginPanel.setVisible(false);
-                // go to next view
+                setResizable(true);
+                setAlwaysOnTop(false);
+
+                showActivityOverview();
             }
         });
 
     }
 
-    private void setupDetailsView() {
-        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(21001101));
+    public void showActivityOverview() {
+       ActivityOverview activityOverview = new ActivityOverview(
+                haseGmbHManagement.getAllContracts());
+
+        activityOverview.setEditActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Edit button clicked on row: " + row);
+
+            activityOverview.setVisible(false);
+            setupDetailsView(activityOverview.getIdByRow(row));
+
+            System.out.println("ContractID: " + activityOverview.getIdByRow(row));
+
+            add(activityDetailsView);
+            activityDetailsView.setVisible(true);
+        });
+
+        activityOverview.setDeleteActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Delete button clicked on row: " + row);
+
+            haseGmbHManagement.deleteContract(activityOverview.getIdByRow(row));
+            activityOverview.removeRow(row);
+        });
+
+        add(activityOverview);
+    }
+
+    private void setupDetailsView(int ContractID) {
+        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID));
     }
 
     private void setupTestTaskView() {
