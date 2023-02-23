@@ -2,13 +2,11 @@ package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
-import de.oszimt.lf10ContractMgmt.mock_data.MockDataCreator;
 import de.oszimt.lf10ContractMgmt.view.ActivityOverview;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 import de.oszimt.lf10ContractMgmt.view.TaskDetailsView;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
 

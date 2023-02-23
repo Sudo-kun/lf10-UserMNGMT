@@ -68,4 +68,9 @@ public class SearchCriteria {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public String toString() {
+        return "Criteria [customer=" + customer + ", projectOwner=" + projectOwner + ", contractType="
+                + contractType + ", state=" + state + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+    }
 }
