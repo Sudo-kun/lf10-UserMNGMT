@@ -307,8 +307,8 @@ public class HaseGmbHManagement implements IntContractMgmt, IntCustomerMgmt, Int
 		addNewContract(aContract);
 
 		aContract = new Contract(LocalDate.of(2022, 2, 10),
-				new Address("Theodor-Storm-Straße", "23", "73529", "Berlin", "Deutschland"), getAllCustomers().get(0),
-				getAllEmployees().get(0), "Warung", "fertiggestsellt",
+				new Address("Theodor-Storm-Straße", "23", "73529", "Berlin", "Deutschland"), getAllCustomers().get(1),
+				getAllEmployees().get(1), "Warung", "fertiggestsellt",
 				"Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", arList02);
 		addNewContract(aContract);
 	}
