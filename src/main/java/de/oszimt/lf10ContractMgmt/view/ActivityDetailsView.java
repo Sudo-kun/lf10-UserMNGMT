@@ -68,6 +68,9 @@ public class ActivityDetailsView extends JPanel {
 
         JButton addNewTaskButton = new JButton("Add new task");
         mainCenterPanel.add(addNewTaskButton);
+        addNewTaskButton.addActionListener(e -> {
+            new TaskDetailsView(null, haseGmbHManagement, activityRecordBufferList, this);
+        });
 
         add(mainCenterPanel, BorderLayout.CENTER);
 
@@ -256,21 +259,7 @@ public class ActivityDetailsView extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     removeTask(activityRecord);
-                    taskListPanel.removeAll();
-                    createTaskListPanel(haseGmbHManagement);
-                    taskListPanel.repaint();
-                    taskListPanel.revalidate();
-                }
-            });
-
-            deleteTaskButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    removeTask(activityRecord);
-                    taskListPanel.removeAll();
-                    createTaskListPanel(haseGmbHManagement);
-                    taskListPanel.repaint();
-                    taskListPanel.revalidate();
+                    reloadTaskList(haseGmbHManagement);
                 }
             });
 
