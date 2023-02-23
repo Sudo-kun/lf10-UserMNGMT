@@ -8,6 +8,7 @@ import de.oszimt.lf10ContractMgmt.util.DateUtils;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -49,7 +50,7 @@ public class TaskDetailsView extends JFrame {
     }
 
     private void setupWindow() {
-        //addPaddingToMainWindow();
+        addPaddingToMainWindow();
         setSize(500, 500);
     }
 
@@ -127,13 +128,16 @@ public class TaskDetailsView extends JFrame {
         return buttonsPanel;
     }
 
-    /*
-        private void addPaddingToMainWindow() {
-            Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+    private void addPaddingToMainWindow() {
+        JPanel contentPanel = new JPanel();
 
-            setBorder(padding);
-        }
-    */
+        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+
+        contentPanel.setBorder(padding);
+
+        this.setContentPane(contentPanel);
+    }
+
     private void createOrUpdateActivityRecordFromFormData(ActivityRecord activityRecord, ArrayList<ActivityRecord> activityRecordBufferList, HaseGmbHManagement haseGmbHManagement) {
         LocalDate date = DateUtils.asLocalDate(datePicker.getDate());
         LocalTime startTime = DateUtils.asLocalTime((Date) startTimeInput.getValue());

@@ -275,7 +275,7 @@ public class ActivityDetailsView extends JPanel {
             });
 
             editTaskButton.addActionListener(e -> {
-                TaskDetailsView taskDetailsView = new TaskDetailsView(activityRecord, haseGmbHManagement, activityRecordBufferList, this);
+                new TaskDetailsView(activityRecord, haseGmbHManagement, activityRecordBufferList, this);
             });
 
             taskListPanel.add(timeText);
@@ -338,6 +338,7 @@ public class ActivityDetailsView extends JPanel {
     public void reloadTaskList(HaseGmbHManagement haseGmbHManagement) {
         taskListPanel.removeAll();
         createTaskListPanel(haseGmbHManagement);
+
         taskListPanel.repaint();
         taskListPanel.revalidate();
     }
