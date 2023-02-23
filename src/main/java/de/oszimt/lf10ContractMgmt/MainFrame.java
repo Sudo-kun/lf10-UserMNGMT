@@ -8,6 +8,7 @@ import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 import de.oszimt.lf10ContractMgmt.view.TaskDetailsView;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
 
@@ -29,8 +30,7 @@ public class MainFrame extends JFrame {
     HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
 
     public MainFrame() {
-        setupDetailsView();
-        setupTestTaskView();
+        //setupTestTaskView();
 
         setVisible(true);
         // setResizable(false);
@@ -41,9 +41,7 @@ public class MainFrame extends JFrame {
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
-        //add(loginPanel);
-        //add(taskDetailsView);
-        //add(activityDetailsView);
+        add(loginPanel);
 
         loginPanel.setLoginActionListener(e -> {
             // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
@@ -57,6 +55,8 @@ public class MainFrame extends JFrame {
 
             if (validData) {
                 loginPanel.setVisible(false);
+                setResizable(true);
+                setAlwaysOnTop(false);
 
                 showActivityOverview();
             }
@@ -65,20 +65,35 @@ public class MainFrame extends JFrame {
     }
 
     public void showActivityOverview() {
-        // go to next view
-        setSize(1920, 1080);
-        setVisible(true);
+       ActivityOverview activityOverview = new ActivityOverview(
+                haseGmbHManagement.getAllContracts());
 
-        MockDataCreator mockDataCreator = new MockDataCreator();
+        activityOverview.setEditActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Edit button clicked on row: " + row);
 
-        ActivityOverview activityOverview = new ActivityOverview(this);
+            activityOverview.setVisible(false);
+            setupDetailsView(activityOverview.getIdByRow(row));
 
-        activityOverview.drawActivityOverview(mockDataCreator.createContractMockData((int) (Math.random() * 20) + 1));
+            System.out.println("ContractID: " + activityOverview.getIdByRow(row));
 
+            add(activityDetailsView);
+            activityDetailsView.setVisible(true);
+        });
+
+        activityOverview.setDeleteActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Delete button clicked on row: " + row);
+
+            haseGmbHManagement.deleteContract(activityOverview.getIdByRow(row));
+            activityOverview.removeRow(row);
+        });
+
+        add(activityOverview);
     }
 
-    private void setupDetailsView() {
-        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(21001101));
+    private void setupDetailsView(int ContractID) {
+        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID));
     }
 
     private void setupTestTaskView() {
