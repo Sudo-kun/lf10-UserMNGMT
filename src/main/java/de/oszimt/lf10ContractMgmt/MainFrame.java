@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
         //add(loginPanel);
-        add(new JScrollPane(activityDetailsView));
+        //add(new JScrollPane(activityDetailsView));
 
         loginPanel.setLoginActionListener(e -> {
             // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
     }
 
     private void setupDetailsView() {
-      //  activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(21001101), haseGmbHManagement);
+        // activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(21001101), haseGmbHManagement);
         activityDetailsView = new ActivityDetailsView(null, haseGmbHManagement);
     }
 }
