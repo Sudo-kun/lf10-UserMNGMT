@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view;
+package de.oszimt.lf10ContractMgmt.view.activity.details;
 
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
@@ -24,9 +24,9 @@ public class TaskDetailsView extends JFrame {
     private JComboBox<Employee> employeeSelect;
     private JTextField descriptionInput;
 
-    private ActivityDetailsView parentView;
+    private TaskListPanel parentView;
 
-    public TaskDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, ArrayList<ActivityRecord> activityRecordBufferList, ActivityDetailsView parent) {
+    public TaskDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, ArrayList<ActivityRecord> activityRecordBufferList, TaskListPanel parent) {
         parentView = parent;
         setupWindow();
         setupActivityDetailsView(activityRecord, haseGmbHManagement, activityRecordBufferList);
