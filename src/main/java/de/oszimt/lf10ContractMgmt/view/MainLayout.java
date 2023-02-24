@@ -1,5 +1,7 @@
 package de.oszimt.lf10ContractMgmt.view;
 
+import de.oszimt.lf10ContractMgmt.util.FontUtil;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -89,7 +91,7 @@ public class MainLayout extends JPanel {
         headlinePanel.setSize(headlinePanelSize);
         headlinePanel.setPreferredSize(headlinePanelSize);
 
-        headlineLabel.setFont(new Font("Serif", Font.BOLD, 20));
+        headlineLabel.setFont(FontUtil.getBoldFont(25));
         headlinePanel.add(headlineLabel);
 
         contractOverview = new JButton("Aufträge");

@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view;
+package de.oszimt.lf10ContractMgmt.view.tableButton;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -17,23 +17,6 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
         this.valueColumn = valueColumn;
         this.editButton = new JButton("Edit");
         this.deleteButton = new JButton("Delete");
-        // add action listeners to the buttons
-/*        this.editButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int row = Integer.parseInt(e.getActionCommand());
-                System.out.println("Edit button clicked on row: " + row);
-                // here you can get the value of the valueColumn and perform the corresponding action
-                System.out.println("Value of column " + valueColumn + " is: " + table.getValueAt(row, valueColumn));
-            }
-        });*/
-        this.deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int row = Integer.parseInt(e.getActionCommand());
-                System.out.println("Delete button clicked on row: " + row);
-                // here you can get the value of the valueColumn and perform the corresponding action
-                System.out.println("Value of column " + valueColumn + " is: " + table.getValueAt(row, valueColumn));
-            }
-        });
     }
 
     @Override

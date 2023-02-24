@@ -1,6 +1,7 @@
 package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
+import de.oszimt.lf10ContractMgmt.view.EmployeeOverview;
 import de.oszimt.lf10ContractMgmt.view.*;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
@@ -69,8 +70,38 @@ public class MainFrame extends JFrame {
         add(mainLayout);
 
         mainLayout.setContractOverviewAction(e -> showActivityOverview());
+        mainLayout.setEmployeeOverviewAction(e -> showEmployeeOverview());
     }
 
+    public void showEmployeeOverview() {
+        EmployeeOverview employeesOverview = new EmployeeOverview(
+                haseGmbHManagement.getAllEmployees());
+
+        employeesOverview.setEditActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Edit button clicked on row: " + row);
+
+            employeesOverview.setVisible(false);
+            setupDetailsView(employeesOverview.getIdByRow(row));
+
+            System.out.println("EmployeeID: " + employeesOverview.getIdByRow(row));
+
+            mainLayout.setHeadline("Mitarbeiterdetails");
+            mainLayout.setBody(employeesOverview);
+            employeesOverview.setVisible(true);
+        });
+
+        employeesOverview.setDeleteActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Delete button clicked on row: " + row);
+
+            haseGmbHManagement.deleteEmployee(employeesOverview.getIdByRow(row));
+            employeesOverview.removeRow(row);
+        });
+
+        mainLayout.setHeadline("Mitarbeiterübersicht");
+        mainLayout.setBody(employeesOverview);
+    }
 
     public void showActivityOverview() {
         ActivityOverview activityOverview = new ActivityOverview(

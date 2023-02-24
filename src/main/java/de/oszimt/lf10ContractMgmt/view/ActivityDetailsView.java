@@ -3,6 +3,7 @@ package de.oszimt.lf10ContractMgmt.view;
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.model.Address;
 import de.oszimt.lf10ContractMgmt.model.Contract;
+import de.oszimt.lf10ContractMgmt.util.FontUtil;
 import de.oszimt.lf10ContractMgmt.model.Customer;
 import de.oszimt.lf10ContractMgmt.model.Employee;
 
@@ -39,7 +40,7 @@ public class ActivityDetailsView extends JPanel {
 
         JLabel titleForTaskList = new JLabel("Tasks");
 
-        titleForTaskList.setFont(new Font("Serif", Font.BOLD, 20));
+        titleForTaskList.setFont(FontUtil.getBoldFont());
         titleForTaskList.setHorizontalAlignment(SwingConstants.LEADING);
         mainCenterPanel.add(titleForTaskList);
 
