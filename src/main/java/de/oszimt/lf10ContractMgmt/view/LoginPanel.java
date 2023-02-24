@@ -14,6 +14,7 @@ public class LoginPanel extends JPanel {
     public static final String VIEW_TITLE = "Login";
 
     private JButton loginBtn;
+    private JButton forgotPasswordBtn;
     private JLabel errorLabel;
 
     private JTextField usernameField;
@@ -47,6 +48,7 @@ public class LoginPanel extends JPanel {
         panel.add(errorPanel);
 
         loginBtn = setupLoginButton();
+        forgotPasswordBtn = new JButton("Forgot password?");
         usernameField = new JTextField(10);
         passwordField = new JPasswordField(10);
 
@@ -66,6 +68,8 @@ public class LoginPanel extends JPanel {
         buttonRow.add(Box.createHorizontalGlue());
 
         btnPanel.add(buttonRow, BorderLayout.CENTER);
+        btnPanel.add(forgotPasswordBtn);
+        buttonRow.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         add(panel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.PAGE_END);
