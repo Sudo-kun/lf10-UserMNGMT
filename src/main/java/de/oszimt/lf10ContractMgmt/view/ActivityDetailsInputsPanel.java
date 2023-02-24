@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view.activity;
+package de.oszimt.lf10ContractMgmt.view;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.model.Contract;
