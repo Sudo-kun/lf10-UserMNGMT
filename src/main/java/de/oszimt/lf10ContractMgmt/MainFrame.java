@@ -3,7 +3,7 @@ package de.oszimt.lf10ContractMgmt;
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.view.*;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
-import de.oszimt.lf10ContractMgmt.view.activity.details.ActivityDetailsView;
+import de.oszimt.lf10ContractMgmt.view.activity.ActivityDetailsView;
 
 import javax.swing.*;
 
