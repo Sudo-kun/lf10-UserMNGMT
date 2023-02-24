@@ -137,13 +137,13 @@ public class MainLayout extends JPanel {
   public void setBody(JPanel body) {
     this.body = body;
 
+    this.body.setSize(this.bodyPanel.getWidth(), (int) (this.bodyPanel.getHeight() * 0.90));
+    this.body.setPreferredSize(new Dimension(this.bodyPanel.getWidth(), (int) (this.bodyPanel.getHeight() * 0.90)));
+
     bodyPanel.removeAll();
     bodyPanel.add(body);
     bodyPanel.revalidate();
     bodyPanel.repaint();
-
-    scrollPane.revalidate();
-    scrollPane.repaint();
 
     revalidate();
     repaint();
