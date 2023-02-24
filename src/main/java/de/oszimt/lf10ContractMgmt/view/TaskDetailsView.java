@@ -3,7 +3,6 @@ package de.oszimt.lf10ContractMgmt.view;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.model.ActivityRecord;
-import de.oszimt.lf10ContractMgmt.model.Contract;
 import de.oszimt.lf10ContractMgmt.model.Employee;
 import de.oszimt.lf10ContractMgmt.util.DateUtils;
 import de.oszimt.lf10ContractMgmt.util.FontUtil;
@@ -12,13 +11,13 @@ import org.jdesktop.swingx.JXDatePicker;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class TaskDetailsView extends JPanel {
+public class TaskDetailsView extends JFrame {
 
     private JXDatePicker datePicker;
     private JSpinner startTimeInput;
@@ -26,13 +25,16 @@ public class TaskDetailsView extends JPanel {
     private JComboBox<Employee> employeeSelect;
     private JTextField descriptionInput;
 
-    public TaskDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, Contract contract) {
+    private TaskListPanel parentView;
+
+    public TaskDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, ArrayList<ActivityRecord> activityRecordBufferList, TaskListPanel parent) {
+        parentView = parent;
         setupWindow();
-        setupActivityDetailsView(activityRecord, haseGmbHManagement);
+        setupActivityDetailsView(activityRecord, haseGmbHManagement, activityRecordBufferList);
         setVisible(true);
     }
 
-    private void setupActivityDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement) {
+    private void setupActivityDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, ArrayList<ActivityRecord> activityRecordBufferList) {
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Task Details");
@@ -44,17 +46,22 @@ public class TaskDetailsView extends JPanel {
         JPanel inputsPanel = createInputsPanel(activityRecord, haseGmbHManagement);
         add(inputsPanel);
 
-        JPanel buttonsPanel = createButtonsPanel();
+        JPanel buttonsPanel = createButtonsPanel(activityRecord, activityRecordBufferList, haseGmbHManagement);
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     private void setupWindow() {
         addPaddingToMainWindow();
-
         setSize(500, 500);
     }
 
     private JPanel createInputsPanel(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement) {
+        Date date = activityRecord == null ? DateUtils.asDate(LocalDate.now()) : DateUtils.asDate(activityRecord.getDate());
+        Date startTime = activityRecord == null ? DateUtils.asDate(LocalDateTime.now()) : DateUtils.asDateTimeIgnoringDate(activityRecord.getStartTime());
+        Date endTime = activityRecord == null ? DateUtils.asDate(LocalDateTime.now()) : DateUtils.asDateTimeIgnoringDate(activityRecord.getEndTime());
+        String description = activityRecord == null ? "" : activityRecord.getDescription();
+        Employee selectedEmployee = activityRecord == null ? null : activityRecord.getEmployee();
+
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(8, 2));
         inputPanel.setPreferredSize(new Dimension(700, 330));
@@ -63,17 +70,19 @@ public class TaskDetailsView extends JPanel {
 
         JLabel dateLabel = new JLabel("Date");
         datePicker = new JXDatePicker();
-        datePicker.setDate(DateUtils.asDate(activityRecord.getDate()));
+        datePicker.setDate(date);
 
         JLabel startTimeLabel = new JLabel("Start time");
         startTimeInput = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor startTimeEditor = new JSpinner.DateEditor(startTimeInput, "HH:mm");
         startTimeInput.setEditor(startTimeEditor);
+        startTimeInput.setValue(startTime);
 
         JLabel endTimeLabel = new JLabel("End time");
         endTimeInput = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor endTimeEditor = new JSpinner.DateEditor(endTimeInput, "HH:mm");
         endTimeInput.setEditor(endTimeEditor);
+        endTimeInput.setValue(endTime);
 
         JLabel employeeSelectLabel = new JLabel("Employee");
         employeeSelect = new JComboBox<>(haseGmbHManagement.getAllEmployees().toArray(new Employee[0]));
@@ -87,9 +96,12 @@ public class TaskDetailsView extends JPanel {
             }
         });
 
+        if (selectedEmployee != null) employeeSelect.setSelectedItem(selectedEmployee);
+
 
         JLabel descriptionLabel = new JLabel("Description");
-        descriptionInput = new JTextField(activityRecord.getDescription());
+        descriptionInput = new JTextField();
+        descriptionInput.setText(description);
 
         inputPanel.add(dateLabel);
         inputPanel.add(datePicker);
@@ -105,17 +117,12 @@ public class TaskDetailsView extends JPanel {
         return inputPanel;
     }
 
-    private JPanel createButtonsPanel() {
+    private JPanel createButtonsPanel(ActivityRecord activityRecord, ArrayList<ActivityRecord> activityRecordBufferList, HaseGmbHManagement haseGmbHManagement) {
         JPanel buttonsPanel = new JPanel();
 
         JButton saveButton = new JButton("Save");
         saveButton.setPreferredSize(new Dimension(200, 30));
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ActivityRecord activityRecord = createActivityRecordFromFormData();
-            }
-        });
+        saveButton.addActionListener(e -> createOrUpdateActivityRecordFromFormData(activityRecord, activityRecordBufferList, haseGmbHManagement));
 
         buttonsPanel.add(saveButton);
 
@@ -123,22 +130,37 @@ public class TaskDetailsView extends JPanel {
     }
 
     private void addPaddingToMainWindow() {
+        JPanel contentPanel = new JPanel();
+
         Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
 
-        setBorder(padding);
+        contentPanel.setBorder(padding);
+
+        this.setContentPane(contentPanel);
     }
 
-    private ActivityRecord createActivityRecordFromFormData() {
+    private void createOrUpdateActivityRecordFromFormData(ActivityRecord activityRecord, ArrayList<ActivityRecord> activityRecordBufferList, HaseGmbHManagement haseGmbHManagement) {
         LocalDate date = DateUtils.asLocalDate(datePicker.getDate());
-        LocalTime startTime = DateUtils.asLocalTime((Date) endTimeInput.getValue());
-        LocalTime endTime = DateUtils.asLocalTime((Date) startTimeInput.getValue());
+        LocalTime startTime = DateUtils.asLocalTime((Date) startTimeInput.getValue());
+        LocalTime endTime = DateUtils.asLocalTime((Date) endTimeInput.getValue());
         Employee selectedEmployee = (Employee) employeeSelect.getSelectedItem();
         String description = descriptionInput.getText();
 
-        ActivityRecord activityRecord = new ActivityRecord(
-                date, startTime, endTime, selectedEmployee, description
-        );
+        if (activityRecord == null) {
+            activityRecord = new ActivityRecord(
+                    date, startTime, endTime, selectedEmployee, description
+            );
 
-        return activityRecord;
+            activityRecordBufferList.add(activityRecord);
+        } else {
+            activityRecord.setDate(date);
+            activityRecord.setStartTime(startTime);
+            activityRecord.setEndTime(endTime);
+            activityRecord.setDescription(description);
+            activityRecord.setEmployee(selectedEmployee);
+        }
+
+        parentView.reloadTaskList(haseGmbHManagement);
+        this.dispose();
     }
 }

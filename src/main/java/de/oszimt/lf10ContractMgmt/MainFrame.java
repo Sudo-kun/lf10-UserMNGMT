@@ -3,8 +3,8 @@ package de.oszimt.lf10ContractMgmt;
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.view.EmployeeOverview;
 import de.oszimt.lf10ContractMgmt.view.*;
-import de.oszimt.lf10ContractMgmt.view.CustomerView;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
+import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
 
 import javax.swing.*;
 
@@ -23,8 +23,6 @@ public class MainFrame extends JFrame {
     LoginPanel loginPanel = new LoginPanel();
     ActivityDetailsView activityDetailsView;
 
-    TaskDetailsView taskDetailsView;
-
     HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
 
     MainLayout mainLayout;
@@ -32,7 +30,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         setVisible(true);
         // setResizable(false);
-        setAlwaysOnTop(true);
+        setAlwaysOnTop(false);
         setLocationRelativeTo(null); // Zentriert das Fenster auf dem Bildschirm
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(300, 300);
@@ -167,11 +165,7 @@ public class MainFrame extends JFrame {
     }
 
     private void setupDetailsView(int ContractID) {
-        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID));
-    }
-
-    private void setupTestTaskView() {
-        taskDetailsView = new TaskDetailsView(haseGmbHManagement.getContract(21001101).getActivityRecordList().get(0), haseGmbHManagement, null);
+        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID), haseGmbHManagement);
     }
 }
 
