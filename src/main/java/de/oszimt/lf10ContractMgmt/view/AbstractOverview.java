@@ -23,6 +23,7 @@ public abstract class AbstractOverview extends JPanel {
     protected final JButton addButton = new JButton("Add");
 
     protected static JButton innerSearchButton = new JButton("Search");
+    protected static JButton resetSearchButton = new JButton("Zurücksetzen");
 
     protected int actionButtonsColumn;
     protected int idColumn;
@@ -45,6 +46,12 @@ public abstract class AbstractOverview extends JPanel {
         innerSearchButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         innerSearchButton.setAlignmentY(Component.TOP_ALIGNMENT);
 
+        resetSearchButton.setPreferredSize(new Dimension(100, 30));
+        resetSearchButton.setMaximumSize(new Dimension(100, 30));
+        resetSearchButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        resetSearchButton.setAlignmentY(Component.TOP_ALIGNMENT);
+        resetSearchButton.setVisible(false);
+
         addButton.setPreferredSize(new Dimension(100, 30));
         addButton.setMaximumSize(new Dimension(100, 30));
         addButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -55,6 +62,8 @@ public abstract class AbstractOverview extends JPanel {
         searchPanel.setSize((int) (screenSize.getWidth() * 0.95), 40);
         searchPanel.setPreferredSize(new Dimension((int) (screenSize.getWidth() * 0.95), 40));
         searchPanel.add(innerSearchButton);
+        searchPanel.add(Box.createHorizontalStrut(10));
+        searchPanel.add(resetSearchButton);
         searchPanel.add(Box.createHorizontalGlue());
         searchPanel.add(addButton);
         searchPanel.setAlignmentX(Component.LEFT_ALIGNMENT);

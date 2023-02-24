@@ -73,6 +73,37 @@ public class MainFrame extends JFrame {
 
         mainLayout.setContractOverviewAction(e -> showActivityOverview());
         mainLayout.setEmployeeOverviewAction(e -> showEmployeeOverview());
+        mainLayout.setCustomerOverviewAction(e -> showCustomerOverview());
+    }
+
+    public void showCustomerOverview() {
+        CustomerOverview customerOverview = new CustomerOverview(
+                haseGmbHManagement.getAllCustomers());
+
+        customerOverview.setEditActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Edit button clicked on row: " + row);
+
+            customerOverview.setVisible(false);
+            setupDetailsView(customerOverview.getIdByRow(row));
+
+            System.out.println("CustomerID: " + customerOverview.getIdByRow(row));
+
+            mainLayout.setHeadline("Kundendetails");
+            mainLayout.setBody(customerOverview);
+            customerOverview.setVisible(true);
+        });
+
+        customerOverview.setDeleteActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Delete button clicked on row: " + row);
+
+            haseGmbHManagement.deleteCustomer(customerOverview.getIdByRow(row));
+            customerOverview.removeRow(row);
+        });
+
+        mainLayout.setHeadline("Kundenübersicht");
+        mainLayout.setBody(customerOverview);
     }
 
     public void showEmployeeOverview() {

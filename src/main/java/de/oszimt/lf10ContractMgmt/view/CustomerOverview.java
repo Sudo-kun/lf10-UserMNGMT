@@ -1,20 +1,24 @@
 package de.oszimt.lf10ContractMgmt.view;
 
+import de.oszimt.lf10ContractMgmt.model.Customer;
 import de.oszimt.lf10ContractMgmt.model.Employee;
 import de.oszimt.lf10ContractMgmt.util.FontUtil;
+import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class EmployeeOverview extends AbstractOverview {
+public class CustomerOverview extends AbstractOverview {
   private static final JButton outerSearchButton = new JButton("Search");
-  ArrayList<Employee> employees;
-  private ArrayList<Employee> filteredEmployees;
 
-  public EmployeeOverview(ArrayList<Employee> employees) {
+  private ArrayList<Customer> customers;
+  private ArrayList<Customer> filteredCustomers;
+
+  public CustomerOverview(ArrayList<Customer> customers) {
     this.actionButtonsColumn = 5;
     this.idColumn = 0;
 
@@ -25,20 +29,20 @@ public class EmployeeOverview extends AbstractOverview {
       }
     });
 
-    setEmployees(employees);
+    setCustomers(customers);
     drawOverview();
     setVisible(true);
   }
 
   private void resetSearch() {
-    setEmployees(employees);
+    setCustomers(customers);
     updateTable();
     resetSearchButton.setVisible(false);
   }
 
-  private void setEmployees(ArrayList<Employee> employees) {
-    this.employees = employees;
-    this.filteredEmployees = employees;
+  private void setCustomers(ArrayList<Customer> customers) {
+    this.customers = customers;
+    this.filteredCustomers = customers;
   }
 
   @Override
@@ -46,32 +50,34 @@ public class EmployeeOverview extends AbstractOverview {
     model = new DefaultTableModel();
     model.addColumn("firstname");
     model.addColumn("lastname");
-    model.addColumn("address");
+    model.addColumn("birthday");
     model.addColumn("email");
-    model.addColumn("telephone");
-    model.addColumn("Actions");
+    model.addColumn("address");
+    model.addColumn("");
 
-    for (Employee employee : filteredEmployees) {
+    for (Customer customer : filteredCustomers) {
       model.addRow(
         new Object[]{
-          employee.getFirstname(),
-          employee.getLastname(),
-          employee.getAddress().toString(),
-          employee.getEmail(),
-          employee.getTelephone(),
+          customer.getFirstname(),
+          customer.getLastname(),
+          customer.getBirthday(),
+          customer.getEmail(),
+          customer.getAddress().toString(),
           "Actions"
         }
       );
     }
 
     return model;
+
   }
 
   @Override
   public int getIdByRow(int row) {
-    return filteredEmployees.get(row).getEmployeeID();
+    return filteredCustomers.get(row).getCustomerID();
   }
 
+  @Override
   protected void createSearchWindow() {
     JFrame searchWindow = new JFrame("Search");
     searchWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -97,9 +103,11 @@ public class EmployeeOverview extends AbstractOverview {
     JTextField emailField = new JTextField("Email");
     emailField.setForeground(Color.GRAY);
 
-    JLabel telefonLabel = new JLabel("Telefon");
-    JTextField telefonField = new JTextField("Telefon");
-    telefonField.setForeground(Color.GRAY);
+    JLabel startDateLabel = new JLabel("Start Datum");
+    JXDatePicker startDateField = new JXDatePicker(new Date());
+
+    JLabel endDateLabel = new JLabel("End Datum");
+    JXDatePicker endDateField = new JXDatePicker(new Date());
 
     firstnameField.addFocusListener(new FocusListener() {
       @Override
@@ -179,8 +187,10 @@ public class EmployeeOverview extends AbstractOverview {
     searchPanel.add(addressField);
     searchPanel.add(emailLabel);
     searchPanel.add(emailField);
-    searchPanel.add(telefonLabel);
-    searchPanel.add(telefonField);
+    searchPanel.add(startDateLabel);
+    searchPanel.add(startDateField);
+    searchPanel.add(endDateLabel);
+    searchPanel.add(endDateField);
 
     // add a new panel that combines the search fields and the search button
     // the search button should be aligned to the right with a margin of 10px
@@ -216,10 +226,10 @@ public class EmployeeOverview extends AbstractOverview {
       String lastname = lastnameField.getText();
       String address = addressField.getText();
       String email = emailField.getText();
-      String telefon = telefonField.getText();
-
+      Date startDate = startDateField.getDate();
+      Date endDate = endDateField.getDate();
       // create a list with the search criteria
-      filterList(new EmployeeSearchCriteria(firstname, lastname, address, email, telefon));
+      filterList(new CustomerSearchCriteria(firstname, lastname, address, email, startDate, endDate));
 
       innerSearchButton.setEnabled(true);
       searchWindow.dispose();
@@ -229,14 +239,14 @@ public class EmployeeOverview extends AbstractOverview {
   private void updateTable() {
     model.setRowCount(0);
 
-    for (Employee employee : filteredEmployees) {
+    for (Customer customer : filteredCustomers) {
       model.addRow(
         new Object[]{
-          employee.getFirstname(),
-          employee.getLastname(),
-          employee.getAddress().toString(),
-          employee.getEmail(),
-          employee.getTelephone(),
+          customer.getFirstname(),
+          customer.getLastname(),
+          customer.getBirthday(),
+          customer.getEmail(),
+          customer.getAddress().toString(),
           "Actions"
         }
       );
@@ -258,28 +268,29 @@ public class EmployeeOverview extends AbstractOverview {
     return headlinePanel;
   }
 
-  private void filterList(EmployeeSearchCriteria searchCriteria) {
-    filteredEmployees = new ArrayList<>();
+  private void filterList(CustomerSearchCriteria searchCriteria) {
+    filteredCustomers = new ArrayList<>();
 
-    for (Employee employee : employees) {
-      if (employee.getFirstname().contains(searchCriteria.getFirstname())) {
-        filteredEmployees.add(employee);
-      } else if (employee.getLastname().contains(searchCriteria.getLastname())) {
-        filteredEmployees.add(employee);
-      } else if (employee.getAddress().toString().contains(searchCriteria.getAddress())) {
-        filteredEmployees.add(employee);
-      } else if (employee.getEmail().contains(searchCriteria.getEmail())) {
-        filteredEmployees.add(employee);
-      } else if (employee.getTelephone().contains(searchCriteria.getTelefon())) {
-        filteredEmployees.add(employee);
+    for (Customer customer : customers) {
+      if (customer.getFirstname().contains(searchCriteria.getFirstname())) {
+        filteredCustomers.add(customer);
+      } else if (customer.getLastname().contains(searchCriteria.getLastname())) {
+        filteredCustomers.add(customer);
+      } else if (customer.getAddress().toString().contains(searchCriteria.getAddress())) {
+        filteredCustomers.add(customer);
+      } else if (customer.getEmail().contains(searchCriteria.getEmail())) {
+        filteredCustomers.add(customer);
+      } else if (customer.getBirthday().isBefore(searchCriteria.getEndDate())
+        && customer.getBirthday().isAfter(searchCriteria.getStartDate())) {
+        filteredCustomers.add(customer);
       }
     }
 
-    if (filteredEmployees.isEmpty()) {
+    if (filteredCustomers.isEmpty()) {
       JOptionPane.showMessageDialog(null, "No contracts found!");
     }
 
-    if (filteredEmployees.size() != employees.size()) {
+    if (filteredCustomers.size() != customers.size()) {
       resetSearchButton.setVisible(true);
     }
 
