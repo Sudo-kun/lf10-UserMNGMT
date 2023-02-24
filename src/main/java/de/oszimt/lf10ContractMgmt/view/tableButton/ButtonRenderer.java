@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view;
+package de.oszimt.lf10ContractMgmt.view.tableButton;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

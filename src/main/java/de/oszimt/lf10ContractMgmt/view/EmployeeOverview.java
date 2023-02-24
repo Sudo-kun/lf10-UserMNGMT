@@ -1,17 +1,16 @@
-package de.oszimt.lf10ContractMgmt.model;
+package de.oszimt.lf10ContractMgmt.view;
 
-import de.oszimt.lf10ContractMgmt.view.AbstractOverview;
-import de.oszimt.lf10ContractMgmt.view.SearchCriteria;
-import org.jdesktop.swingx.JXDatePicker;
+import de.oszimt.lf10ContractMgmt.model.Employee;
+import de.oszimt.lf10ContractMgmt.util.FontUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.text.SimpleDateFormat;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class EmployeeOverview extends AbstractOverview {
   private static final JButton outerSearchButton = new JButton("Search");
@@ -198,6 +197,13 @@ public class EmployeeOverview extends AbstractOverview {
     // draw fields
     searchWindow.add(searchBoxPanel);
 
+    searchWindow.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        innerSearchButton.setEnabled(true);
+      }
+    });
+
     outerSearchButton.addActionListener(e -> {
       String firstname = firstnameField.getText();
       String lastname = lastnameField.getText();
@@ -237,7 +243,7 @@ public class EmployeeOverview extends AbstractOverview {
 
     JLabel headLine = new JLabel(headlineText);
     headLine.setAlignmentY(Component.TOP_ALIGNMENT);
-    headLine.setFont(new Font("Serif", Font.BOLD, 25));
+    headLine.setFont(FontUtil.getBoldFont(25));
 
     headlinePanel.add(Box.createHorizontalGlue());
     headlinePanel.add(headLine);

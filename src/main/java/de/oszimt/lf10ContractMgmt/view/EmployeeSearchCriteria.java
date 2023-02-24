@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.model;
+package de.oszimt.lf10ContractMgmt.view;
 
 import de.oszimt.lf10ContractMgmt.view.SearchCriteria;
 

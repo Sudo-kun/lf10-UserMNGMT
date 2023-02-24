@@ -1,6 +1,7 @@
 package de.oszimt.lf10ContractMgmt.view;
 
-import de.oszimt.lf10ContractMgmt.model.Contract;
+import de.oszimt.lf10ContractMgmt.view.tableButton.ButtonEditor;
+import de.oszimt.lf10ContractMgmt.view.tableButton.ButtonRenderer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,7 +11,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
 
 public abstract class AbstractOverview extends JPanel {
 
@@ -24,8 +24,8 @@ public abstract class AbstractOverview extends JPanel {
 
     protected static JButton innerSearchButton = new JButton("Search");
 
-    protected int actionButtonsColumn = 5;
-    protected int idColumn = 0;
+    protected int actionButtonsColumn;
+    protected int idColumn;
 
 
     protected JPanel createTable() {

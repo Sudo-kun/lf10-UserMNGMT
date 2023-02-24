@@ -1,7 +1,7 @@
 package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
-import de.oszimt.lf10ContractMgmt.model.EmployeeOverview;
+import de.oszimt.lf10ContractMgmt.view.EmployeeOverview;
 import de.oszimt.lf10ContractMgmt.view.*;
 import de.oszimt.lf10ContractMgmt.view.CustomerView;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;

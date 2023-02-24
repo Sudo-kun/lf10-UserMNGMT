@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import de.oszimt.lf10ContractMgmt.util.FontUtil;
 import org.jdesktop.swingx.*;
 
 import java.awt.*;
@@ -25,7 +26,7 @@ public class ActivityOverview extends AbstractOverview {
   ArrayList<Contract> filteredContracts;
 
   public ActivityOverview(ArrayList<Contract> contracts) {
-    this.actionButtonsColumn = 5;
+    this.actionButtonsColumn = 4;
     this.idColumn = 0;
 
     setContracts(contracts);
@@ -40,17 +41,15 @@ public class ActivityOverview extends AbstractOverview {
 
   protected DefaultTableModel createModel() {
     model = new DefaultTableModel();
-    model.addColumn("Id");
-    model.addColumn("Customer");
-    model.addColumn("Employee");
+    model.addColumn("Kunde");
+    model.addColumn("Mitarbeiter");
     model.addColumn("Type");
-    model.addColumn("State");
-    model.addColumn("Actions");
+    model.addColumn("Status");
+    model.addColumn("");
 
     for (Contract contract : filteredContracts) {
       model.addRow(
         new Object[]{
-          contract.getContractID(),
           contract.getCustomer().getLastname(),
           contract.getProjectOwner().getLastname(),
           contract.getContractType(),
@@ -72,7 +71,7 @@ public class ActivityOverview extends AbstractOverview {
 
     JPanel searchPanel = new JPanel(new GridLayout(6, 2, 10, 10));
 
-    JLabel customerLabel = new JLabel("Customer");
+    JLabel customerLabel = new JLabel("Kunde");
     JTextField customerField = new JTextField("Customer");
     customerField.setForeground(Color.GRAY);
 
@@ -84,7 +83,7 @@ public class ActivityOverview extends AbstractOverview {
     JTextField contractTypeField = new JTextField("Contract Type");
     contractTypeField.setForeground(Color.GRAY);
 
-    JLabel stateLabel = new JLabel("State");
+    JLabel stateLabel = new JLabel("Status");
     JTextField stateField = new JTextField("State");
     stateField.setForeground(Color.GRAY);
 
@@ -200,8 +199,14 @@ public class ActivityOverview extends AbstractOverview {
 
     searchWindow.setPreferredSize(searchBoxPanel.getSize());
 
-    // draw fields
     searchWindow.add(searchBoxPanel);
+
+    searchWindow.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        innerSearchButton.setEnabled(true);
+      }
+    });
 
     outerSearchButton.addActionListener(e -> {
       String customer = customerField.getText();
@@ -248,7 +253,7 @@ public class ActivityOverview extends AbstractOverview {
 
     JLabel headLine = new JLabel(headlineText);
     headLine.setAlignmentY(Component.TOP_ALIGNMENT);
-    headLine.setFont(new Font("Serif", Font.BOLD, 25));
+    headLine.setFont(FontUtil.getBoldFont(25));
 
     headlinePanel.add(Box.createHorizontalGlue());
     headlinePanel.add(headLine);
