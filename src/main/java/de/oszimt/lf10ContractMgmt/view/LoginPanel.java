@@ -69,6 +69,8 @@ public class LoginPanel extends JPanel {
 
         add(panel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.PAGE_END);
+
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
     private JButton setupLoginButton() {
