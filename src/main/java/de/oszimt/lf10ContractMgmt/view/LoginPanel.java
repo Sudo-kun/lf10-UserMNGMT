@@ -37,7 +37,7 @@ public class LoginPanel extends JPanel {
 
         var errorPanel = new JPanel(new BorderLayout());
 
-        errorLabel = new JLabel("<html><p style='color: red; margin: 0;'>Anmeldedaten sind falsch</p></html>");
+        errorLabel = new JLabel("<html><p style='color: red; margin: 0;'>Invalid username or password!</p></html>");
 
         errorLabel.setFont(FontUtil.getDefaultFont());
         errorLabel.setVisible(false);
