@@ -1,10 +1,7 @@
 package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
-import de.oszimt.lf10ContractMgmt.view.EmployeeOverview;
 import de.oszimt.lf10ContractMgmt.view.*;
-import de.oszimt.lf10ContractMgmt.view.LoginPanel;
-import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
 
 import javax.swing.*;
 
@@ -29,11 +26,11 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         setVisible(true);
-        // setResizable(false);
+        setResizable(false);
         setAlwaysOnTop(false);
         setLocationRelativeTo(null); // Zentriert das Fenster auf dem Bildschirm
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(300, 300);
+        setSize(300, 400);
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
