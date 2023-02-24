@@ -14,6 +14,7 @@ public class LoginPanel extends JPanel {
     public static final String VIEW_TITLE = "Login";
 
     private JButton loginBtn;
+    private JButton forgotPasswordBtn;
     private JLabel errorLabel;
 
     private JTextField usernameField;
@@ -37,7 +38,7 @@ public class LoginPanel extends JPanel {
 
         var errorPanel = new JPanel(new BorderLayout());
 
-        errorLabel = new JLabel("<html><p style='color: red; margin: 0;'>Anmeldedaten sind falsch</p></html>");
+        errorLabel = new JLabel("<html><p style='color: red; margin: 0;'>Invalid username or password!</p></html>");
 
         errorLabel.setFont(FontUtil.getDefaultFont());
         errorLabel.setVisible(false);
@@ -47,11 +48,12 @@ public class LoginPanel extends JPanel {
         panel.add(errorPanel);
 
         loginBtn = setupLoginButton();
+        forgotPasswordBtn = new JButton("Forgot password?");
         usernameField = new JTextField(10);
         passwordField = new JPasswordField(10);
 
-        var usernamePanel = getTextField("Benutzername:", usernameField);
-        var passwordPanel = getTextField("Passwort:", passwordField);
+        var usernamePanel = getTextField("Username:", usernameField);
+        var passwordPanel = getTextField("Password:", passwordField);
 
         panel.add(usernamePanel);
         panel.add(passwordPanel);
@@ -66,9 +68,13 @@ public class LoginPanel extends JPanel {
         buttonRow.add(Box.createHorizontalGlue());
 
         btnPanel.add(buttonRow, BorderLayout.CENTER);
+        btnPanel.add(forgotPasswordBtn);
+        buttonRow.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         add(panel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.PAGE_END);
+
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
     private JButton setupLoginButton() {
