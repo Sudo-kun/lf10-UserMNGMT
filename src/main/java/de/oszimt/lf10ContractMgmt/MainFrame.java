@@ -1,5 +1,7 @@
 package de.oszimt.lf10ContractMgmt;
 
+import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
+import de.oszimt.lf10ContractMgmt.view.*;
 import de.oszimt.lf10ContractMgmt.view.CustomerPanel;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 
@@ -18,21 +20,25 @@ public class MainFrame extends JFrame {
     public static final String LOGIN_PASSWORD = "password";
 
     LoginPanel loginPanel = new LoginPanel();
-    CustomerPanel customerPanel = new CustomerPanel();
+    ActivityDetailsView activityDetailsView;
+
+    TaskDetailsView taskDetailsView;
+
+    HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
+
+    MainLayout mainLayout;
 
     public MainFrame() {
         setVisible(true);
-        setResizable(false);
+        // setResizable(false);
         setAlwaysOnTop(true);
         setLocationRelativeTo(null); // Zentriert das Fenster auf dem Bildschirm
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //setSize(300, 300);
-        setSize(960, 540);
+        setSize(300, 300);
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
         add(loginPanel);
-        add(customerPanel);
 
         loginPanel.setLoginActionListener(e -> {
             // Hier können Sie den Code zum Überprüfen der Anmeldedaten einfügen
@@ -46,10 +52,65 @@ public class MainFrame extends JFrame {
 
             if (validData) {
                 loginPanel.setVisible(false);
-                // go to next view
-                customerPanel.setVisible(true);
+                setResizable(true);
+                setAlwaysOnTop(false);
+
+
+                showMainLayout();
+                setSize(1920, 1080);
+                showActivityOverview();
             }
         });
+
+    }
+
+    public void showMainLayout () {
+        setSize(1920, 1080);
+        mainLayout = new MainLayout();
+        mainLayout.setHeadline("Test");
+        add(mainLayout);
+
+        mainLayout.setContractOverviewAction(e -> showActivityOverview());
+    }
+
+
+    public void showActivityOverview() {
+        ActivityOverview activityOverview = new ActivityOverview(
+                haseGmbHManagement.getAllContracts());
+
+        activityOverview.setEditActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Edit button clicked on row: " + row);
+
+            activityOverview.setVisible(false);
+            setupDetailsView(activityOverview.getIdByRow(row));
+
+            System.out.println("ContractID: " + activityOverview.getIdByRow(row));
+
+            mainLayout.setHeadline("Aktivitätsdetails");
+            mainLayout.setBody(activityDetailsView);
+            activityDetailsView.setVisible(true);
+        });
+
+        activityOverview.setDeleteActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+            System.out.println("Delete button clicked on row: " + row);
+
+            haseGmbHManagement.deleteContract(activityOverview.getIdByRow(row));
+            activityOverview.removeRow(row);
+        });
+
+        mainLayout.setHeadline("Aktivitätenübersicht");
+        mainLayout.setBody(activityOverview);
+    }
+
+    private void setupDetailsView(int ContractID) {
+        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID));
+    }
+
+    private void setupTestTaskView() {
+        taskDetailsView = new TaskDetailsView(haseGmbHManagement.getContract(21001101).getActivityRecordList().get(0), haseGmbHManagement, null);
     }
 }
+
 

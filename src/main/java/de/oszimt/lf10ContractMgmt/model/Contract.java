@@ -5,32 +5,41 @@ import java.util.ArrayList;
 
 public class Contract {
 	private int contractID;
-	private LocalDate CreationDate;
-	private Address ProjectLocations;
+	private LocalDate creationDate;
+	private Address projectLocations;
 	private Customer customer;
 	private Employee projectOwner;
-	private String contractType;
-	private String state;
+	private String contractType;   
+	private String state;          
 	private String description;
 	private ArrayList<ActivityRecord> activityRecordList;
-
-	public Contract(int contractID, LocalDate creationDate, Address projectLocations, Customer customer,
+	
+	private static int nextID = 21001100; // this is only for internal usage.
+	
+	public Contract(LocalDate creationDate, Address projectLocations, Customer customer,
 			Employee projectOwner, String contractType, String state, String description,
 			ArrayList<ActivityRecord> activityRecordList) {
 		super();
-		this.contractID = contractID;
-		CreationDate = creationDate;
-		ProjectLocations = projectLocations;
+		this.contractID = generateNewID();
+		this.creationDate = creationDate;
+		this.projectLocations = projectLocations;
 		this.customer = customer;
 		this.projectOwner = projectOwner;
 		this.contractType = contractType;
 		this.state = state;
 		this.description = description;
-		this.activityRecordList = activityRecordList;
+		if (activityRecordList != null)
+			this.activityRecordList = activityRecordList;
+		else
+			this.activityRecordList = new ArrayList<ActivityRecord>();
 	}
 
+	private int generateNewID() {
+		return ++nextID;
+	}
+	
 	public int getContractID() {
-		return contractID;
+		return this.contractID;
 	}
 
 	public void setContractID(int contractID) {
@@ -38,19 +47,19 @@ public class Contract {
 	}
 
 	public LocalDate getCreationDate() {
-		return CreationDate;
+		return creationDate;
 	}
 
 	public void setCreationDate(LocalDate creationDate) {
-		CreationDate = creationDate;
+		creationDate = creationDate;
 	}
 
 	public Address getProjectLocations() {
-		return ProjectLocations;
+		return projectLocations;
 	}
 
 	public void setProjectLocations(Address projectLocations) {
-		ProjectLocations = projectLocations;
+		projectLocations = projectLocations;
 	}
 
 	public Customer getCustomer() {
@@ -101,4 +110,21 @@ public class Contract {
 		this.activityRecordList = activityRecordList;
 	}
 
+	@Override
+	public String toString() {
+		return "Contract [contractID=" + contractID + ", creationDate=" + creationDate + ", projectLocations="
+				+ projectLocations + ", customer=" + customer.getLastname() + ", projectOwner=" + projectOwner.getLastname() + ", contractType="
+				+ contractType + ", state=" + state + ", description=" + description + ", activityRecordList="
+				+ activityRecordList + "]";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if ( o instanceof Contract) {
+			Contract tempContract = (Contract) o;
+			if (this.contractID == tempContract.getContractID())
+				return true;
+		}
+		return false;
+	}
 }

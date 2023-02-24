@@ -1,64 +1,67 @@
 package de.oszimt.lf10ContractMgmt.model;
 
 public class Address {
-	private String street;
-	private String house;
-	private String postalCode;
-	private String city;
-	private String country;
+    private String street;
+    private String house;
+    private String postalCode;
+    private String city;
+    private String country;
 
-	public Address(String street, String house,
-			       String postalCode, String city, String country) {
-		super();
-		this.street = street;
-		this.house = house;
-		this.postalCode = postalCode;
-		this.city = city;
-		this.country = country;
-	}
+    public Address(String street, String house,
+                   String postalCode, String city, String country) {
+        super();
+        this.street = street;
+        this.house = house;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.country = country;
+    }
 
-	public String getStreet() {
-		return street;
-	}
+    public String getStreet() {
+        return street;
+    }
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-	public String getHouse() {
-		return house;
-	}
+    public String getHouse() {
+        return house;
+    }
 
-	public void setHouse(String house) {
-		this.house = house;
-	}
+    public void setHouse(String house) {
+        this.house = house;
+    }
 
-	public String getPostalCode() {
-		return postalCode;
-	}
+    public String getPostalCode() {
+        return postalCode;
+    }
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-
-
+    @Override
+    public String toString() {
+        return "Address [street=" + street + ", house=" + house + ", postalCode=" + postalCode + ", city=" + city
+                + ", country=" + country + "]";
+    }
 
 
 }

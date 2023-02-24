@@ -1,50 +1,71 @@
 package de.oszimt.lf10ContractMgmt.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class ActivityRecord {
-	private LocalDateTime  startTime;
-	private LocalDateTime  endTime;
-	private int numberOfEmployees;
-	private String description;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private Employee employee;
+    private String description;
 
-	public ActivityRecord(LocalDateTime startTime, LocalDateTime endTime, int numberOfEmployees, String description) {
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.numberOfEmployees = numberOfEmployees;
-		this.description = description;
-	}
+    public ActivityRecord(LocalDate date, LocalTime startTime,
+                          LocalTime endTime, Employee employee, String description) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.employee = employee;
+        this.description = description;
+    }
 
-	public LocalDateTime getStartTime() {
-		return startTime;
-	}
+    public LocalDate getDate() {
+        return date;
+    }
 
-	public void setStartTime(LocalDateTime startTime) {
-		this.startTime = startTime;
-	}
 
-	public LocalDateTime getEndTime() {
-		return endTime;
-	}
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
-	public void setEndTime(LocalDateTime endTime) {
-		this.endTime = endTime;
-	}
 
-	public int getNumberOfEmployees() {
-		return numberOfEmployees;
-	}
+    public LocalTime getStartTime() {
+        return startTime;
+    }
 
-	public void setNumberOfEmployees(int numberOfEmployees) {
-		this.numberOfEmployees = numberOfEmployees;
-	}
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public LocalTime getEndTime() {
+        return endTime;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "ActivityRecord [date=" + date + ", startTime=" + startTime + ", endTime=" + endTime + ", employee="
+                + employee + ", description=" + description + "]";
+    }
+
 
 }
