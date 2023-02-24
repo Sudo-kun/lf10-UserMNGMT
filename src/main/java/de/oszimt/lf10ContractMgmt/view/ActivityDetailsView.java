@@ -82,7 +82,7 @@ public class ActivityDetailsView extends JPanel {
         Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         this.setBorder(padding);
 
-        setSize(500, 500);
+        setSize(1920, 1080);
     }
 
     private JPanel createInputsPanel(Contract contract, HaseGmbHManagement haseGmbHManagement) {
