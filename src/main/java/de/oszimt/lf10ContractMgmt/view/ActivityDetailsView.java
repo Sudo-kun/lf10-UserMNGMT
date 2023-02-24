@@ -2,6 +2,7 @@ package de.oszimt.lf10ContractMgmt.view;
 
 import de.oszimt.lf10ContractMgmt.model.ActivityRecord;
 import de.oszimt.lf10ContractMgmt.model.Contract;
+import de.oszimt.lf10ContractMgmt.util.FontUtil;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -26,7 +27,7 @@ public class ActivityDetailsView extends JPanel {
 
         JLabel titleForTaskList = new JLabel("Tasks");
 
-        titleForTaskList.setFont(new Font("Serif", Font.BOLD, 20));
+        titleForTaskList.setFont(FontUtil.getBoldFont());
         titleForTaskList.setHorizontalAlignment(SwingConstants.LEADING);
         mainCenterPanel.add(titleForTaskList);
 

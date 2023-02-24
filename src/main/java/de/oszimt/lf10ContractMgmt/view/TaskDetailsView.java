@@ -6,6 +6,7 @@ import de.oszimt.lf10ContractMgmt.model.ActivityRecord;
 import de.oszimt.lf10ContractMgmt.model.Contract;
 import de.oszimt.lf10ContractMgmt.model.Employee;
 import de.oszimt.lf10ContractMgmt.util.DateUtils;
+import de.oszimt.lf10ContractMgmt.util.FontUtil;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
@@ -36,7 +37,7 @@ public class TaskDetailsView extends JPanel {
 
         JLabel title = new JLabel("Task Details");
 
-        title.setFont(new Font("Serif", Font.BOLD, 20));
+        title.setFont(FontUtil.getBoldFont(25));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         add(title, BorderLayout.NORTH);
 
