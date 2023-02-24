@@ -64,7 +64,6 @@ public class MainFrame extends JFrame {
     }
 
     public void showMainLayout () {
-        setSize(1920, 1080);
         mainLayout = new MainLayout();
         mainLayout.setHeadline("Test");
         add(mainLayout);
@@ -75,6 +74,7 @@ public class MainFrame extends JFrame {
     }
 
     public void showCustomerOverview() {
+        setSize(1920, 1080);
         CustomerOverview customerOverview = new CustomerOverview(
                 haseGmbHManagement.getAllCustomers());
 
@@ -105,6 +105,8 @@ public class MainFrame extends JFrame {
     }
 
     public void showEmployeeOverview() {
+        setSize(1920, 1080);
+
         EmployeeOverview employeesOverview = new EmployeeOverview(
                 haseGmbHManagement.getAllEmployees());
 
@@ -135,6 +137,8 @@ public class MainFrame extends JFrame {
     }
 
     public void showActivityOverview() {
+        setSize(1920, 1080);
+
         ActivityOverview activityOverview = new ActivityOverview(
                 haseGmbHManagement.getAllContracts());
 

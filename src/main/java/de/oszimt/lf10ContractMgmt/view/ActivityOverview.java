@@ -192,17 +192,13 @@ public class ActivityOverview extends AbstractOverview {
     searchPanel.add(endDateLabel);
     searchPanel.add(endDateField);
 
-    // add a new panel that combines the search fields and the search button
-    // the search button should be aligned to the right with a margin of 10px
     JPanel searchButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-
     searchButtonPanel.add(outerSearchButton);
 
-    // add a new box panel that combines the search panel and the search button panel
     JPanel searchBoxPanel = new JPanel();
     searchBoxPanel.setLayout(new BoxLayout(searchBoxPanel, BoxLayout.Y_AXIS));
-    // add a margin of 10px to the left and right
     searchBoxPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
     searchBoxPanel.add(Box.createVerticalGlue());
     searchBoxPanel.add(createHeadline("Search"));
     searchBoxPanel.add(Box.createVerticalGlue());
@@ -211,9 +207,7 @@ public class ActivityOverview extends AbstractOverview {
     searchBoxPanel.add(searchButtonPanel);
 
     searchWindow.setPreferredSize(searchBoxPanel.getSize());
-
     searchWindow.add(searchBoxPanel);
-
     searchWindow.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
@@ -229,7 +223,6 @@ public class ActivityOverview extends AbstractOverview {
       Date startDate = startDateField.getDate();
       Date endDate = endDateField.getDate();
 
-      // create a list with the search criteria
       filterList(new SearchCriteria(customer, projectOwner, contractType, state, startDate, endDate));
 
       innerSearchButton.setEnabled(true);

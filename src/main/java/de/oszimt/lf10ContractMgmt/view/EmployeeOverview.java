@@ -182,17 +182,13 @@ public class EmployeeOverview extends AbstractOverview {
     searchPanel.add(telefonLabel);
     searchPanel.add(telefonField);
 
-    // add a new panel that combines the search fields and the search button
-    // the search button should be aligned to the right with a margin of 10px
     JPanel searchButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-
     searchButtonPanel.add(outerSearchButton);
 
-    // add a new box panel that combines the search panel and the search button panel
     JPanel searchBoxPanel = new JPanel();
     searchBoxPanel.setLayout(new BoxLayout(searchBoxPanel, BoxLayout.Y_AXIS));
-    // add a margin of 10px to the left and right
     searchBoxPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
     searchBoxPanel.add(Box.createVerticalGlue());
     searchBoxPanel.add(createHeadline("Search"));
     searchBoxPanel.add(Box.createVerticalGlue());
@@ -201,8 +197,6 @@ public class EmployeeOverview extends AbstractOverview {
     searchBoxPanel.add(searchButtonPanel);
 
     searchWindow.setPreferredSize(searchBoxPanel.getSize());
-
-    // draw fields
     searchWindow.add(searchBoxPanel);
     searchWindow.addWindowListener(new WindowAdapter() {
       @Override
@@ -218,7 +212,6 @@ public class EmployeeOverview extends AbstractOverview {
       String email = emailField.getText();
       String telefon = telefonField.getText();
 
-      // create a list with the search criteria
       filterList(new EmployeeSearchCriteria(firstname, lastname, address, email, telefon));
 
       innerSearchButton.setEnabled(true);
