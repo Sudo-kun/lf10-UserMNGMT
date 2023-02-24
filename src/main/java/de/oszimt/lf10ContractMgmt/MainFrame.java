@@ -2,6 +2,8 @@ package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.view.*;
+import de.oszimt.lf10ContractMgmt.view.CustomerPanel;
+import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 
 import javax.swing.*;
 
