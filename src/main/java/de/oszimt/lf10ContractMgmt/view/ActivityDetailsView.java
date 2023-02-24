@@ -1,29 +1,42 @@
 package de.oszimt.lf10ContractMgmt.view;
 
-import de.oszimt.lf10ContractMgmt.model.ActivityRecord;
+import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
+import de.oszimt.lf10ContractMgmt.model.Address;
 import de.oszimt.lf10ContractMgmt.model.Contract;
 import de.oszimt.lf10ContractMgmt.util.FontUtil;
+import de.oszimt.lf10ContractMgmt.model.Customer;
+import de.oszimt.lf10ContractMgmt.model.Employee;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class ActivityDetailsView extends JPanel {
-    public ActivityDetailsView(Contract contract) {
+    private ActivityDetailsInputsPanel activityDetailsInputsPanel;
+    private TaskListPanel taskListPanel;
+    private JPanel mainCenterPanel;
+
+    public ActivityDetailsView(Contract contract, HaseGmbHManagement haseGmbHManagement) {
         setupWindow();
-        setupActivityDetailsView(contract);
+        setupActivityDetailsView(contract, haseGmbHManagement);
         setVisible(true);
     }
 
-    private void setupActivityDetailsView(Contract contract) {
+    private void setupActivityDetailsView(Contract contract, HaseGmbHManagement haseGmbHManagement) {
         setLayout(new BorderLayout());
 
-        JPanel mainCenterPanel = new JPanel();
+        JLabel title = new JLabel("Activity Details");
+
+        title.setFont(new Font("Serif", Font.BOLD, 20));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        add(title, BorderLayout.NORTH);
+
+        mainCenterPanel = new JPanel();
         mainCenterPanel.setLayout(new BoxLayout(mainCenterPanel, BoxLayout.Y_AXIS));
 
-        JPanel inputsPanel = createInputsPanel(contract);
-        mainCenterPanel.add(inputsPanel);
+        activityDetailsInputsPanel = new ActivityDetailsInputsPanel(contract, haseGmbHManagement);
+        mainCenterPanel.add(activityDetailsInputsPanel);
 
         JLabel titleForTaskList = new JLabel("Tasks");
 
@@ -31,193 +44,63 @@ public class ActivityDetailsView extends JPanel {
         titleForTaskList.setHorizontalAlignment(SwingConstants.LEADING);
         mainCenterPanel.add(titleForTaskList);
 
-        JPanel taskListPanel = createTaskListPanel(contract.getActivityRecordList());
-        mainCenterPanel.add(taskListPanel);
+        taskListPanel = new TaskListPanel(contract, haseGmbHManagement);
 
-        JButton addNewTaskButton = new JButton("Add new task");
-        mainCenterPanel.add(addNewTaskButton);
+        mainCenterPanel.add(taskListPanel);
+        mainCenterPanel.add(taskListPanel.createNewTaskButton(haseGmbHManagement));
 
         add(mainCenterPanel, BorderLayout.CENTER);
 
-        JPanel buttonsPanel = createButtonsPanel();
+        JPanel buttonsPanel = createButtonsPanel(haseGmbHManagement, contract);
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     private void setupWindow() {
-        addPaddingToMainWindow();
+        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        this.setBorder(padding);
 
         setSize(1920, 1080);
     }
 
-    private JPanel createInputsPanel(Contract contract) {
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(8, 2));
-        inputPanel.setPreferredSize(new Dimension(700, 330));
-        inputPanel.setMaximumSize(new Dimension(700, 330));
-        inputPanel.setMinimumSize(new Dimension(700, 330));
-
-        JLabel addressLabel = new JLabel("Project location");
-        JTextField streetInput = new JTextField(contract.getProjectLocations().getStreet());
-        JTextField streetNumberInput = new JTextField(contract.getProjectLocations().getHouse());
-        JPanel addressPanel1 = new JPanel();
-
-        streetInput.setPreferredSize(new Dimension(200, 25));
-        streetNumberInput.setPreferredSize(new Dimension(100, 25));
-        addressPanel1.setLayout(new FlowLayout());
-
-        addressPanel1.add(streetInput);
-        addressPanel1.add(streetNumberInput);
-
-        JTextField postalCodeInput = new JTextField(contract.getProjectLocations().getPostalCode());
-        JTextField cityInput = new JTextField(contract.getProjectLocations().getCity());
-        JPanel addressPanel2 = new JPanel();
-
-        cityInput.setPreferredSize(new Dimension(200, 25));
-        postalCodeInput.setPreferredSize(new Dimension(100, 25));
-
-        addressPanel2.setLayout(new FlowLayout());
-        addressPanel2.add(postalCodeInput);
-        addressPanel2.add(cityInput);
-
-        JPanel addressPanel3 = new JPanel();
-        JTextField countryInput = new JTextField(contract.getProjectLocations().getCountry());
-        countryInput.setPreferredSize(new Dimension(305, 25));
-        addressPanel3.add(countryInput);
-
-        JComboBox<String> customerSelect = new JComboBox<>();
-        customerSelect.setPreferredSize(new Dimension(305, 25));
-        JPanel customerSelectWrapper = new JPanel();
-        customerSelectWrapper.add(customerSelect);
-
-        JComboBox<String> employeeSelect = new JComboBox<>();
-        employeeSelect.setPreferredSize(new Dimension(305, 25));
-        JPanel employeeSelectWrapper = new JPanel();
-        employeeSelectWrapper.add(employeeSelect);
-
-        JComboBox<String> typeSelect = new JComboBox<>();
-        typeSelect.setPreferredSize(new Dimension(305, 25));
-        JPanel typeSelectWrapper = new JPanel();
-        typeSelectWrapper.add(typeSelect);
-
-        JComboBox<String> stateSelect = new JComboBox<>();
-        stateSelect.setPreferredSize(new Dimension(305, 25));
-        JPanel stateSelectWrapper = new JPanel();
-        stateSelectWrapper.add(stateSelect);
-
-
-        JTextField descriptionInput = new JTextField(contract.getDescription());
-        descriptionInput.setPreferredSize(new Dimension(305, 25));
-        JPanel descriptionInputWrapper = new JPanel();
-        descriptionInputWrapper.add(descriptionInput);
-
-
-        inputPanel.add(addressLabel);
-        inputPanel.add(addressPanel1);
-        inputPanel.add(new JLabel());
-        inputPanel.add(addressPanel2);
-        inputPanel.add(new JLabel());
-        inputPanel.add(addressPanel3);
-        inputPanel.add(new JLabel("Select Customer"));
-        inputPanel.add(customerSelectWrapper);
-        inputPanel.add(new JLabel("Select Employee"));
-        inputPanel.add(employeeSelectWrapper);
-        inputPanel.add(new JLabel("Select Type"));
-        inputPanel.add(typeSelectWrapper);
-        inputPanel.add(new JLabel("Select State"));
-        inputPanel.add(stateSelectWrapper);
-        inputPanel.add(new JLabel("Description"));
-        inputPanel.add(descriptionInputWrapper);
-
-        return inputPanel;
-    }
-
-    private JPanel createTaskListPanel(ArrayList<ActivityRecord> activityRecords) {
-        JPanel taskListPanel = new JPanel();
-        taskListPanel.setPreferredSize(new Dimension(700, 40 + 40 * activityRecords.size()));
-        taskListPanel.setMaximumSize(new Dimension(700, 40 + 40 * activityRecords.size()));
-        taskListPanel.setMinimumSize(new Dimension(700, 40 + 40 * activityRecords.size()));
-        taskListPanel.setLayout(new GridLayout(1 + activityRecords.size(), 4));
-        taskListPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-
-        JLabel timeLabel = new JLabel("Start - & Endtime", SwingConstants.CENTER);
-        timeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        timeLabel.setBackground(Color.LIGHT_GRAY);
-        timeLabel.setOpaque(true);
-        timeLabel.setPreferredSize(new Dimension(100, 25));
-
-        JLabel employeeLabel = new JLabel("Employee", SwingConstants.CENTER);
-        employeeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        employeeLabel.setBackground(Color.LIGHT_GRAY);
-        employeeLabel.setOpaque(true);
-        employeeLabel.setPreferredSize(new Dimension(100, 25));
-
-        JLabel descriptionLabel = new JLabel("Description", SwingConstants.CENTER);
-        descriptionLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        descriptionLabel.setBackground(Color.LIGHT_GRAY);
-        descriptionLabel.setOpaque(true);
-        descriptionLabel.setPreferredSize(new Dimension(100, 25));
-
-        JLabel actionsLabel = new JLabel("Actions", SwingConstants.CENTER);
-        actionsLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        actionsLabel.setBackground(Color.LIGHT_GRAY);
-        actionsLabel.setOpaque(true);
-        actionsLabel.setPreferredSize(new Dimension(100, 25));
-
-        taskListPanel.add(timeLabel);
-        taskListPanel.add(employeeLabel);
-        taskListPanel.add(descriptionLabel);
-        taskListPanel.add(actionsLabel);
-
-        addTasksToTaskList(taskListPanel, activityRecords);
-
-        return taskListPanel;
-    }
-
-    private void addTasksToTaskList(JPanel taskListPanel, ArrayList<ActivityRecord> activityRecords) {
-        for (ActivityRecord activityRecord : activityRecords) {
-            JLabel timeText = new JLabel(activityRecord.getDate() + " " + activityRecord.getStartTime() + "-" + activityRecord.getEndTime(), SwingConstants.CENTER);
-            timeText.setBackground(Color.lightGray);
-            timeText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            timeText.setPreferredSize(new Dimension(100, 25));
-
-            JLabel employeeNameText = new JLabel(activityRecord.getEmployee().getFirstname() + " " + activityRecord.getEmployee().getLastname(), SwingConstants.CENTER);
-            employeeNameText.setBackground(Color.lightGray);
-            employeeNameText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            employeeNameText.setPreferredSize(new Dimension(100, 25));
-
-            JLabel descriptionText = new JLabel(activityRecord.getDescription(), SwingConstants.CENTER);
-            descriptionText.setBackground(Color.lightGray);
-            descriptionText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            descriptionText.setPreferredSize(new Dimension(100, 25));
-
-
-            JPanel taskActionsButtonPanel = new JPanel();
-            taskActionsButtonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            taskActionsButtonPanel.setLayout(new FlowLayout());
-            taskActionsButtonPanel.add(new JButton("Edit"));
-            taskActionsButtonPanel.add(new JButton("Delete"));
-
-            taskListPanel.add(timeText);
-            taskListPanel.add(employeeNameText);
-            taskListPanel.add(descriptionText);
-            taskListPanel.add(taskActionsButtonPanel);
-        }
-    }
-
-    private JPanel createButtonsPanel() {
+    private JPanel createButtonsPanel(HaseGmbHManagement haseGmbHManagement, Contract contract) {
         JPanel buttonsPanel = new JPanel();
 
         JButton saveButton = new JButton("Save");
         saveButton.setPreferredSize(new Dimension(200, 30));
+
+        saveButton.addActionListener(e -> {
+            createOrUpdateContract(haseGmbHManagement, contract);
+        });
 
         buttonsPanel.add(saveButton);
 
         return buttonsPanel;
     }
 
-    private void addPaddingToMainWindow() {
-        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+    private void createOrUpdateContract(HaseGmbHManagement haseGmbHManagement, Contract contract) {
+        String street = activityDetailsInputsPanel.getStreetInput().getText();
+        String house = activityDetailsInputsPanel.getStreetNumberInput().getText();
+        String postalCode = activityDetailsInputsPanel.getPostalCodeInput().getText();
+        String city = activityDetailsInputsPanel.getCityInput().getText();
+        String country = activityDetailsInputsPanel.getCountryInput().getText();
+        Customer customer = (Customer) activityDetailsInputsPanel.getCustomerSelect().getSelectedItem();
+        Employee projectOwner = (Employee) activityDetailsInputsPanel.getEmployeeSelect().getSelectedItem();
+        String type = activityDetailsInputsPanel.getTypeInput().getText();
+        String state = activityDetailsInputsPanel.getStateInput().getText();
+        String description = activityDetailsInputsPanel.getDescriptionInput().getText();
 
-        setBorder(padding);
+        if (contract == null) {
+            contract = new Contract(LocalDate.now(), new Address(street, house, postalCode, city, country), customer, projectOwner, type, state, description, taskListPanel.getActivityRecordBufferList());
+
+            haseGmbHManagement.addNewContract(contract);
+        } else {
+            contract.setProjectLocations(new Address(street, house, postalCode, city, country));
+            contract.setCustomer(customer);
+            contract.setProjectOwner(projectOwner);
+            contract.setContractType(type);
+            contract.setState(state);
+            contract.setDescription(description);
+            contract.setActivityRecordList(taskListPanel.getActivityRecordBufferList());
+        }
     }
 }
