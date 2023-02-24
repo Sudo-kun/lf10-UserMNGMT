@@ -5,11 +5,11 @@ import de.oszimt.lf10ContractMgmt.util.FontUtil;
 import javax.swing.*;
 import java.awt.*;
 
-public class CustomerPanel extends JPanel {
+public class CustomerView extends JPanel {
 
     public static final String VIEW_TITLE = "Edit/Create Customer";
 
-    public CustomerPanel() {
+    public CustomerView() {
         setLayout(new GridLayout(3, 1));
 
         var titlePanel = new JPanel(new BorderLayout());
