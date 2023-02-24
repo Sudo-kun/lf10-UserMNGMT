@@ -52,8 +52,8 @@ public class LoginPanel extends JPanel {
         usernameField = new JTextField(10);
         passwordField = new JPasswordField(10);
 
-        var usernamePanel = getTextField("Benutzername:", usernameField);
-        var passwordPanel = getTextField("Passwort:", passwordField);
+        var usernamePanel = getTextField("Username:", usernameField);
+        var passwordPanel = getTextField("Password:", passwordField);
 
         panel.add(usernamePanel);
         panel.add(passwordPanel);
