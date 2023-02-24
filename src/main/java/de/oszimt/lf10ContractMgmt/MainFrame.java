@@ -91,7 +91,7 @@ public class MainFrame extends JFrame {
     }
 
     private void setupDetailsView(int ContractID) {
-        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID));
+        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID), haseGmbHManagement);
     }
 }
 

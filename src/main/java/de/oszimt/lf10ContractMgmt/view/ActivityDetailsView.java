@@ -87,16 +87,16 @@ public class ActivityDetailsView extends JPanel {
 
     private JPanel createInputsPanel(Contract contract, HaseGmbHManagement haseGmbHManagement) {
         // get values / default values if contract is null
-        String street = contract == null ? "" : streetInput.getText();
-        String house = contract == null ? "" : streetNumberInput.getText();
-        String postalCode = contract == null ? "" : postalCodeInput.getText();
-        String city = contract == null ? "" : cityInput.getText();
-        String country = contract == null ? "" :  countryInput.getText();
-        Customer customer = contract == null ? null :  (Customer) customerSelect.getSelectedItem();
-        Employee projectOwner = contract == null ? null :  (Employee) employeeSelect.getSelectedItem();
-        String type = contract == null ? "" : typeInput.getText();
-        String state = contract == null ? "" : stateInput.getText();
-        String description = contract == null ? "" :  descriptionInput.getText();
+        String street = contract == null ? "" : contract.getProjectLocations().getStreet();
+        String house = contract == null ? "" : contract.getProjectLocations().getHouse();
+        String postalCode = contract == null ? "" : contract.getProjectLocations().getPostalCode();
+        String city = contract == null ? "" : contract.getProjectLocations().getCity();
+        String country = contract == null ? "" : contract.getProjectLocations().getCountry();
+        Customer customer = contract == null ? null : contract.getCustomer();
+        Employee projectOwner = contract == null ? null : contract.getProjectOwner();
+        String type = contract == null ? "" : contract.getContractType();
+        String state = contract == null ? "" : contract.getState();
+        String description = contract == null ? "" : contract.getDescription();
 
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(8, 2));
@@ -302,6 +302,7 @@ public class ActivityDetailsView extends JPanel {
 
         return buttonsPanel;
     }
+
     private void createOrUpdateContract(HaseGmbHManagement haseGmbHManagement, Contract contract) {
         String street = streetInput.getText();
         String house = streetNumberInput.getText();
