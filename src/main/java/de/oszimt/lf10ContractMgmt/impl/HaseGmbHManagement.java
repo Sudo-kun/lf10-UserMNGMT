@@ -198,7 +198,6 @@ public class HaseGmbHManagement implements IntContractMgmt, IntCustomerMgmt, Int
 	//
 
 	public void setupTestEmployees() {
-
 		Employee anEmployee = new Employee("Max", "Müller",
 				new Address("Schloßweg", "5", "85777", "Berlin", "Deutschland"), "may.mueller@hase-gmbh.de",
 				"0049301234545");
@@ -302,13 +301,13 @@ public class HaseGmbHManagement implements IntContractMgmt, IntCustomerMgmt, Int
 		Contract aContract;
 		aContract = new Contract(LocalDate.of(2022, 4, 10),
 				new Address("Theodor-Storm-Straße", "23", "73529", "Berlin", "Deutschland"), getAllCustomers().get(0),
-				getAllEmployees().get(0), "Warung", "fertiggestsellt",
+				getAllEmployees().get(0), "Wartung", "fertiggestellt",
 				"Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", arList01);
 		addNewContract(aContract);
 
 		aContract = new Contract(LocalDate.of(2022, 2, 10),
 				new Address("Theodor-Storm-Straße", "23", "73529", "Berlin", "Deutschland"), getAllCustomers().get(1),
-				getAllEmployees().get(1), "Warung", "fertiggestsellt",
+				getAllEmployees().get(1), "Wartung", "fertiggestellt",
 				"Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", arList02);
 		addNewContract(aContract);
 	}

@@ -22,17 +22,11 @@ public class ButtonRenderer implements TableCellRenderer {
         this.editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int row = Integer.parseInt(e.getActionCommand());
-                System.out.println("Edit button clicked on row: " + row);
-                // here you can get the value of the valueColumn and perform the corresponding action
-                System.out.println("Value of column " + valueColumn + " is: " + table.getValueAt(row, valueColumn));
             }
         });
         this.deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int row = Integer.parseInt(e.getActionCommand());
-                System.out.println("Delete button clicked on row: " + row);
-                // here you can get the value of the valueColumn and perform the corresponding action
-                System.out.println("Value of column " + valueColumn + " is: " + table.getValueAt(row, valueColumn));
             }
         });
     }

@@ -29,9 +29,22 @@ public class ActivityOverview extends AbstractOverview {
     this.actionButtonsColumn = 4;
     this.idColumn = 0;
 
+    resetSearchButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        resetSearch();
+      }
+    });
+
     setContracts(contracts);
     drawOverview();
     setVisible(true);
+  }
+
+  private void resetSearch() {
+    setContracts(contracts);
+    updateTable();
+    resetSearchButton.setVisible(false);
   }
 
   private void setContracts(ArrayList<Contract> contracts) {
@@ -179,17 +192,13 @@ public class ActivityOverview extends AbstractOverview {
     searchPanel.add(endDateLabel);
     searchPanel.add(endDateField);
 
-    // add a new panel that combines the search fields and the search button
-    // the search button should be aligned to the right with a margin of 10px
     JPanel searchButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-
     searchButtonPanel.add(outerSearchButton);
 
-    // add a new box panel that combines the search panel and the search button panel
     JPanel searchBoxPanel = new JPanel();
     searchBoxPanel.setLayout(new BoxLayout(searchBoxPanel, BoxLayout.Y_AXIS));
-    // add a margin of 10px to the left and right
     searchBoxPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
     searchBoxPanel.add(Box.createVerticalGlue());
     searchBoxPanel.add(createHeadline("Search"));
     searchBoxPanel.add(Box.createVerticalGlue());
@@ -198,9 +207,7 @@ public class ActivityOverview extends AbstractOverview {
     searchBoxPanel.add(searchButtonPanel);
 
     searchWindow.setPreferredSize(searchBoxPanel.getSize());
-
     searchWindow.add(searchBoxPanel);
-
     searchWindow.addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
@@ -216,7 +223,6 @@ public class ActivityOverview extends AbstractOverview {
       Date startDate = startDateField.getDate();
       Date endDate = endDateField.getDate();
 
-      // create a list with the search criteria
       filterList(new SearchCriteria(customer, projectOwner, contractType, state, startDate, endDate));
 
       innerSearchButton.setEnabled(true);
@@ -236,7 +242,6 @@ public class ActivityOverview extends AbstractOverview {
       model.addRow(
         new Object[]
           {
-            contract.getContractID(),
             contract.getCustomer().getLastname(),
             contract.getProjectOwner().getLastname(),
             contract.getContractType(),
@@ -267,30 +272,26 @@ public class ActivityOverview extends AbstractOverview {
     filteredContracts = new ArrayList<>();
 
     for (Contract contract : contracts) {
-      if (contract.getCustomer().getLastname().equals(searchCriteria.getCustomer())) {
-        System.out.println("Customer matches");
+      if (contract.getCustomer().getLastname().contains(searchCriteria.getCustomer())) {
         filteredContracts.add(contract);
-        System.out.println("Added contract " + contract.getContractID() + " to filtered list");
-      } else if (contract.getProjectOwner().getLastname().equals(searchCriteria.getProjectOwner())) {
-        System.out.println("Project owner matches");
+      } else if (contract.getProjectOwner().getLastname().contains(searchCriteria.getProjectOwner())) {
         filteredContracts.add(contract);
-        System.out.println("Added contract " + contract.getContractID() + " to filtered list");
-      } else if (contract.getContractType().equals(searchCriteria.getContractType())) {
-        System.out.println("Contract type matches");
+      } else if (contract.getContractType().contains(searchCriteria.getContractType())) {
         filteredContracts.add(contract);
-        System.out.println("Added contract " + contract.getContractID() + " to filtered list");
-      } else if (contract.getState().equals(searchCriteria.getState())) {
-        System.out.println("State matches");
+      } else if (contract.getState().contains(searchCriteria.getState())) {
         filteredContracts.add(contract);
-        System.out.println("Added contract " + contract.getContractID() + " to filtered list");
       } else if (contract.getCreationDate().isBefore(searchCriteria.getEndDate())
         && contract.getCreationDate().isAfter(searchCriteria.getStartDate())) {
-        System.out.println("Creation date matches");
         filteredContracts.add(contract);
-        System.out.println("Added contract " + contract.getContractID() + " to filtered list");
-      } else {
-        System.out.println("No match");
       }
+    }
+
+    if (filteredContracts.isEmpty()) {
+      JOptionPane.showMessageDialog(null, "No contracts found!");
+    }
+
+    if (filteredContracts.size() != contracts.size()) {
+      resetSearchButton.setVisible(true);
     }
 
     updateTable();
