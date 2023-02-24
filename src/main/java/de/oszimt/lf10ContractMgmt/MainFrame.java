@@ -80,12 +80,9 @@ public class MainFrame extends JFrame {
 
         customerOverview.setEditActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Edit button clicked on row: " + row);
 
             customerOverview.setVisible(false);
             setupDetailsView(customerOverview.getIdByRow(row));
-
-            System.out.println("CustomerID: " + customerOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Kundendetails");
             mainLayout.setBody(customerOverview);
@@ -94,7 +91,6 @@ public class MainFrame extends JFrame {
 
         customerOverview.setDeleteActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Delete button clicked on row: " + row);
 
             haseGmbHManagement.deleteCustomer(customerOverview.getIdByRow(row));
             customerOverview.removeRow(row);
@@ -112,12 +108,9 @@ public class MainFrame extends JFrame {
 
         employeesOverview.setEditActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Edit button clicked on row: " + row);
 
             employeesOverview.setVisible(false);
             setupDetailsView(employeesOverview.getIdByRow(row));
-
-            System.out.println("EmployeeID: " + employeesOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Mitarbeiterdetails");
             mainLayout.setBody(employeesOverview);
@@ -126,7 +119,6 @@ public class MainFrame extends JFrame {
 
         employeesOverview.setDeleteActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Delete button clicked on row: " + row);
 
             haseGmbHManagement.deleteEmployee(employeesOverview.getIdByRow(row));
             employeesOverview.removeRow(row);
@@ -144,12 +136,9 @@ public class MainFrame extends JFrame {
 
         activityOverview.setEditActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Edit button clicked on row: " + row);
 
             activityOverview.setVisible(false);
             setupDetailsView(activityOverview.getIdByRow(row));
-
-            System.out.println("ContractID: " + activityOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Aktivitätsdetails");
             mainLayout.setBody(activityDetailsView);
@@ -158,7 +147,6 @@ public class MainFrame extends JFrame {
 
         activityOverview.setDeleteActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Delete button clicked on row: " + row);
 
             haseGmbHManagement.deleteContract(activityOverview.getIdByRow(row));
             activityOverview.removeRow(row);
