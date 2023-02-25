@@ -27,19 +27,13 @@ public class ActivityDetailsView extends JPanel {
     private void setupActivityDetailsView(Contract contract, HaseGmbHManagement haseGmbHManagement) {
         setLayout(new BorderLayout());
 
-        JLabel title = new JLabel("Activity Details");
-
-        title.setFont(FontUtil.getBoldFont(20));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        add(title, BorderLayout.NORTH);
-
         mainCenterPanel = new JPanel();
         mainCenterPanel.setLayout(new BoxLayout(mainCenterPanel, BoxLayout.Y_AXIS));
 
         activityDetailsInputsPanel = new ActivityDetailsInputsPanel(contract, haseGmbHManagement);
         mainCenterPanel.add(activityDetailsInputsPanel);
 
-        JLabel titleForTaskList = new JLabel("Tasks");
+        JLabel titleForTaskList = new JLabel("Aufgaben");
 
         titleForTaskList.setFont(FontUtil.getBoldFont());
         titleForTaskList.setHorizontalAlignment(SwingConstants.LEADING);
@@ -66,7 +60,7 @@ public class ActivityDetailsView extends JPanel {
     private JPanel createButtonsPanel(HaseGmbHManagement haseGmbHManagement, Contract contract) {
         JPanel buttonsPanel = new JPanel();
 
-        JButton saveButton = new JButton("Save");
+        JButton saveButton = new JButton("Speichern");
         saveButton.setPreferredSize(new Dimension(200, 30));
 
         saveButton.addActionListener(e -> {
