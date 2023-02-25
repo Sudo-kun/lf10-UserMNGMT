@@ -101,6 +101,7 @@ public class TaskListPanel extends JPanel {
             add(taskActionsButtonPanel);
         }
     }
+
     private void setupPanelSettings() {
         setPreferredSize(new Dimension(700, 40 + 40 * activityRecordBufferList.size()));
         setMaximumSize(new Dimension(700, 40 + 40 * activityRecordBufferList.size()));
