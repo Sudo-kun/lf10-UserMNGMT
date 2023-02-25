@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view;
+package de.oszimt.lf10ContractMgmt.view.activity.details;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.model.Contract;
@@ -47,7 +47,7 @@ public class ActivityDetailsInputsPanel extends JPanel {
 
     private void addInputFields(HaseGmbHManagement haseGmbHManagement, String street, String house, String postalCode, String city, String country, Customer customer, Employee projectOwner, String type, String state, String description) {
 
-        JLabel addressLabel = new JLabel("Project location");
+        JLabel addressLabel = new JLabel("Projektstandort");
         streetInput = new JTextField(street);
         streetNumberInput = new JTextField(house);
         JPanel addressPanel1 = new JPanel();
@@ -80,7 +80,7 @@ public class ActivityDetailsInputsPanel extends JPanel {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Customer customer = ((Customer) value);
-                String displayValue = "Customer: " + customer.getFirstname() + " " + customer.getLastname();
+                String displayValue = customer.getFirstname() + " " + customer.getLastname();
 
                 return super.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
             }
@@ -96,7 +96,7 @@ public class ActivityDetailsInputsPanel extends JPanel {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Employee employee = ((Employee) value);
-                String displayValue = "Employee: " + employee.getFirstname() + " " + employee.getLastname();
+                String displayValue = employee.getFirstname() + " " + employee.getLastname();
 
                 return super.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
             }
@@ -130,15 +130,15 @@ public class ActivityDetailsInputsPanel extends JPanel {
         add(addressPanel2);
         add(new JLabel());
         add(addressPanel3);
-        add(new JLabel("Select Customer"));
+        add(new JLabel("Kunde"));
         add(customerSelectWrapper);
-        add(new JLabel("Select Employee"));
+        add(new JLabel("Projektinhaber/Mitarbeiter"));
         add(employeeSelectWrapper);
-        add(new JLabel("Select Type"));
+        add(new JLabel("Typ"));
         add(typeSelectWrapper);
-        add(new JLabel("Select State"));
+        add(new JLabel("Stand"));
         add(stateSelectWrapper);
-        add(new JLabel("Description"));
+        add(new JLabel("Beschreibung"));
         add(descriptionInputWrapper);
     }
 

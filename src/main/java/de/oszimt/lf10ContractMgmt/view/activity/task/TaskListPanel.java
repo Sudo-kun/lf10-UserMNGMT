@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view;
+package de.oszimt.lf10ContractMgmt.view.activity.task;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.model.ActivityRecord;
@@ -26,19 +26,19 @@ public class TaskListPanel extends JPanel {
     }
 
     private void addHeaders() {
-        JLabel timeLabel = new JLabel("Start - & Endtime", SwingConstants.CENTER);
+        JLabel timeLabel = new JLabel("Zeit", SwingConstants.CENTER);
         timeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         timeLabel.setBackground(Color.LIGHT_GRAY);
         timeLabel.setOpaque(true);
         timeLabel.setPreferredSize(new Dimension(100, 25));
 
-        JLabel employeeLabel = new JLabel("Employee", SwingConstants.CENTER);
+        JLabel employeeLabel = new JLabel("Mitarbeiter", SwingConstants.CENTER);
         employeeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         employeeLabel.setBackground(Color.LIGHT_GRAY);
         employeeLabel.setOpaque(true);
         employeeLabel.setPreferredSize(new Dimension(100, 25));
 
-        JLabel descriptionLabel = new JLabel("Description", SwingConstants.CENTER);
+        JLabel descriptionLabel = new JLabel("Beschreibung", SwingConstants.CENTER);
         descriptionLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         descriptionLabel.setBackground(Color.LIGHT_GRAY);
         descriptionLabel.setOpaque(true);
@@ -78,8 +78,8 @@ public class TaskListPanel extends JPanel {
             taskActionsButtonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             taskActionsButtonPanel.setLayout(new FlowLayout());
 
-            JButton editTaskButton = new JButton("Edit");
-            JButton deleteTaskButton = new JButton("Delete");
+            JButton editTaskButton = new JButton("Bearbeiten");
+            JButton deleteTaskButton = new JButton("Löschen");
             taskActionsButtonPanel.add(editTaskButton);
             taskActionsButtonPanel.add(deleteTaskButton);
 
@@ -101,6 +101,7 @@ public class TaskListPanel extends JPanel {
             add(taskActionsButtonPanel);
         }
     }
+
     private void setupPanelSettings() {
         setPreferredSize(new Dimension(700, 40 + 40 * activityRecordBufferList.size()));
         setMaximumSize(new Dimension(700, 40 + 40 * activityRecordBufferList.size()));
@@ -129,7 +130,7 @@ public class TaskListPanel extends JPanel {
     }
 
     public JButton createNewTaskButton(HaseGmbHManagement haseGmbHManagement) {
-        JButton addNewTaskButton = new JButton("Add new task");
+        JButton addNewTaskButton = new JButton("Neue Aufgabe hinzufügen");
         addNewTaskButton.addActionListener(e -> {
             new TaskDetailsView(null, haseGmbHManagement, activityRecordBufferList, this);
         });

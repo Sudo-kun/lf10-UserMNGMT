@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view;
+package de.oszimt.lf10ContractMgmt.view.activity.task;
 
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
@@ -37,7 +37,7 @@ public class TaskDetailsView extends JFrame {
     private void setupActivityDetailsView(ActivityRecord activityRecord, HaseGmbHManagement haseGmbHManagement, ArrayList<ActivityRecord> activityRecordBufferList) {
         setLayout(new BorderLayout());
 
-        JLabel title = new JLabel("Task Details");
+        JLabel title = new JLabel("Aufgabedetails");
 
         title.setFont(FontUtil.getBoldFont(25));
         title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -68,29 +68,29 @@ public class TaskDetailsView extends JFrame {
         inputPanel.setMaximumSize(new Dimension(700, 330));
         inputPanel.setMinimumSize(new Dimension(700, 330));
 
-        JLabel dateLabel = new JLabel("Date");
+        JLabel dateLabel = new JLabel("Datum");
         datePicker = new JXDatePicker();
         datePicker.setDate(date);
 
-        JLabel startTimeLabel = new JLabel("Start time");
+        JLabel startTimeLabel = new JLabel("Startzeit");
         startTimeInput = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor startTimeEditor = new JSpinner.DateEditor(startTimeInput, "HH:mm");
         startTimeInput.setEditor(startTimeEditor);
         startTimeInput.setValue(startTime);
 
-        JLabel endTimeLabel = new JLabel("End time");
+        JLabel endTimeLabel = new JLabel("Endzeit");
         endTimeInput = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor endTimeEditor = new JSpinner.DateEditor(endTimeInput, "HH:mm");
         endTimeInput.setEditor(endTimeEditor);
         endTimeInput.setValue(endTime);
 
-        JLabel employeeSelectLabel = new JLabel("Employee");
+        JLabel employeeSelectLabel = new JLabel("Mitarbeiter");
         employeeSelect = new JComboBox<>(haseGmbHManagement.getAllEmployees().toArray(new Employee[0]));
         employeeSelect.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Employee employee = ((Employee) value);
-                String displayValue = "Employee: " + employee.getFirstname() + " " + employee.getLastname();
+                String displayValue = employee.getFirstname() + " " + employee.getLastname();
 
                 return super.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
             }
@@ -99,7 +99,7 @@ public class TaskDetailsView extends JFrame {
         if (selectedEmployee != null) employeeSelect.setSelectedItem(selectedEmployee);
 
 
-        JLabel descriptionLabel = new JLabel("Description");
+        JLabel descriptionLabel = new JLabel("Beschreibung");
         descriptionInput = new JTextField();
         descriptionInput.setText(description);
 
@@ -120,7 +120,7 @@ public class TaskDetailsView extends JFrame {
     private JPanel createButtonsPanel(ActivityRecord activityRecord, ArrayList<ActivityRecord> activityRecordBufferList, HaseGmbHManagement haseGmbHManagement) {
         JPanel buttonsPanel = new JPanel();
 
-        JButton saveButton = new JButton("Save");
+        JButton saveButton = new JButton("Speichern");
         saveButton.setPreferredSize(new Dimension(200, 30));
         saveButton.addActionListener(e -> createOrUpdateActivityRecordFromFormData(activityRecord, activityRecordBufferList, haseGmbHManagement));
 
