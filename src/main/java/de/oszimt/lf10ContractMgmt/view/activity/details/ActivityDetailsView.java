@@ -29,7 +29,7 @@ public class ActivityDetailsView extends JPanel {
 
         JLabel title = new JLabel("Activity Details");
 
-        title.setFont(new Font("Serif", Font.BOLD, 20));
+        title.setFont(FontUtil.getBoldFont(20));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         add(title, BorderLayout.NORTH);
 
