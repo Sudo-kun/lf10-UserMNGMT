@@ -1,5 +1,7 @@
 package de.oszimt.lf10ContractMgmt.view;
 
+import de.oszimt.lf10ContractMgmt.util.DateUtils;
+
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -54,7 +56,7 @@ public class SearchCriteria {
     }
 
     public LocalDate getStartDate() {
-        return endDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate().atStartOfDay().toLocalDate();
+        return DateUtils.asLocalDate(startDate);
     }
 
     public void setStartDate(Date startDate) {
@@ -62,7 +64,7 @@ public class SearchCriteria {
     }
 
     public LocalDate getEndDate() {
-        return endDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate().atStartOfDay().toLocalDate();
+        return DateUtils.asLocalDate(endDate);
     }
 
     public void setEndDate(Date endDate) {

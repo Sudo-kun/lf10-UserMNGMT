@@ -1,7 +1,6 @@
 package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
-import de.oszimt.lf10ContractMgmt.view.EmployeeOverview;
 import de.oszimt.lf10ContractMgmt.view.*;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 import de.oszimt.lf10ContractMgmt.view.activity.details.ActivityDetailsView;
@@ -29,11 +28,11 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         setVisible(true);
-        // setResizable(false);
+        setResizable(false);
         setAlwaysOnTop(false);
         setLocationRelativeTo(null); // Zentriert das Fenster auf dem Bildschirm
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(300, 300);
+        setSize(300, 400);
 
         // Hier können Sie Ihre Komponenten hinzufügen
         // z.B. ein Login-Panel, eine Menüleiste, etc.
@@ -64,27 +63,53 @@ public class MainFrame extends JFrame {
     }
 
     public void showMainLayout () {
-        setSize(1920, 1080);
         mainLayout = new MainLayout();
         mainLayout.setHeadline("Test");
         add(mainLayout);
 
         mainLayout.setContractOverviewAction(e -> showActivityOverview());
         mainLayout.setEmployeeOverviewAction(e -> showEmployeeOverview());
+        mainLayout.setCustomerOverviewAction(e -> showCustomerOverview());
+    }
+
+    public void showCustomerOverview() {
+        setSize(1920, 1080);
+        CustomerOverview customerOverview = new CustomerOverview(
+                haseGmbHManagement.getAllCustomers());
+
+        customerOverview.setEditActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+
+            customerOverview.setVisible(false);
+            setupDetailsView(customerOverview.getIdByRow(row));
+
+            mainLayout.setHeadline("Kundendetails");
+            mainLayout.setBody(customerOverview);
+            customerOverview.setVisible(true);
+        });
+
+        customerOverview.setDeleteActionListener(e -> {
+            int row = Integer.parseInt(e.getActionCommand());
+
+            haseGmbHManagement.deleteCustomer(customerOverview.getIdByRow(row));
+            customerOverview.removeRow(row);
+        });
+
+        mainLayout.setHeadline("Kundenübersicht");
+        mainLayout.setBody(customerOverview);
     }
 
     public void showEmployeeOverview() {
+        setSize(1920, 1080);
+
         EmployeeOverview employeesOverview = new EmployeeOverview(
                 haseGmbHManagement.getAllEmployees());
 
         employeesOverview.setEditActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Edit button clicked on row: " + row);
 
             employeesOverview.setVisible(false);
             setupDetailsView(employeesOverview.getIdByRow(row));
-
-            System.out.println("EmployeeID: " + employeesOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Mitarbeiterdetails");
             mainLayout.setBody(employeesOverview);
@@ -93,7 +118,6 @@ public class MainFrame extends JFrame {
 
         employeesOverview.setDeleteActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Delete button clicked on row: " + row);
 
             haseGmbHManagement.deleteEmployee(employeesOverview.getIdByRow(row));
             employeesOverview.removeRow(row);
@@ -104,17 +128,16 @@ public class MainFrame extends JFrame {
     }
 
     public void showActivityOverview() {
+        setSize(1920, 1080);
+
         ActivityOverview activityOverview = new ActivityOverview(
                 haseGmbHManagement.getAllContracts());
 
         activityOverview.setEditActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Edit button clicked on row: " + row);
 
             activityOverview.setVisible(false);
             setupDetailsView(activityOverview.getIdByRow(row));
-
-            System.out.println("ContractID: " + activityOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Aktivitätsdetails");
             mainLayout.setBody(activityDetailsView);
@@ -123,7 +146,6 @@ public class MainFrame extends JFrame {
 
         activityOverview.setDeleteActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
-            System.out.println("Delete button clicked on row: " + row);
 
             haseGmbHManagement.deleteContract(activityOverview.getIdByRow(row));
             activityOverview.removeRow(row);

@@ -23,6 +23,7 @@ public abstract class AbstractOverview extends JPanel {
     protected final JButton addButton = new JButton("Add");
 
     protected static JButton innerSearchButton = new JButton("Search");
+    protected static JButton resetSearchButton = new JButton("Zurücksetzen");
 
     protected int actionButtonsColumn;
     protected int idColumn;
@@ -33,17 +34,21 @@ public abstract class AbstractOverview extends JPanel {
 
         model = createModel();
 
-        //create table
         table = new JTable(model);
         table.setDefaultEditor(Object.class, null);
         table.setAutoCreateRowSorter(true);
         table.setRowHeight(35);
 
-        // create a search button
         innerSearchButton.setPreferredSize(new Dimension(100, 30));
         innerSearchButton.setMaximumSize(new Dimension(100, 30));
         innerSearchButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         innerSearchButton.setAlignmentY(Component.TOP_ALIGNMENT);
+
+        resetSearchButton.setPreferredSize(new Dimension(100, 30));
+        resetSearchButton.setMaximumSize(new Dimension(100, 30));
+        resetSearchButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        resetSearchButton.setAlignmentY(Component.TOP_ALIGNMENT);
+        resetSearchButton.setVisible(false);
 
         addButton.setPreferredSize(new Dimension(100, 30));
         addButton.setMaximumSize(new Dimension(100, 30));
@@ -54,7 +59,10 @@ public abstract class AbstractOverview extends JPanel {
         searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
         searchPanel.setSize((int) (screenSize.getWidth() * 0.95), 40);
         searchPanel.setPreferredSize(new Dimension((int) (screenSize.getWidth() * 0.95), 40));
+
         searchPanel.add(innerSearchButton);
+        searchPanel.add(Box.createHorizontalStrut(10));
+        searchPanel.add(resetSearchButton);
         searchPanel.add(Box.createHorizontalGlue());
         searchPanel.add(addButton);
         searchPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -118,7 +126,6 @@ public abstract class AbstractOverview extends JPanel {
         tablePanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                System.out.println("Table resized");
                 super.componentResized(e);
                 Dimension windowSize = tablePanel.getSize();
                 Dimension newScrollPaneSize = new Dimension((int) (windowSize.getWidth() * 0.95), (int) (windowSize.getHeight() * 0.90));
