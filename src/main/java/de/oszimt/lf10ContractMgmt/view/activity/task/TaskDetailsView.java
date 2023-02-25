@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view;
+package de.oszimt.lf10ContractMgmt.view.activity.task;
 
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
@@ -6,6 +6,7 @@ import de.oszimt.lf10ContractMgmt.model.ActivityRecord;
 import de.oszimt.lf10ContractMgmt.model.Employee;
 import de.oszimt.lf10ContractMgmt.util.DateUtils;
 import de.oszimt.lf10ContractMgmt.util.FontUtil;
+import de.oszimt.lf10ContractMgmt.view.activity.task.TaskListPanel;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;

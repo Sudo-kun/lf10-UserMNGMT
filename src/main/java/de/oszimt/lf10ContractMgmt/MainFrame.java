@@ -4,7 +4,7 @@ import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.view.EmployeeOverview;
 import de.oszimt.lf10ContractMgmt.view.*;
 import de.oszimt.lf10ContractMgmt.view.LoginPanel;
-import de.oszimt.lf10ContractMgmt.view.ActivityDetailsView;
+import de.oszimt.lf10ContractMgmt.view.activity.details.ActivityDetailsView;
 
 import javax.swing.*;
 

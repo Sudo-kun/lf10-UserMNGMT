@@ -1,4 +1,4 @@
-package de.oszimt.lf10ContractMgmt.view;
+package de.oszimt.lf10ContractMgmt.view.activity.details;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.model.Address;
@@ -6,6 +6,7 @@ import de.oszimt.lf10ContractMgmt.model.Contract;
 import de.oszimt.lf10ContractMgmt.util.FontUtil;
 import de.oszimt.lf10ContractMgmt.model.Customer;
 import de.oszimt.lf10ContractMgmt.model.Employee;
+import de.oszimt.lf10ContractMgmt.view.activity.task.TaskListPanel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
