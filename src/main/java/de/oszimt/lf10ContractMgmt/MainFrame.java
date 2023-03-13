@@ -175,7 +175,11 @@ public class MainFrame extends JFrame {
     }
 
     private void setupEmployeeView(int employeeId) {
-        employeeView = new EmployeeView(haseGmbHManagement.getEmployee(employeeId), haseGmbHManagement);
+        if (employeeId != -1) {
+            employeeView = new EmployeeView(haseGmbHManagement.getEmployee(employeeId), haseGmbHManagement);
+        } else {
+            employeeView = new EmployeeView(null, haseGmbHManagement);
+        }
     }
 }
 
