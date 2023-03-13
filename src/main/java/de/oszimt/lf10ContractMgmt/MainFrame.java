@@ -2,7 +2,6 @@ package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.view.*;
-import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 import de.oszimt.lf10ContractMgmt.view.activity.details.ActivityDetailsView;
 
 import javax.swing.*;
@@ -21,6 +20,8 @@ public class MainFrame extends JFrame {
 
     LoginPanel loginPanel = new LoginPanel();
     ActivityDetailsView activityDetailsView;
+
+    EmployeeView employeeView;
 
     HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
 
@@ -109,11 +110,11 @@ public class MainFrame extends JFrame {
             int row = Integer.parseInt(e.getActionCommand());
 
             employeesOverview.setVisible(false);
-            setupDetailsView(employeesOverview.getIdByRow(row));
+            setupEmployeeView(employeesOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Mitarbeiterdetails");
-            mainLayout.setBody(employeesOverview);
-            employeesOverview.setVisible(true);
+            mainLayout.setBody(employeeView);
+            employeeView.setVisible(true);
         });
 
         employeesOverview.setDeleteActionListener(e -> {
@@ -157,6 +158,10 @@ public class MainFrame extends JFrame {
 
     private void setupDetailsView(int ContractID) {
         activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID), haseGmbHManagement);
+    }
+
+    private void setupEmployeeView(int employeeId) {
+        employeeView = new EmployeeView(haseGmbHManagement.getEmployee(employeeId), haseGmbHManagement);
     }
 }
 
