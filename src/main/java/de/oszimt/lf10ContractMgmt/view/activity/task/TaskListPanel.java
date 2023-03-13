@@ -103,9 +103,9 @@ public class TaskListPanel extends JPanel {
     }
 
     private void setupPanelSettings() {
-        setPreferredSize(new Dimension(700, 40 + 40 * activityRecordBufferList.size()));
-        setMaximumSize(new Dimension(700, 40 + 40 * activityRecordBufferList.size()));
-        setMinimumSize(new Dimension(700, 40 + 40 * activityRecordBufferList.size()));
+        setPreferredSize(new Dimension(1080, 40 + 40 * activityRecordBufferList.size()));
+        setMaximumSize(new Dimension(1080, 40 + 40 * activityRecordBufferList.size()));
+        setMinimumSize(new Dimension(1080, 40 + 40 * activityRecordBufferList.size()));
         setLayout(new GridLayout(1 + activityRecordBufferList.size(), 4));
         setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     }
@@ -129,12 +129,21 @@ public class TaskListPanel extends JPanel {
         return activityRecordBufferList;
     }
 
-    public JButton createNewTaskButton(HaseGmbHManagement haseGmbHManagement) {
+    public JPanel createNewTaskButton(HaseGmbHManagement haseGmbHManagement) {
+        JPanel newTaskButtonPanel = new JPanel();
+        newTaskButtonPanel.setLayout(new BoxLayout(newTaskButtonPanel, BoxLayout.X_AXIS));
+
+        newTaskButtonPanel.setPreferredSize(new Dimension(1080, 40));
+
         JButton addNewTaskButton = new JButton("Neue Aufgabe hinzufügen");
         addNewTaskButton.addActionListener(e -> {
             new TaskDetailsView(null, haseGmbHManagement, activityRecordBufferList, this);
         });
 
-        return addNewTaskButton;
+        newTaskButtonPanel.add(Box.createHorizontalGlue());
+        newTaskButtonPanel.add(addNewTaskButton);
+        newTaskButtonPanel.add(Box.createHorizontalGlue());
+
+        return newTaskButtonPanel;
     }
 }
