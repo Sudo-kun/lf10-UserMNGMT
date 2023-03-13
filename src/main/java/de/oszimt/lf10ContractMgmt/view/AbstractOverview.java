@@ -20,9 +20,9 @@ public abstract class AbstractOverview extends JPanel {
 
     protected DefaultTableModel model;
 
-    protected final JButton addButton = new JButton("Add");
+    protected final JButton addButton = new JButton("Hinzufügen");
 
-    protected static JButton innerSearchButton = new JButton("Search");
+    protected static JButton innerSearchButton = new JButton("Suchen");
     protected static JButton resetSearchButton = new JButton("Zurücksetzen");
 
     protected int actionButtonsColumn;

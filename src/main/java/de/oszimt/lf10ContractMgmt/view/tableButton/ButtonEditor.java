@@ -1,10 +1,9 @@
 package de.oszimt.lf10ContractMgmt.view.tableButton;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
 
@@ -15,8 +14,8 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
 
     public ButtonEditor(int valueColumn) {
         this.valueColumn = valueColumn;
-        this.editButton = new JButton("Edit");
-        this.deleteButton = new JButton("Delete");
+        this.editButton = new JButton("Bearbeiten");
+        this.deleteButton = new JButton("Löschen");
     }
 
     @Override
