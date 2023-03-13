@@ -40,9 +40,9 @@ public class ActivityDetailsInputsPanel extends JPanel {
 
     private void setupPanelSettings() {
         setLayout(new GridLayout(8, 2));
-        setPreferredSize(new Dimension(700, 330));
-        setMaximumSize(new Dimension(700, 330));
-        setMinimumSize(new Dimension(700, 330));
+        setPreferredSize(new Dimension(770, 330));
+        setMaximumSize(new Dimension(770, 330));
+        setMinimumSize(new Dimension(770, 330));
     }
 
     private void addInputFields(HaseGmbHManagement haseGmbHManagement, String street, String house, String postalCode, String city, String country, Customer customer, Employee projectOwner, String type, String state, String description) {
@@ -85,13 +85,16 @@ public class ActivityDetailsInputsPanel extends JPanel {
                 return super.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
             }
         });
+
         customerSelect.setPreferredSize(new Dimension(305, 25));
+
         if (customer != null) customerSelect.setSelectedItem(customer);
 
         JPanel customerSelectWrapper = new JPanel();
         customerSelectWrapper.add(customerSelect);
 
         employeeSelect = new JComboBox<>(haseGmbHManagement.getAllEmployees().toArray(new Employee[0]));
+
         employeeSelect.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -101,6 +104,7 @@ public class ActivityDetailsInputsPanel extends JPanel {
                 return super.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
             }
         });
+
         employeeSelect.setPreferredSize(new Dimension(305, 25));
         if (projectOwner != null) employeeSelect.setSelectedItem(projectOwner);
 

@@ -150,6 +150,7 @@ public class HaseGmbHManagement implements IntContractMgmt, IntCustomerMgmt, Int
 			if (c.getContractID() == contractID) {
 				return c;
 			}
+
 		System.err.println("Error: contract does not exist.");
 		return null;
 	}

@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class ActivityDetailsView extends JPanel {
     private ActivityDetailsInputsPanel activityDetailsInputsPanel;
     private TaskListPanel taskListPanel;
-    private JPanel mainCenterPanel;
+    JButton saveButton = new JButton("Speichern");
 
     public ActivityDetailsView(Contract contract, HaseGmbHManagement haseGmbHManagement) {
         setupWindow();
@@ -27,7 +27,7 @@ public class ActivityDetailsView extends JPanel {
     private void setupActivityDetailsView(Contract contract, HaseGmbHManagement haseGmbHManagement) {
         setLayout(new BorderLayout());
 
-        mainCenterPanel = new JPanel();
+        JPanel mainCenterPanel = new JPanel();
         mainCenterPanel.setLayout(new BoxLayout(mainCenterPanel, BoxLayout.Y_AXIS));
 
         activityDetailsInputsPanel = new ActivityDetailsInputsPanel(contract, haseGmbHManagement);
@@ -37,11 +37,19 @@ public class ActivityDetailsView extends JPanel {
 
         titleForTaskList.setFont(FontUtil.getBoldFont());
         titleForTaskList.setHorizontalAlignment(SwingConstants.LEADING);
-        mainCenterPanel.add(titleForTaskList);
 
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
+
+        titlePanel.add(Box.createHorizontalGlue());
+        titlePanel.add(titleForTaskList);
+        titlePanel.add(Box.createHorizontalGlue());
+
+        mainCenterPanel.add(titlePanel);
         taskListPanel = new TaskListPanel(contract, haseGmbHManagement);
 
         mainCenterPanel.add(taskListPanel);
+        mainCenterPanel.add(Box.createVerticalStrut(10));
         mainCenterPanel.add(taskListPanel.createNewTaskButton(haseGmbHManagement));
 
         add(mainCenterPanel, BorderLayout.CENTER);
@@ -60,9 +68,7 @@ public class ActivityDetailsView extends JPanel {
     private JPanel createButtonsPanel(HaseGmbHManagement haseGmbHManagement, Contract contract) {
         JPanel buttonsPanel = new JPanel();
 
-        JButton saveButton = new JButton("Speichern");
         saveButton.setPreferredSize(new Dimension(200, 30));
-
         saveButton.addActionListener(e -> {
             createOrUpdateContract(haseGmbHManagement, contract);
         });
@@ -70,6 +76,10 @@ public class ActivityDetailsView extends JPanel {
         buttonsPanel.add(saveButton);
 
         return buttonsPanel;
+    }
+
+    public void setSaveButtonText(String text) {
+        saveButton.setText(text);
     }
 
     private void createOrUpdateContract(HaseGmbHManagement haseGmbHManagement, Contract contract) {
