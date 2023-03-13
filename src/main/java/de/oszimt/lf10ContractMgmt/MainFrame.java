@@ -144,6 +144,16 @@ public class MainFrame extends JFrame {
             activityDetailsView.setVisible(true);
         });
 
+        activityOverview.setNewActionListener(e -> {
+            setupDetailsView(-1);
+
+            mainLayout.setHeadline("Aktivitätsdetails");
+            mainLayout.setBody(activityDetailsView);
+
+            activityDetailsView.setSaveButtonText("Erstellen");
+            activityDetailsView.setVisible(true);
+        });
+
         activityOverview.setDeleteActionListener(e -> {
             int row = Integer.parseInt(e.getActionCommand());
 
@@ -156,7 +166,11 @@ public class MainFrame extends JFrame {
     }
 
     private void setupDetailsView(int ContractID) {
-        activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID), haseGmbHManagement);
+        if (ContractID != -1) {
+            activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID), haseGmbHManagement);
+        } else {
+            activityDetailsView = new ActivityDetailsView(null, haseGmbHManagement);
+        }
     }
 }
 
