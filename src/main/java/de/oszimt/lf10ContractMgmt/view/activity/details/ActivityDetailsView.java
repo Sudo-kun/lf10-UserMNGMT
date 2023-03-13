@@ -11,6 +11,7 @@ import de.oszimt.lf10ContractMgmt.view.activity.task.TaskListPanel;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
 public class ActivityDetailsView extends JPanel {
@@ -124,5 +125,9 @@ public class ActivityDetailsView extends JPanel {
 
     public void setHeadlineText(String text) {
         titleForActivityDetails.setText(text);
+    }
+
+    public void setSaveButtionActionListener(ActionListener actionListener) {
+        saveButton.addActionListener(actionListener);
     }
 }
