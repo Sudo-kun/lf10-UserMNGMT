@@ -64,7 +64,7 @@ public class MainFrame extends JFrame {
 
     }
 
-    public void showMainLayout () {
+    public void showMainLayout() {
         mainLayout = new MainLayout();
         mainLayout.setHeadline("Test");
         add(mainLayout);
@@ -97,6 +97,15 @@ public class MainFrame extends JFrame {
             customerOverview.removeRow(row);
         });
 
+        customerOverview.setNewActionListener(e -> {
+            customerOverview.setVisible(false);
+            setupCustomersView(-1);
+
+            mainLayout.setHeadline("Kundendetails");
+            mainLayout.setBody(customerView);
+            customerView.setVisible(true);
+        });
+
         mainLayout.setHeadline("Kundenübersicht");
         mainLayout.setBody(customerOverview);
     }
@@ -123,6 +132,15 @@ public class MainFrame extends JFrame {
 
             haseGmbHManagement.deleteEmployee(employeesOverview.getIdByRow(row));
             employeesOverview.removeRow(row);
+        });
+
+        employeesOverview.setNewActionListener(e -> {
+            employeesOverview.setVisible(false);
+            setupEmployeeView(-1);
+
+            mainLayout.setHeadline("Kundendetails");
+            mainLayout.setBody(employeeView);
+            employeeView.setVisible(true);
         });
 
         mainLayout.setHeadline("Mitarbeiterübersicht");
