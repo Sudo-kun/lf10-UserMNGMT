@@ -19,8 +19,9 @@ public class MainFrame extends JFrame {
     public static final String LOGIN_PASSWORD = "password";
 
     LoginPanel loginPanel = new LoginPanel();
-    ActivityDetailsView activityDetailsView;
 
+    ActivityDetailsView activityDetailsView;
+    CustomerView customerView;
     EmployeeView employeeView;
 
     HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
@@ -63,7 +64,7 @@ public class MainFrame extends JFrame {
 
     }
 
-    public void showMainLayout () {
+    public void showMainLayout() {
         mainLayout = new MainLayout();
         mainLayout.setHeadline("Test");
         add(mainLayout);
@@ -82,11 +83,11 @@ public class MainFrame extends JFrame {
             int row = Integer.parseInt(e.getActionCommand());
 
             customerOverview.setVisible(false);
-            setupDetailsView(customerOverview.getIdByRow(row));
+            setupCustomersView(customerOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Kundendetails");
-            mainLayout.setBody(customerOverview);
-            customerOverview.setVisible(true);
+            mainLayout.setBody(customerView);
+            customerView.setVisible(true);
         });
 
         customerOverview.setDeleteActionListener(e -> {
@@ -94,6 +95,15 @@ public class MainFrame extends JFrame {
 
             haseGmbHManagement.deleteCustomer(customerOverview.getIdByRow(row));
             customerOverview.removeRow(row);
+        });
+
+        customerOverview.setNewActionListener(e -> {
+            customerOverview.setVisible(false);
+            setupCustomersView(-1);
+
+            mainLayout.setHeadline("Kundendetails");
+            mainLayout.setBody(customerView);
+            customerView.setVisible(true);
         });
 
         mainLayout.setHeadline("Kundenübersicht");
@@ -122,6 +132,15 @@ public class MainFrame extends JFrame {
 
             haseGmbHManagement.deleteEmployee(employeesOverview.getIdByRow(row));
             employeesOverview.removeRow(row);
+        });
+
+        employeesOverview.setNewActionListener(e -> {
+            employeesOverview.setVisible(false);
+            setupEmployeeView(-1);
+
+            mainLayout.setHeadline("Kundendetails");
+            mainLayout.setBody(employeeView);
+            employeeView.setVisible(true);
         });
 
         mainLayout.setHeadline("Mitarbeiterübersicht");
@@ -179,6 +198,14 @@ public class MainFrame extends JFrame {
             employeeView = new EmployeeView(haseGmbHManagement.getEmployee(employeeId), haseGmbHManagement);
         } else {
             employeeView = new EmployeeView(null, haseGmbHManagement);
+        }
+    }
+
+    private void setupCustomersView(int customerId) {
+        if (customerId != -1) {
+            customerView = new CustomerView(haseGmbHManagement.getCustomer(customerId), haseGmbHManagement);
+        } else {
+            customerView = new CustomerView(null, haseGmbHManagement);
         }
     }
 }
