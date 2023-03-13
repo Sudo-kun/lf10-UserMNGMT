@@ -91,7 +91,7 @@ public class MainLayout extends JPanel {
     headlinePanel.setSize(headlinePanelSize);
     headlinePanel.setPreferredSize(headlinePanelSize);
 
-    headlineLabel.setFont(FontUtil.getBoldFont(25));
+    headlineLabel.setFont(FontUtil.getBoldFont(30));
     headlinePanel.add(headlineLabel);
 
     contractOverview = new JButton("Aufträge");

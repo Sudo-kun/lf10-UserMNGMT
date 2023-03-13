@@ -17,6 +17,8 @@ public class ActivityDetailsView extends JPanel {
     private ActivityDetailsInputsPanel activityDetailsInputsPanel;
     private TaskListPanel taskListPanel;
     JButton saveButton = new JButton("Speichern");
+    JLabel titleForActivityDetails = new JLabel("Aktivitätsdetails");
+
 
     public ActivityDetailsView(Contract contract, HaseGmbHManagement haseGmbHManagement) {
         setupWindow();
@@ -26,9 +28,20 @@ public class ActivityDetailsView extends JPanel {
 
     private void setupActivityDetailsView(Contract contract, HaseGmbHManagement haseGmbHManagement) {
         setLayout(new BorderLayout());
+        titleForActivityDetails.setFont(FontUtil.getBoldFont(25));
 
         JPanel mainCenterPanel = new JPanel();
         mainCenterPanel.setLayout(new BoxLayout(mainCenterPanel, BoxLayout.Y_AXIS));
+
+        JPanel headlinePanel = new JPanel();
+        headlinePanel.setLayout(new BoxLayout(headlinePanel, BoxLayout.X_AXIS));
+
+        headlinePanel.add(Box.createHorizontalGlue());
+        headlinePanel.add(titleForActivityDetails);
+        headlinePanel.add(Box.createHorizontalGlue());
+
+        mainCenterPanel.add(headlinePanel);
+        mainCenterPanel.add(Box.createVerticalStrut(29));
 
         activityDetailsInputsPanel = new ActivityDetailsInputsPanel(contract, haseGmbHManagement);
         mainCenterPanel.add(activityDetailsInputsPanel);
@@ -107,5 +120,9 @@ public class ActivityDetailsView extends JPanel {
             contract.setDescription(description);
             contract.setActivityRecordList(taskListPanel.getActivityRecordBufferList());
         }
+    }
+
+    public void setHeadlineText(String text) {
+        titleForActivityDetails.setText(text);
     }
 }
