@@ -1,15 +1,31 @@
 package de.oszimt.lf10ContractMgmt.view;
 
+import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
+import de.oszimt.lf10ContractMgmt.model.Address;
+import de.oszimt.lf10ContractMgmt.model.Customer;
 import de.oszimt.lf10ContractMgmt.util.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class CustomerView extends JPanel {
 
     public static final String VIEW_TITLE = "Edit/Create Customer";
 
-    public CustomerView() {
+    private JTextField firstNameField;
+    private JTextField lastNameField;
+    private JTextField emailField;
+    private JTextField birthdayField;
+
+    private JTextField addressStreetField;
+    private JTextField addressNumberField;
+    private JTextField addressPostalCodeField;
+    private JTextField addressCityField;
+    private JTextField addressCountryField;
+
+    public CustomerView(Customer customer, HaseGmbHManagement haseGmbHManagement) {
         setLayout(new GridLayout(3, 1));
 
         var titlePanel = new JPanel(new BorderLayout());
@@ -38,16 +54,17 @@ public class CustomerView extends JPanel {
         JLabel addressLabel = new JLabel("Address:");
 
         // Create JTextFields for the form fields
-        JTextField firstNameField = new JTextField();
-        JTextField lastNameField = new JTextField();
-        JTextField emailField = new JTextField();
-        JTextField birthdayField = new JTextField();
+        firstNameField = new JTextField();
+        lastNameField = new JTextField();
+        emailField = new JTextField();
+        birthdayField = new JTextField();
 
-        JTextField addressStreetField = new JTextField();
-        JTextField addressNumberField = new JTextField();
-        JTextField addressPostalCodeField = new JTextField();
-        JTextField addressCityField = new JTextField();
-        JTextField addressCountryField = new JTextField();
+        addressStreetField = new JTextField();
+        addressNumberField = new JTextField();
+        addressPostalCodeField = new JTextField();
+        addressCityField = new JTextField();
+        addressCountryField = new JTextField();
+
 
         // Add the JLabels and JTextFields to the formPanel
         formPanel.add(firstNameLabel);
@@ -62,21 +79,27 @@ public class CustomerView extends JPanel {
         formPanel.add(birthdayLabel);
         formPanel.add(birthdayField);
 
-        formPanel.add(addressLabel);
-        formPanel.add(addressStreetField);
-        //formPanel.add(addressNumberField);
-        //formPanel.add(addressPostalCodeField);
-        //formPanel.add(addressCityField);
-        //formPanel.add(addressCountryField);
+        var addressPanel = new JPanel();
+        addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.X_AXIS));
 
-        var selectBtn = new Button("Select");
-        var saveBtn = new Button("Save");
+        addressPanel.add(addressStreetField);
+        addressPanel.add(addressNumberField);
+        addressPanel.add(addressPostalCodeField);
+        addressPanel.add(addressCityField);
+        addressPanel.add(addressCountryField);
+
+        formPanel.add(addressLabel);
+        formPanel.add(addressPanel);
+
+        var saveBtn = new Button("Speichern");
+
+        saveBtn.addActionListener(e -> {
+            createOrUpdateCustomer(haseGmbHManagement, customer);
+        });
 
         var buttonContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         var buttonContainerGrid = new JPanel(new GridLayout(1, 3, 25, 25));
-        buttonContainerGrid.add(selectBtn);
-        buttonContainerGrid.add(Box.createVerticalGlue());
         buttonContainerGrid.add(saveBtn);
         buttonContainer.add(buttonContainerGrid);
 
@@ -89,6 +112,45 @@ public class CustomerView extends JPanel {
         parentContainer.add(buttonContainer);
         parentContainer.add(Box.createHorizontalGlue());
         add(parentContainer);
+
+        if (customer != null)
+            loadDataByCustomer(customer);
+    }
+
+    private void loadDataByCustomer(Customer customer) {
+        firstNameField.setText(customer.getFirstname());
+        lastNameField.setText(customer.getLastname());
+        emailField.setText(customer.getEmail());
+        birthdayField.setText(customer.getBirthday().format(DateTimeFormatter.ISO_DATE));
+        addressStreetField.setText(customer.getAddress().getStreet());
+        addressNumberField.setText(customer.getAddress().getHouse());
+        addressPostalCodeField.setText(customer.getAddress().getPostalCode());
+        addressCityField.setText(customer.getAddress().getCity());
+        addressCountryField.setText(customer.getAddress().getCountry());
+    }
+
+    private void createOrUpdateCustomer(HaseGmbHManagement haseGmbHManagement, Customer customer) {
+        String firstname = firstNameField.getText();
+        String lastname = lastNameField.getText();
+        String email = emailField.getText();
+        String birthday = birthdayField.getText();
+        String addressStreet = addressStreetField.getText();
+        String addressNumber = addressNumberField.getText();
+        String addressPostalCode = addressPostalCodeField.getText();
+        String addressCity = addressCityField.getText();
+        String addressCountry = addressCountryField.getText();
+
+        if (customer == null) {
+            customer = new Customer(firstname, lastname, LocalDate.parse(birthday), email, new Address(addressStreet, addressNumber, addressPostalCode, addressCity, addressCountry));
+
+            haseGmbHManagement.addNewCustomer(customer);
+        } else {
+            customer.setFirstname(firstname);
+            customer.setLastname(lastname);
+            customer.setEmail(email);
+            customer.setBirthday(LocalDate.parse(birthday));
+            customer.setAddress(new Address(addressStreet, addressNumber, addressPostalCode, addressCity, addressCountry));
+        }
     }
 
 }
