@@ -1,4 +1,4 @@
 Login, Customer Create/Edit, Employee Create/ Edit: Bernburg
 Activity Details: Kurachkin
-Activity Overview: Schwitalla
+Activity Overview, Customer Overview, Employee Overview: Schwitalla
 MainLayout: Ihde
