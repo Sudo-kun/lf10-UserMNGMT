@@ -10,24 +10,18 @@ public class CustomerSearchCriteria {
   private String lastname;
   private String address;
   private String email;
-  private Date startDate;
-  private Date endDate;
+  private Date birthdate;
 
-  public CustomerSearchCriteria(String firstname, String lastname, String address, String email, Date startDate, Date endDate) {
+  public CustomerSearchCriteria(String firstname, String lastname, String address, String email, Date birthdate) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.address = address;
     this.email = email;
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this.birthdate = birthdate;
   }
 
-  public LocalDate getEndDate() {
-    return DateUtils.asLocalDate(endDate);
-  }
-
-  public LocalDate getStartDate() {
-    return DateUtils.asLocalDate(startDate);
+  public LocalDate getBirthdate() {
+    return DateUtils.asLocalDate(birthdate);
   }
 
   public String getEmail() {

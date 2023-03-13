@@ -79,7 +79,7 @@ public class CustomerOverview extends AbstractOverview {
 
   @Override
   protected void createSearchWindow() {
-    JFrame searchWindow = new JFrame("Search");
+    JFrame searchWindow = new JFrame("Suchen");
     searchWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     searchWindow.setSize(500, 500);
     searchWindow.setLocationRelativeTo(null);
@@ -99,15 +99,12 @@ public class CustomerOverview extends AbstractOverview {
     JTextField addressField = new JTextField("Adresse");
     addressField.setForeground(Color.GRAY);
 
-    JLabel emailLabel = new JLabel("Email");
-    JTextField emailField = new JTextField("Email");
+    JLabel emailLabel = new JLabel("E-Mail");
+    JTextField emailField = new JTextField("E-Mail");
     emailField.setForeground(Color.GRAY);
 
-    JLabel startDateLabel = new JLabel("Start Datum");
-    JXDatePicker startDateField = new JXDatePicker(new Date());
-
-    JLabel endDateLabel = new JLabel("End Datum");
-    JXDatePicker endDateField = new JXDatePicker(new Date());
+    JLabel birthdayLabel = new JLabel("Geburtsdatum");
+    JXDatePicker birthdayField = new JXDatePicker(new Date());
 
     firstnameField.addFocusListener(new FocusListener() {
       @Override
@@ -164,7 +161,7 @@ public class CustomerOverview extends AbstractOverview {
     emailField.addFocusListener(new FocusListener() {
       @Override
       public void focusGained(FocusEvent e) {
-        if (emailField.getText().equals("Eamil")) {
+        if (emailField.getText().equals("E-Mail")) {
           emailField.setText("");
           emailField.setForeground(Color.BLACK);
         }
@@ -173,7 +170,7 @@ public class CustomerOverview extends AbstractOverview {
       @Override
       public void focusLost(FocusEvent e) {
         if (emailField.getText().isEmpty()) {
-          emailField.setText("Eamil");
+          emailField.setText("E-Mail");
           emailField.setForeground(Color.GRAY);
         }
       }
@@ -187,10 +184,8 @@ public class CustomerOverview extends AbstractOverview {
     searchPanel.add(addressField);
     searchPanel.add(emailLabel);
     searchPanel.add(emailField);
-    searchPanel.add(startDateLabel);
-    searchPanel.add(startDateField);
-    searchPanel.add(endDateLabel);
-    searchPanel.add(endDateField);
+    searchPanel.add(birthdayLabel);
+    searchPanel.add(birthdayField);
 
     JPanel searchButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
     searchButtonPanel.add(outerSearchButton);
@@ -200,7 +195,7 @@ public class CustomerOverview extends AbstractOverview {
     searchBoxPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 
     searchBoxPanel.add(Box.createVerticalGlue());
-    searchBoxPanel.add(createHeadline("Search"));
+    searchBoxPanel.add(createHeadline("Suchen"));
     searchBoxPanel.add(Box.createVerticalGlue());
     searchBoxPanel.add(searchPanel);
     searchBoxPanel.add(Box.createVerticalGlue());
@@ -221,10 +216,9 @@ public class CustomerOverview extends AbstractOverview {
       String lastname = lastnameField.getText();
       String address = addressField.getText();
       String email = emailField.getText();
-      Date startDate = startDateField.getDate();
-      Date endDate = endDateField.getDate();
+      Date birthdate = birthdayField.getDate();
 
-      filterList(new CustomerSearchCriteria(firstname, lastname, address, email, startDate, endDate));
+      filterList(new CustomerSearchCriteria(firstname, lastname, address, email, birthdate));
 
       innerSearchButton.setEnabled(true);
       searchWindow.dispose();
@@ -275,8 +269,7 @@ public class CustomerOverview extends AbstractOverview {
         filteredCustomers.add(customer);
       } else if (customer.getEmail().contains(searchCriteria.getEmail())) {
         filteredCustomers.add(customer);
-      } else if (customer.getBirthday().isBefore(searchCriteria.getEndDate())
-        && customer.getBirthday().isAfter(searchCriteria.getStartDate())) {
+      } else if (customer.getBirthday().isEqual(searchCriteria.getBirthdate())) {
         filteredCustomers.add(customer);
       }
     }
