@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class EmployeeView extends JPanel {
 
-    public static final String VIEW_TITLE = "Edit/Create Employee";
+    public static final String VIEW_TITLE = "Mitarbeiter erstellen/bearbeiten";
 
     private JTextField firstNameField;
     private JTextField lastNameField;
@@ -45,11 +45,11 @@ public class EmployeeView extends JPanel {
         JPanel formPanel = new JPanel(new GridLayout(5, 2));
 
         // Create 5 JLabels for the captions
-        JLabel firstNameLabel = new JLabel("Firstname:");
-        JLabel lastNameLabel = new JLabel("Lastname:");
+        JLabel firstNameLabel = new JLabel("Vorname:");
+        JLabel lastNameLabel = new JLabel("Nachname:");
         JLabel emailLabel = new JLabel("E-Mail:");
-        JLabel telephoneLabel = new JLabel("Telephone:");
-        JLabel addressLabel = new JLabel("Address:");
+        JLabel telephoneLabel = new JLabel("Telefon:");
+        JLabel addressLabel = new JLabel("Adresse:");
 
         // Create JTextFields for the form fields
         firstNameField = new JTextField();
@@ -89,7 +89,7 @@ public class EmployeeView extends JPanel {
         formPanel.add(addressLabel);
         formPanel.add(addressPanel);
 
-        var saveBtn = new Button("Save");
+        var saveBtn = new Button("Speichern");
 
         saveBtn.addActionListener(e -> {
             createOrUpdateEmployee(haseGmbHManagement, employee);

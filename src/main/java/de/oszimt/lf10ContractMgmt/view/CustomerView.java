@@ -47,11 +47,11 @@ public class CustomerView extends JPanel {
         JPanel formPanel = new JPanel(new GridLayout(5, 2));
 
         // Create 5 JLabels for the captions
-        JLabel firstNameLabel = new JLabel("Firstname:");
-        JLabel lastNameLabel = new JLabel("Lastname:");
+        JLabel firstNameLabel = new JLabel("Vorname:");
+        JLabel lastNameLabel = new JLabel("Nachname:");
         JLabel emailLabel = new JLabel("E-Mail:");
-        JLabel birthdayLabel = new JLabel("Birthday:");
-        JLabel addressLabel = new JLabel("Address:");
+        JLabel birthdayLabel = new JLabel("Geburtstag:");
+        JLabel addressLabel = new JLabel("Adresse:");
 
         // Create JTextFields for the form fields
         firstNameField = new JTextField();

@@ -44,12 +44,12 @@ public class EmployeeOverview extends AbstractOverview {
   @Override
   protected DefaultTableModel createModel() {
     model = new DefaultTableModel();
-    model.addColumn("firstname");
-    model.addColumn("lastname");
-    model.addColumn("address");
-    model.addColumn("email");
-    model.addColumn("telephone");
-    model.addColumn("Actions");
+    model.addColumn("Vorname");
+    model.addColumn("Nachname");
+    model.addColumn("Adresse");
+    model.addColumn("E-Mail");
+    model.addColumn("Telefon");
+    model.addColumn("Aktionen");
 
     for (Employee employee : filteredEmployees) {
       model.addRow(
@@ -59,7 +59,7 @@ public class EmployeeOverview extends AbstractOverview {
           employee.getAddress().toString(),
           employee.getEmail(),
           employee.getTelephone(),
-          "Actions"
+          "Aktionen"
         }
       );
     }
@@ -73,7 +73,7 @@ public class EmployeeOverview extends AbstractOverview {
   }
 
   protected void createSearchWindow() {
-    JFrame searchWindow = new JFrame("Search");
+    JFrame searchWindow = new JFrame("Suchen");
     searchWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     searchWindow.setSize(500, 500);
     searchWindow.setLocationRelativeTo(null);
@@ -93,8 +93,8 @@ public class EmployeeOverview extends AbstractOverview {
     JTextField addressField = new JTextField("Adresse");
     addressField.setForeground(Color.GRAY);
 
-    JLabel emailLabel = new JLabel("Email");
-    JTextField emailField = new JTextField("Email");
+    JLabel emailLabel = new JLabel("E-Mail");
+    JTextField emailField = new JTextField("E-Mail");
     emailField.setForeground(Color.GRAY);
 
     JLabel telefonLabel = new JLabel("Telefon");
@@ -156,7 +156,7 @@ public class EmployeeOverview extends AbstractOverview {
     emailField.addFocusListener(new FocusListener() {
       @Override
       public void focusGained(FocusEvent e) {
-        if (emailField.getText().equals("Eamil")) {
+        if (emailField.getText().equals("E-Mail")) {
           emailField.setText("");
           emailField.setForeground(Color.BLACK);
         }
@@ -165,7 +165,7 @@ public class EmployeeOverview extends AbstractOverview {
       @Override
       public void focusLost(FocusEvent e) {
         if (emailField.getText().isEmpty()) {
-          emailField.setText("Eamil");
+          emailField.setText("E-Mail");
           emailField.setForeground(Color.GRAY);
         }
       }
@@ -190,7 +190,7 @@ public class EmployeeOverview extends AbstractOverview {
     searchBoxPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 
     searchBoxPanel.add(Box.createVerticalGlue());
-    searchBoxPanel.add(createHeadline("Search"));
+    searchBoxPanel.add(createHeadline("Suchen"));
     searchBoxPanel.add(Box.createVerticalGlue());
     searchBoxPanel.add(searchPanel);
     searchBoxPanel.add(Box.createVerticalGlue());
@@ -269,7 +269,7 @@ public class EmployeeOverview extends AbstractOverview {
     }
 
     if (filteredEmployees.isEmpty()) {
-      JOptionPane.showMessageDialog(null, "No contracts found!");
+      JOptionPane.showMessageDialog(null, "Keine Mitarbeiter gefunden.");
     }
 
     if (filteredEmployees.size() != employees.size()) {

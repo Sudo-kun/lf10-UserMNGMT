@@ -1,25 +1,19 @@
 package de.oszimt.lf10ContractMgmt.view;
 
 import de.oszimt.lf10ContractMgmt.model.Contract;
+import de.oszimt.lf10ContractMgmt.util.FontUtil;
+import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
-import de.oszimt.lf10ContractMgmt.util.FontUtil;
-import org.jdesktop.swingx.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class ActivityOverview extends AbstractOverview {
-  private static final JButton outerSearchButton = new JButton("Search");
+  private static final JButton outerSearchButton = new JButton("Suchen");
 
   ArrayList<Contract> contracts;
 
@@ -85,25 +79,25 @@ public class ActivityOverview extends AbstractOverview {
     JPanel searchPanel = new JPanel(new GridLayout(6, 2, 10, 10));
 
     JLabel customerLabel = new JLabel("Kunde");
-    JTextField customerField = new JTextField("Customer");
+    JTextField customerField = new JTextField("Kunde");
     customerField.setForeground(Color.GRAY);
 
-    JLabel projectOwnerLabel = new JLabel("Project Owner");
-    JTextField projectOwnerField = new JTextField("Employee");
+    JLabel projectOwnerLabel = new JLabel("Projektbesitzer");
+    JTextField projectOwnerField = new JTextField("Mitarbeiten");
     projectOwnerField.setForeground(Color.GRAY);
 
-    JLabel contractTypeLabel = new JLabel("Contract Type");
-    JTextField contractTypeField = new JTextField("Contract Type");
+    JLabel contractTypeLabel = new JLabel("Vertragstyp");
+    JTextField contractTypeField = new JTextField("Vertragstyp");
     contractTypeField.setForeground(Color.GRAY);
 
     JLabel stateLabel = new JLabel("Status");
-    JTextField stateField = new JTextField("State");
+    JTextField stateField = new JTextField("Status");
     stateField.setForeground(Color.GRAY);
 
-    JLabel startDateLabel = new JLabel("Start Date");
+    JLabel startDateLabel = new JLabel("Start Datum");
     JXDatePicker startDateField = new JXDatePicker(new Date());
 
-    JLabel endDateLabel = new JLabel("End Date");
+    JLabel endDateLabel = new JLabel("End Datum");
     JXDatePicker endDateField = new JXDatePicker(new Date());
 
     startDateField.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
@@ -112,7 +106,7 @@ public class ActivityOverview extends AbstractOverview {
     customerField.addFocusListener(new FocusListener() {
       @Override
       public void focusGained(FocusEvent e) {
-        if (customerField.getText().equals("Customer")) {
+        if (customerField.getText().equals("Kunde")) {
           customerField.setText("");
           customerField.setForeground(Color.BLACK);
 
@@ -122,7 +116,7 @@ public class ActivityOverview extends AbstractOverview {
       @Override
       public void focusLost(FocusEvent e) {
         if (customerField.getText().isEmpty()) {
-          customerField.setText("Customer");
+          customerField.setText("Kunde");
           customerField.setForeground(Color.GRAY);
         }
       }
@@ -130,7 +124,7 @@ public class ActivityOverview extends AbstractOverview {
     projectOwnerField.addFocusListener(new FocusListener() {
       @Override
       public void focusGained(FocusEvent e) {
-        if (projectOwnerField.getText().equals("Employee")) {
+        if (projectOwnerField.getText().equals("Kunde")) {
           projectOwnerField.setText("");
           projectOwnerField.setForeground(Color.BLACK);
         }
@@ -139,7 +133,7 @@ public class ActivityOverview extends AbstractOverview {
       @Override
       public void focusLost(FocusEvent e) {
         if (projectOwnerField.getText().isEmpty()) {
-          projectOwnerField.setText("Employee");
+          projectOwnerField.setText("Kunde");
           projectOwnerField.setForeground(Color.GRAY);
         }
       }
@@ -147,7 +141,7 @@ public class ActivityOverview extends AbstractOverview {
     contractTypeField.addFocusListener(new FocusListener() {
       @Override
       public void focusGained(FocusEvent e) {
-        if (contractTypeField.getText().equals("Contract Type")) {
+        if (contractTypeField.getText().equals("Vertragstyp")) {
           contractTypeField.setText("");
           contractTypeField.setForeground(Color.BLACK);
         }
@@ -156,7 +150,7 @@ public class ActivityOverview extends AbstractOverview {
       @Override
       public void focusLost(FocusEvent e) {
         if (contractTypeField.getText().isEmpty()) {
-          contractTypeField.setText("Contract Type");
+          contractTypeField.setText("Vertragstyp");
           contractTypeField.setForeground(Color.GRAY);
         }
       }
@@ -164,7 +158,7 @@ public class ActivityOverview extends AbstractOverview {
     stateField.addFocusListener(new FocusListener() {
       @Override
       public void focusGained(FocusEvent e) {
-        if (stateField.getText().equals("State")) {
+        if (stateField.getText().equals("Status")) {
           stateField.setText("");
           stateField.setForeground(Color.BLACK);
         }
@@ -173,7 +167,7 @@ public class ActivityOverview extends AbstractOverview {
       @Override
       public void focusLost(FocusEvent e) {
         if (stateField.getText().isEmpty()) {
-          stateField.setText("State");
+          stateField.setText("Status");
           stateField.setForeground(Color.GRAY);
         }
       }
@@ -200,7 +194,7 @@ public class ActivityOverview extends AbstractOverview {
     searchBoxPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 
     searchBoxPanel.add(Box.createVerticalGlue());
-    searchBoxPanel.add(createHeadline("Search"));
+    searchBoxPanel.add(createHeadline("Suchen"));
     searchBoxPanel.add(Box.createVerticalGlue());
     searchBoxPanel.add(searchPanel);
     searchBoxPanel.add(Box.createVerticalGlue());
@@ -287,7 +281,7 @@ public class ActivityOverview extends AbstractOverview {
     }
 
     if (filteredContracts.isEmpty()) {
-      JOptionPane.showMessageDialog(null, "No contracts found!");
+      JOptionPane.showMessageDialog(null, "Keine Verträge gefunden.");
     }
 
     if (filteredContracts.size() != contracts.size()) {

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  */
 public class LoginPanel extends JPanel {
 
-    public static final String VIEW_TITLE = "Login";
+    public static final String VIEW_TITLE = "Anmeldung";
 
     private JButton loginBtn;
     private JButton forgotPasswordBtn;
@@ -38,7 +38,7 @@ public class LoginPanel extends JPanel {
 
         var errorPanel = new JPanel(new BorderLayout());
 
-        errorLabel = new JLabel("<html><p style='color: red; margin: 0;'>Invalid username or password!</p></html>");
+        errorLabel = new JLabel("<html><p style='color: red; margin: 0;'>Ungültiger Benutzername oder Passwort!</p></html>");
 
         errorLabel.setFont(FontUtil.getDefaultFont());
         errorLabel.setVisible(false);
@@ -48,12 +48,12 @@ public class LoginPanel extends JPanel {
         panel.add(errorPanel);
 
         loginBtn = setupLoginButton();
-        forgotPasswordBtn = new JButton("Forgot password?");
+        forgotPasswordBtn = new JButton("Passwort vergessen?");
         usernameField = new JTextField(10);
         passwordField = new JPasswordField(10);
 
-        var usernamePanel = getTextField("Username:", usernameField);
-        var passwordPanel = getTextField("Password:", passwordField);
+        var usernamePanel = getTextField("Nutzername:", usernameField);
+        var passwordPanel = getTextField("Passwort:", passwordField);
 
         panel.add(usernamePanel);
         panel.add(passwordPanel);
@@ -78,7 +78,7 @@ public class LoginPanel extends JPanel {
     }
 
     private JButton setupLoginButton() {
-        loginBtn = new JButton("Login");
+        loginBtn = new JButton("Anmelden");
         loginBtn.setBorder(BorderFactory.createEmptyBorder(10, 32, 10, 32));
         return loginBtn;
     }

@@ -1,10 +1,10 @@
 package de.oszimt.lf10ContractMgmt.view.tableButton;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ButtonRenderer implements TableCellRenderer {
 
@@ -16,8 +16,8 @@ public class ButtonRenderer implements TableCellRenderer {
 
     public ButtonRenderer(int valueColumn) {
         this.valueColumn = valueColumn;
-        this.editButton = new JButton("Edit");
-        this.deleteButton = new JButton("Delete");
+        this.editButton = new JButton("Bearbeiten");
+        this.deleteButton = new JButton("Löschen");
         // add action listeners to the buttons
         this.editButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
