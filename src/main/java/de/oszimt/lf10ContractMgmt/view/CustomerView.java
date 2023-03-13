@@ -7,6 +7,7 @@ import de.oszimt.lf10ContractMgmt.util.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -24,6 +25,8 @@ public class CustomerView extends JPanel {
     private JTextField addressPostalCodeField;
     private JTextField addressCityField;
     private JTextField addressCountryField;
+
+    private JButton saveButton = new JButton("Speichern");
 
     public CustomerView(Customer customer, HaseGmbHManagement haseGmbHManagement) {
         setLayout(new GridLayout(3, 1));
@@ -91,16 +94,14 @@ public class CustomerView extends JPanel {
         formPanel.add(addressLabel);
         formPanel.add(addressPanel);
 
-        var saveBtn = new Button("Speichern");
-
-        saveBtn.addActionListener(e -> {
+        saveButton.addActionListener(e -> {
             createOrUpdateCustomer(haseGmbHManagement, customer);
         });
 
         var buttonContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         var buttonContainerGrid = new JPanel(new GridLayout(1, 3, 25, 25));
-        buttonContainerGrid.add(saveBtn);
+        buttonContainerGrid.add(saveButton);
         buttonContainer.add(buttonContainerGrid);
 
         formContainer.add(Box.createHorizontalGlue());
@@ -153,4 +154,7 @@ public class CustomerView extends JPanel {
         }
     }
 
+    public void setSaveButtionActionListener(ActionListener actionListener) {
+        saveButton.addActionListener(actionListener);
+    }
 }

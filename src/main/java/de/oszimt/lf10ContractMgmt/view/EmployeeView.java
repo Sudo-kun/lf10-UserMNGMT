@@ -7,6 +7,7 @@ import de.oszimt.lf10ContractMgmt.util.FontUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class EmployeeView extends JPanel {
 
@@ -22,6 +23,9 @@ public class EmployeeView extends JPanel {
     private JTextField addressPostalCodeField;
     private JTextField addressCityField;
     private JTextField addressCountryField;
+
+    private JButton saveButton = new JButton("Speichern");
+
 
     public EmployeeView(Employee employee, HaseGmbHManagement haseGmbHManagement) {
         setLayout(new GridLayout(3, 1));
@@ -89,16 +93,14 @@ public class EmployeeView extends JPanel {
         formPanel.add(addressLabel);
         formPanel.add(addressPanel);
 
-        var saveBtn = new Button("Speichern");
-
-        saveBtn.addActionListener(e -> {
+        saveButton.addActionListener(e -> {
             createOrUpdateEmployee(haseGmbHManagement, employee);
         });
 
         var buttonContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         var buttonContainerGrid = new JPanel(new GridLayout(1, 3, 25, 25));
-        buttonContainerGrid.add(saveBtn);
+        buttonContainerGrid.add(saveButton);
         buttonContainer.add(buttonContainerGrid);
 
         formContainer.add(Box.createHorizontalGlue());
@@ -151,4 +153,8 @@ public class EmployeeView extends JPanel {
         }
     }
 
+
+    public void setSaveButtionActionListener(ActionListener actionListener) {
+        saveButton.addActionListener(actionListener);
+    }
 }

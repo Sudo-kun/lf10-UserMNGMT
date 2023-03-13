@@ -86,6 +86,11 @@ public class MainFrame extends JFrame {
             setupCustomersView(customerOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Kundendetails");
+
+            customerView.setSaveButtionActionListener(e1 -> {
+                showCustomerOverview();
+            });
+
             mainLayout.setBody(customerView);
             customerView.setVisible(true);
         });
@@ -102,6 +107,11 @@ public class MainFrame extends JFrame {
             setupCustomersView(-1);
 
             mainLayout.setHeadline("Kundendetails");
+
+            customerView.setSaveButtionActionListener(e1 -> {
+                showCustomerOverview();
+            });
+
             mainLayout.setBody(customerView);
             customerView.setVisible(true);
         });
@@ -123,6 +133,11 @@ public class MainFrame extends JFrame {
             setupEmployeeView(employeesOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Mitarbeiterdetails");
+
+            employeeView.setSaveButtionActionListener(e1 -> {
+                showEmployeeOverview();
+            });
+
             mainLayout.setBody(employeeView);
             employeeView.setVisible(true);
         });
@@ -139,6 +154,11 @@ public class MainFrame extends JFrame {
             setupEmployeeView(-1);
 
             mainLayout.setHeadline("Kundendetails");
+
+            employeeView.setSaveButtionActionListener(e1 -> {
+                showEmployeeOverview();
+            });
+
             mainLayout.setBody(employeeView);
             employeeView.setVisible(true);
         });
@@ -163,6 +183,11 @@ public class MainFrame extends JFrame {
             mainLayout.setBody(activityDetailsView);
 
             activityDetailsView.setSaveButtonText("Speichern");
+
+            activityDetailsView.setSaveButtionActionListener(e1 -> {
+                showActivityOverview();
+            });
+
             activityDetailsView.setHeadlineText("Bearbeiten");
             activityDetailsView.setVisible(true);
         });
@@ -174,6 +199,11 @@ public class MainFrame extends JFrame {
             mainLayout.setBody(activityDetailsView);
 
             activityDetailsView.setSaveButtonText("Erstellen");
+
+            activityDetailsView.setSaveButtionActionListener(e1 -> {
+                showActivityOverview();
+            });
+
             activityDetailsView.setHeadlineText("Erstellen");
             activityDetailsView.setVisible(true);
         });
