@@ -2,7 +2,6 @@ package de.oszimt.lf10ContractMgmt;
 
 import de.oszimt.lf10ContractMgmt.impl.HaseGmbHManagement;
 import de.oszimt.lf10ContractMgmt.view.*;
-import de.oszimt.lf10ContractMgmt.view.LoginPanel;
 import de.oszimt.lf10ContractMgmt.view.activity.details.ActivityDetailsView;
 
 import javax.swing.*;
@@ -20,7 +19,9 @@ public class MainFrame extends JFrame {
     public static final String LOGIN_PASSWORD = "password";
 
     LoginPanel loginPanel = new LoginPanel();
+
     ActivityDetailsView activityDetailsView;
+    CustomerView customerView;
 
     HaseGmbHManagement haseGmbHManagement = new HaseGmbHManagement();
 
@@ -81,11 +82,11 @@ public class MainFrame extends JFrame {
             int row = Integer.parseInt(e.getActionCommand());
 
             customerOverview.setVisible(false);
-            setupDetailsView(customerOverview.getIdByRow(row));
+            setupCustomersView(customerOverview.getIdByRow(row));
 
             mainLayout.setHeadline("Kundendetails");
-            mainLayout.setBody(customerOverview);
-            customerOverview.setVisible(true);
+            mainLayout.setBody(customerView);
+            customerView.setVisible(true);
         });
 
         customerOverview.setDeleteActionListener(e -> {
@@ -170,6 +171,14 @@ public class MainFrame extends JFrame {
             activityDetailsView = new ActivityDetailsView(haseGmbHManagement.getContract(ContractID), haseGmbHManagement);
         } else {
             activityDetailsView = new ActivityDetailsView(null, haseGmbHManagement);
+        }
+    }
+
+    private void setupCustomersView(int customerId) {
+        if (customerId != -1) {
+            customerView = new CustomerView(haseGmbHManagement.getCustomer(customerId), haseGmbHManagement);
+        } else {
+            customerView = new CustomerView(null, haseGmbHManagement);
         }
     }
 }
