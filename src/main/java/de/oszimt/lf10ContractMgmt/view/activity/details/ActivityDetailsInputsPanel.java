@@ -87,26 +87,60 @@ public class ActivityDetailsInputsPanel extends JPanel {
         });
 
         customerSelect.setPreferredSize(new Dimension(305, 25));
+        customerSelect.addItem(null);
 
-        if (customer != null) customerSelect.setSelectedItem(customer);
+        customerSelect.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Customer customer = ((Customer) value);
+
+                String displayValue;
+
+                if (customer == null) {
+                    displayValue = "Bitte Kunden auswählen";
+                } else {
+                    displayValue = customer.getFirstname() + " " + customer.getLastname();
+                }
+
+                return super.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
+            }
+        });
+
+        if (customer != null) {
+            customerSelect.setSelectedItem(customer);
+        } else {
+            customerSelect.setSelectedIndex(customerSelect.getItemCount() - 1);
+        }
 
         JPanel customerSelectWrapper = new JPanel();
         customerSelectWrapper.add(customerSelect);
 
         employeeSelect = new JComboBox<>(haseGmbHManagement.getAllEmployees().toArray(new Employee[0]));
+        employeeSelect.addItem(null);
 
         employeeSelect.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Employee employee = ((Employee) value);
-                String displayValue = employee.getFirstname() + " " + employee.getLastname();
+
+                String displayValue;
+
+                if (employee == null) {
+                    displayValue = "Bitte Mitarbeiter auswählen";
+                } else {
+                    displayValue = employee.getFirstname() + " " + employee.getLastname();
+                }
 
                 return super.getListCellRendererComponent(list, displayValue, index, isSelected, cellHasFocus);
             }
         });
 
         employeeSelect.setPreferredSize(new Dimension(305, 25));
-        if (projectOwner != null) employeeSelect.setSelectedItem(projectOwner);
+        if (projectOwner != null) {
+            employeeSelect.setSelectedItem(projectOwner);
+        } else {
+            employeeSelect.setSelectedIndex(employeeSelect.getItemCount() - 1);
+        }
 
         JPanel employeeSelectWrapper = new JPanel();
         employeeSelectWrapper.add(employeeSelect);

@@ -161,6 +161,9 @@ public class MainFrame extends JFrame {
 
             mainLayout.setHeadline("Aktivitätsdetails");
             mainLayout.setBody(activityDetailsView);
+
+            activityDetailsView.setSaveButtonText("Speichern");
+            activityDetailsView.setHeadlineText("Bearbeiten");
             activityDetailsView.setVisible(true);
         });
 
@@ -171,6 +174,7 @@ public class MainFrame extends JFrame {
             mainLayout.setBody(activityDetailsView);
 
             activityDetailsView.setSaveButtonText("Erstellen");
+            activityDetailsView.setHeadlineText("Erstellen");
             activityDetailsView.setVisible(true);
         });
 
