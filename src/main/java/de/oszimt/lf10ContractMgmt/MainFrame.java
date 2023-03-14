@@ -75,7 +75,9 @@ public class MainFrame extends JFrame {
     }
 
     public void showCustomerOverview() {
-        setSize(1920, 1080);
+        int width = (int) getToolkit().getScreenSize().getWidth();
+        int height = (int) getToolkit().getScreenSize().getHeight();
+        setSize(width, height);
         CustomerOverview customerOverview = new CustomerOverview(
                 haseGmbHManagement.getAllCustomers());
 
@@ -121,7 +123,9 @@ public class MainFrame extends JFrame {
     }
 
     public void showEmployeeOverview() {
-        setSize(1920, 1080);
+        int width = (int) getToolkit().getScreenSize().getWidth();
+        int height = (int) getToolkit().getScreenSize().getHeight();
+        setSize(width, height);
 
         EmployeeOverview employeesOverview = new EmployeeOverview(
                 haseGmbHManagement.getAllEmployees());
@@ -168,7 +172,9 @@ public class MainFrame extends JFrame {
     }
 
     public void showActivityOverview() {
-        setSize(1920, 1080);
+        int width = (int) getToolkit().getScreenSize().getWidth();
+        int height = (int) getToolkit().getScreenSize().getHeight();
+        setSize(width, height);
 
         ActivityOverview activityOverview = new ActivityOverview(
                 haseGmbHManagement.getAllContracts());
